@@ -1,0 +1,691 @@
+{
+  "source_sheet": "Curtain_Settings",
+  "count": 27,
+  "ranges": {
+    "BendCost": 28,
+    "BlindMax": 50,
+    "BlindMin": 12,
+    "BlindNum": 32,
+    "Controls": [
+      "LH Cord",
+      "RH Cord",
+      "Wands",
+      "LH Mot",
+      "RH Mot",
+      "Any"
+    ],
+    "CordCost": 45,
+    "CurtainMax": 11,
+    "CurtainMin": 1,
+    "CurtainNum": 11,
+    "DefaultLiningName": "DefaultLiningname",
+    "Finish": [
+      "  Standard",
+      "  Top Fix",
+      "  Face to Ceil",
+      " Brushing",
+      "Half Drop",
+      "Pud  1cm",
+      "Pud  2cm",
+      "Pud  3cm",
+      "Pud  4cm",
+      "Pud  5cm",
+      "Pud  6cm",
+      "Pud  7cm",
+      "Pud  8cm",
+      "Pud  9cm",
+      "Pud 10cm",
+      "Pud 15cm",
+      "Pud 20cm",
+      "TF Brushing",
+      "TF Pud  1cm",
+      "TF Pud  2cm",
+      "TF Pud  3cm",
+      "TF Pud  4cm",
+      "TF Pud  5cm",
+      "TF Pud  6cm",
+      "TF Pud  7cm",
+      "TF Pud  8cm",
+      "TF Pud  9cm",
+      "TF Pud 10cm",
+      "TF Pud 15cm",
+      "TF Pud 20cm"
+    ],
+    "Fittings": [
+      "Face Alum",
+      "Face Arch",
+      "Face Brick",
+      "Face Con",
+      "Face Gyp",
+      "Face Gyp Brick",
+      "Face Gyp Steel",
+      "Face Gyp Tim",
+      "Face Tile",
+      "Face Tim",
+      "Rev Alum",
+      "Rev Porc",
+      "Rev Steel",
+      "Rev Tiles",
+      "Rev Tim",
+      "Top Con",
+      "Top Gyp",
+      "Top Tim",
+      "Top Rec",
+      "See note"
+    ],
+    "Fullnesses": [
+      [
+        "Twin Lining",
+        1.8
+      ],
+      [
+        "Upleat 7.5 Sheer",
+        null
+      ],
+      [
+        "Box Pleat Curtain",
+        1.8
+      ],
+      [
+        "Box Pleat Curtain XW",
+        1.8
+      ],
+      [
+        "Box Pleat Sheer",
+        1.8
+      ],
+      [
+        "Box Pleat Sheer OH",
+        1.8
+      ],
+      [
+        "Inverted Curtain",
+        1.8
+      ],
+      [
+        "Inverted Curtain XW",
+        1.8
+      ],
+      [
+        "Inverted Lining",
+        1.8
+      ],
+      [
+        "Inverted Lining OH",
+        1.8
+      ],
+      [
+        "Inverted Sheer",
+        1.8
+      ],
+      [
+        "Pinch Pleat Curtain",
+        2
+      ],
+      [
+        "Pinch Pleat Curtain XW",
+        2
+      ],
+      [
+        "Pinch Pleat Sheer",
+        2.25
+      ],
+      [
+        "Pinch Pleat Sheer OH",
+        2.25
+      ],
+      [
+        "Ripple Fold Curtain",
+        1.8
+      ],
+      [
+        "Ripple Fold Curtain XW",
+        1.8
+      ],
+      [
+        "Ripple Fold Sheer",
+        1.8
+      ],
+      [
+        "S Wave Curtain",
+        1.8
+      ],
+      [
+        "S Wave Curtain XW",
+        1.8
+      ],
+      [
+        "S Wave Sheer",
+        1.8
+      ],
+      [
+        "S Wave Sheer OH",
+        1.8
+      ],
+      [
+        "Twin 15cm Pleat",
+        1.8
+      ],
+      [
+        "Twin 15cm Pleat OH",
+        1.8
+      ],
+      [
+        "Twin 15cm Pleat Sheer",
+        1.8
+      ],
+      [
+        "Twin 15cm Pleat Sheer OH",
+        1.8
+      ],
+      [
+        "Twin 15cm Pleat XW",
+        1.8
+      ],
+      [
+        "Twin Lining OH",
+        1.8
+      ],
+      [
+        "Twin Pleat Curtain",
+        1.8
+      ],
+      [
+        "Twin Pleat Curtain XW",
+        1.8
+      ],
+      [
+        "Twin Pleat Sheer",
+        1.8
+      ],
+      [
+        "Twin Pleat Sheer OH",
+        1.8
+      ],
+      [
+        "Upleat 7.5 Curtain",
+        1.8
+      ],
+      [
+        "Upleat 7.5 Curtain XW",
+        1.8
+      ],
+      [
+        "Upleat 7.5 Sheer OH",
+        1.8
+      ],
+      [
+        "Accessory",
+        null
+      ]
+    ],
+    "InstallationCost": 60,
+    "InstallationCostOnDual": 40,
+    "ItemsPerPage": 24,
+    "LayoutBends": [
+      [
+        " Standard",
+        0,
+        1
+      ],
+      [
+        " 90' Cnr Bend Double (Front)",
+        -39,
+        1
+      ],
+      [
+        " 90' Cnr Bend Double (Back)",
+        -19,
+        1
+      ],
+      [
+        " 90' Cnr Bend Single",
+        -23,
+        0
+      ],
+      [
+        " 90' Cnr Standard Single Left",
+        -7,
+        0
+      ],
+      [
+        " 90' Cnr Standard Single Right",
+        -7,
+        0
+      ],
+      [
+        "45' Bay Back Left",
+        -3,
+        0
+      ],
+      [
+        "45' Bay Back Mid",
+        -6,
+        2
+      ],
+      [
+        "45' Bay Back Right",
+        -3,
+        2
+      ],
+      [
+        "45' Bay Bend Back",
+        -8,
+        0
+      ],
+      [
+        "45' Bay Bend Front",
+        -16,
+        0
+      ],
+      [
+        "45' Bay Front Left",
+        -7,
+        0
+      ],
+      [
+        "45' Bay Front Mid",
+        -14,
+        0
+      ],
+      [
+        "45' Bay Front Right",
+        -7,
+        0
+      ],
+      [
+        "45' Bay Int Back Left",
+        3,
+        0
+      ],
+      [
+        "45' Bay Int Back Mid",
+        6,
+        0
+      ],
+      [
+        "45' Bay Int Back Right",
+        3,
+        0
+      ],
+      [
+        "45' Bay Int Front Left",
+        6,
+        0
+      ],
+      [
+        "45' Bay Int Front Mid",
+        12,
+        1
+      ],
+      [
+        "45' Bay Int Front Right",
+        6,
+        1
+      ],
+      [
+        "45' Half Bay Bend Back",
+        -4,
+        0
+      ],
+      [
+        "45' Half Bay Bend Front",
+        -8,
+        0
+      ],
+      [
+        "45\" Half Bay Int Back Left",
+        3,
+        0
+      ],
+      [
+        "45\" Half Bay Int Back Right",
+        3,
+        0
+      ],
+      [
+        "45\" Half Bay Int Front Left",
+        6,
+        0
+      ],
+      [
+        "45\" Half Bay Int Front Right",
+        6,
+        0
+      ],
+      [
+        "90' Cnr Int Back Left",
+        7,
+        0
+      ],
+      [
+        "90' Cnr Int Back Right",
+        7,
+        0
+      ],
+      [
+        "90' Cnr Int Front Left",
+        17,
+        0
+      ],
+      [
+        "90' Cnr Int Front Right",
+        17,
+        0
+      ],
+      [
+        "90' Cnr Standard Back Left",
+        -7,
+        0
+      ],
+      [
+        "90' Cnr Standard Back Right",
+        -7,
+        0
+      ],
+      [
+        "90' Cnr Standard Front Left",
+        -17,
+        1
+      ],
+      [
+        "90' Cnr Standard Front Right",
+        -17,
+        1
+      ],
+      [
+        "90' Reverse Bend Back",
+        9,
+        0
+      ],
+      [
+        "90' Reverse Bend Front",
+        25,
+        0
+      ],
+      [
+        "Curved",
+        0,
+        0
+      ],
+      [
+        "Square Bay Back Left",
+        -7,
+        0
+      ],
+      [
+        "Square Bay Back Mid",
+        -14,
+        2
+      ],
+      [
+        "Square Bay Back Right",
+        -7,
+        2
+      ],
+      [
+        "Square Bay Bend Back",
+        -38,
+        0
+      ],
+      [
+        "Square Bay Bend Front",
+        -76,
+        0
+      ],
+      [
+        "Square Bay Front Left",
+        -17,
+        0
+      ],
+      [
+        "Square Bay Front Mid",
+        -34,
+        0
+      ],
+      [
+        "Square Bay Front Right",
+        -17,
+        0
+      ],
+      [
+        "Square Bay Int Back Left",
+        7,
+        0
+      ],
+      [
+        "Square Bay Int Back Mid",
+        14,
+        0
+      ],
+      [
+        "Square Bay Int Back Right",
+        7,
+        0
+      ],
+      [
+        "Square Bay Int Front Left",
+        17,
+        0
+      ],
+      [
+        "Square Bay Int Front Mid",
+        34,
+        0
+      ],
+      [
+        "Square Bay Int Front Right",
+        17,
+        0
+      ]
+    ],
+    "Layouts": [
+      " Standard",
+      " 90' Cnr Bend Double (Front)",
+      " 90' Cnr Bend Double (Back)",
+      " 90' Cnr Bend Single",
+      " 90' Cnr Standard Single Left",
+      " 90' Cnr Standard Single Right",
+      "45' Bay Back Left",
+      "45' Bay Back Mid",
+      "45' Bay Back Right",
+      "45' Bay Bend Back",
+      "45' Bay Bend Front",
+      "45' Bay Front Left",
+      "45' Bay Front Mid",
+      "45' Bay Front Right",
+      "45' Bay Int Back Left",
+      "45' Bay Int Back Mid",
+      "45' Bay Int Back Right",
+      "45' Bay Int Front Left",
+      "45' Bay Int Front Mid",
+      "45' Bay Int Front Right",
+      "45' Half Bay Bend Back",
+      "45' Half Bay Bend Front",
+      "45\" Half Bay Int Back Left",
+      "45\" Half Bay Int Back Right",
+      "45\" Half Bay Int Front Left",
+      "45\" Half Bay Int Front Right",
+      "90' Cnr Int Back Left",
+      "90' Cnr Int Back Right",
+      "90' Cnr Int Front Left",
+      "90' Cnr Int Front Right",
+      "90' Cnr Standard Back Left",
+      "90' Cnr Standard Back Right",
+      "90' Cnr Standard Front Left",
+      "90' Cnr Standard Front Right",
+      "90' Reverse Bend Back",
+      "90' Reverse Bend Front",
+      "Curved",
+      "Square Bay Back Left",
+      "Square Bay Back Mid",
+      "Square Bay Back Right",
+      "Square Bay Bend Back",
+      "Square Bay Bend Front",
+      "Square Bay Front Left",
+      "Square Bay Front Mid",
+      "Square Bay Front Right",
+      "Square Bay Int Back Left",
+      "Square Bay Int Back Mid",
+      "Square Bay Int Back Right",
+      "Square Bay Int Front Left",
+      "Square Bay Int Front Mid",
+      "Square Bay Int Front Right",
+      "Wall Left",
+      "Wall Right",
+      "Wall to Wall"
+    ],
+    "Manufacturers": [
+      "Linings",
+      "CP",
+      "Filigree",
+      "Gummerson",
+      "Hoad",
+      "James Dunlop",
+      "Maurice Kain",
+      "Nettex",
+      "Slender Morris",
+      "Warwick",
+      "Wilson",
+      "Wortley",
+      "Zepel",
+      "Miscellaneous"
+    ],
+    "MiscMax": 54,
+    "MiscMin": 51,
+    "MitreCost": 22,
+    "Stacks": [
+      "1WL",
+      "1WR",
+      "2W",
+      "1ANY",
+      "2ANY"
+    ],
+    "Styles": [
+      "Twin Lining",
+      "Upleat 7.5 Sheer",
+      "Box Pleat Curtain",
+      "Box Pleat Curtain XW",
+      "Box Pleat Sheer",
+      "Box Pleat Sheer OH",
+      "Inverted Curtain",
+      "Inverted Curtain XW",
+      "Inverted Lining",
+      "Inverted Lining OH",
+      "Inverted Sheer",
+      "Pinch Pleat Curtain",
+      "Pinch Pleat Curtain XW",
+      "Pinch Pleat Sheer",
+      "Pinch Pleat Sheer OH",
+      "Ripple Fold Curtain",
+      "Ripple Fold Curtain XW",
+      "Ripple Fold Sheer",
+      "S Wave Curtain",
+      "S Wave Curtain XW",
+      "S Wave Sheer",
+      "S Wave Sheer OH",
+      "Twin 15cm Pleat",
+      "Twin 15cm Pleat OH",
+      "Twin 15cm Pleat Sheer",
+      "Twin 15cm Pleat Sheer OH",
+      "Twin 15cm Pleat XW",
+      "Twin Lining OH",
+      "Twin Pleat Curtain",
+      "Twin Pleat Curtain XW",
+      "Twin Pleat Sheer",
+      "Twin Pleat Sheer OH",
+      "Upleat 7.5 Curtain",
+      "Upleat 7.5 Curtain XW",
+      "Upleat 7.5 Sheer OH",
+      "Accessory"
+    ],
+    "TotalItems": 54,
+    "TrackColours": [
+      "Birch White",
+      "Black",
+      "Chrome",
+      "Cream",
+      "Gold",
+      "Honey Bronze",
+      "Silver Silk",
+      "White"
+    ],
+    "Tracks": [
+      "  TW Series 74 Venice",
+      "  TW Series 74 Venice S wave",
+      "  Classic",
+      "  Slimline",
+      "  Slimline Plus",
+      " Decor",
+      " Diva",
+      "SlimlineOnPlus",
+      "SlimlineOnDiva",
+      "SlimlineOnDecor",
+      " Existing Track",
+      "Coralea Princess",
+      "Coralea Simplicity",
+      "TW K Series 35",
+      "TW K Series 600",
+      "TW K Series 600 S wave",
+      "TW K Series smoothline",
+      "TW K Series smoothline S wave",
+      "TW Motor Acmeda ",
+      "TW Motor Acmeda S wave",
+      "TW Motor Acmeda Battery",
+      "TW Motor Acmeda Battery S wave",
+      "TW Motor Series 81 turbo",
+      "TW Motor Series 81 turbo S wave",
+      "TW Series 81 manual",
+      "TW Series 81 manual S wave",
+      "TW Motor Series 84",
+      "TW Motor Series 84 S wave",
+      "TW Series 84 manual",
+      "TW Series 84 manual S wave",
+      "TW Motor Somfy Glydea DCT",
+      "TW Motor Somfy Glydea DCT S wave",
+      "TW Motor Somfy Glydea RTS",
+      "TW Motor Somfy Glydea RTS S wave",
+      "TW Motor Somfy Glydea WT",
+      "TW Motor Somfy Glydea WT S wave",
+      "TW Motor Somfy Series 82 DCT",
+      "TW Motor Somfy Series 82 DCT S wave",
+      "TW Motor Somfy Series 82 RTS",
+      "TW Motor Somfy Series 82 RTS S wave",
+      "TW Motor Somfy Series 82 WT",
+      "TW Motor Somfy Series 82 WT S wave",
+      "TW Ripple black rod 25mm",
+      "TW Series 50 Milan",
+      "TW Series 50 Milan S wave",
+      "TW Series 51",
+      "TW Series 51 S wave",
+      "TW Series 52",
+      "TW Series 52 S wave",
+      "TW Series 58",
+      "TW Series 58 S wave",
+      "TW Series 59 Flexitrack",
+      "TW Series 61",
+      "TW Series 63 Capri",
+      "TW Series 63 Capri S wave",
+      "TW Series 65",
+      "TW Series 67 Siena",
+      "TW Series 67 Siena S wave",
+      "TW Series 70 Recess",
+      "TW Series 70 Recess S wave",
+      "TW Series 71 Recess Housing",
+      "TW Series 79",
+      "TW Series 98",
+      "TW Series 99",
+      "TW Tube slider 25mm",
+      "UniQ Motolox Battery",
+      "UniQ Motolux Hardwired",
+      "Vanda Versatrack double 25mm",
+      "Vanda Versatrack double 25mm SC",
+      "Vanda Versatrak 16mm",
+      "Vanda Versatrak 16mm SC",
+      "Vanda Versatrak 25mm glides",
+      "Vanda Versatrak 25mm glides SC",
+      "Vanda Versatrak 25mm rings",
+      "Vanda Versatrak 25mm rings SC"
+    ]
+  }
+}

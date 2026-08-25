@@ -1,0 +1,126 @@
+{
+  "supplier": "Wilson",
+  "fabric_count": 30,
+  "fabrics": [
+    {
+      "name": "AYERS B/O WW",
+      "price_per_metre": 25.35
+    },
+    {
+      "name": "BARCELONA SHEER",
+      "price_per_metre": 15.95
+    },
+    {
+      "name": "BOSTON II B/O",
+      "price_per_metre": 13.95
+    },
+    {
+      "name": "BOSTON B/O WW",
+      "price_per_metre": 25.35
+    },
+    {
+      "name": "BROOME ll B/O",
+      "price_per_metre": 13.95
+    },
+    {
+      "name": "BROOME B/O WW",
+      "price_per_metre": 25.35
+    },
+    {
+      "name": "COAST SHEER",
+      "price_per_metre": 13.25
+    },
+    {
+      "name": "COMO SHEER",
+      "price_per_metre": 9.95
+    },
+    {
+      "name": "DELHI II B/O",
+      "price_per_metre": 15.25
+    },
+    {
+      "name": "GRATITUDE SHEER",
+      "price_per_metre": 14.05
+    },
+    {
+      "name": "HARVEST",
+      "price_per_metre": 14.05
+    },
+    {
+      "name": "HAYMAN B/O WW",
+      "price_per_metre": 23.45
+    },
+    {
+      "name": "HUGO SHEER",
+      "price_per_metre": 13.25
+    },
+    {
+      "name": "HUSK II SHEER",
+      "price_per_metre": 15
+    },
+    {
+      "name": "LUCCA SHEER",
+      "price_per_metre": 15.95
+    },
+    {
+      "name": "KINDNESS SHEER",
+      "price_per_metre": 14.05
+    },
+    {
+      "name": "LUXURY CASA PLAIN",
+      "price_per_metre": 14.15
+    },
+    {
+      "name": "LUXURY CASA SWIRL",
+      "price_per_metre": 14.15
+    },
+    {
+      "name": "LUXURY OXFORD",
+      "price_per_metre": 15.6
+    },
+    {
+      "name": "MILOS SHEER",
+      "price_per_metre": 15.95
+    },
+    {
+      "name": "MOROCCO II B/O",
+      "price_per_metre": 15
+    },
+    {
+      "name": "ORGANIC",
+      "price_per_metre": 19.35
+    },
+    {
+      "name": "PARKER",
+      "price_per_metre": 22.45
+    },
+    {
+      "name": "PALM COVE B/O WW",
+      "price_per_metre": 23.45
+    },
+    {
+      "name": "POSITANO SHEER",
+      "price_per_metre": 15.95
+    },
+    {
+      "name": "SABRE SHEER",
+      "price_per_metre": 20.45
+    },
+    {
+      "name": "SENSORY SHEER",
+      "price_per_metre": 13.25
+    },
+    {
+      "name": "SHEER NATURE II",
+      "price_per_metre": 15
+    },
+    {
+      "name": "TESSA",
+      "price_per_metre": 22.45
+    },
+    {
+      "name": "WHITSUNDAYS SHEER",
+      "price_per_metre": 14.05
+    }
+  ]
+}

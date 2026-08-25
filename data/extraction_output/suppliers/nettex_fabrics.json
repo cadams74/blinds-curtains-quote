@@ -1,0 +1,426 @@
+{
+  "supplier": "Nettex",
+  "fabric_count": 105,
+  "fabrics": [
+    {
+      "name": "Alaska",
+      "price_per_metre": 20.95
+    },
+    {
+      "name": "Altitude",
+      "price_per_metre": 19.95
+    },
+    {
+      "name": "Amsterdam",
+      "price_per_metre": 19.95
+    },
+    {
+      "name": "Antwerp",
+      "price_per_metre": 21.25
+    },
+    {
+      "name": "Aquila.Lw",
+      "price_per_metre": 18.15
+    },
+    {
+      "name": "Arizona",
+      "price_per_metre": 14
+    },
+    {
+      "name": "Bahamas",
+      "price_per_metre": 5.15
+    },
+    {
+      "name": "Bali.Lw",
+      "price_per_metre": 14.25
+    },
+    {
+      "name": "Balmoral",
+      "price_per_metre": 21.5
+    },
+    {
+      "name": "Banf",
+      "price_per_metre": 15.55
+    },
+    {
+      "name": "Bilbao",
+      "price_per_metre": 16.2
+    },
+    {
+      "name": "Botanical",
+      "price_per_metre": 14.25
+    },
+    {
+      "name": "Bree",
+      "price_per_metre": 33.55
+    },
+    {
+      "name": "Breeze",
+      "price_per_metre": 10.35
+    },
+    {
+      "name": "Brunswick",
+      "price_per_metre": 49.9
+    },
+    {
+      "name": "Cannes",
+      "price_per_metre": 14.25
+    },
+    {
+      "name": "Carina.Lw",
+      "price_per_metre": 18.15
+    },
+    {
+      "name": "Carter",
+      "price_per_metre": 18.15
+    },
+    {
+      "name": "Catania.Lw",
+      "price_per_metre": 13.6
+    },
+    {
+      "name": "Chamonix",
+      "price_per_metre": 14.9
+    },
+    {
+      "name": "Chatsworth",
+      "price_per_metre": 14.25
+    },
+    {
+      "name": "Chic",
+      "price_per_metre": 13.6
+    },
+    {
+      "name": "Chopin",
+      "price_per_metre": 16.85
+    },
+    {
+      "name": "Colorado",
+      "price_per_metre": 11.65
+    },
+    {
+      "name": "Copacabana",
+      "price_per_metre": 32.45
+    },
+    {
+      "name": "Costa.Rica",
+      "price_per_metre": 15.55
+    },
+    {
+      "name": "Dalton",
+      "price_per_metre": 14.25
+    },
+    {
+      "name": "Edge",
+      "price_per_metre": 14.25
+    },
+    {
+      "name": "Galaxy.B.W",
+      "price_per_metre": 23.75
+    },
+    {
+      "name": "Genova",
+      "price_per_metre": 16.85
+    },
+    {
+      "name": "Georgia.Ppc",
+      "price_per_metre": 25.95
+    },
+    {
+      "name": "Grange",
+      "price_per_metre": 14.9
+    },
+    {
+      "name": "Habitat Blockout",
+      "price_per_metre": 14.25
+    },
+    {
+      "name": "Habitat Uncoated",
+      "price_per_metre": 9.7
+    },
+    {
+      "name": "Hampton",
+      "price_per_metre": 35.05
+    },
+    {
+      "name": "Harlow",
+      "price_per_metre": 12.95
+    },
+    {
+      "name": "Highlight.Lw",
+      "price_per_metre": 14.25
+    },
+    {
+      "name": "Hilton",
+      "price_per_metre": 18.15
+    },
+    {
+      "name": "Homestead",
+      "price_per_metre": 15.55
+    },
+    {
+      "name": "Horizon",
+      "price_per_metre": 13.95
+    },
+    {
+      "name": "Infinity",
+      "price_per_metre": 14.25
+    },
+    {
+      "name": "Juliet",
+      "price_per_metre": 16.85
+    },
+    {
+      "name": "Kyoto",
+      "price_per_metre": 19.95
+    },
+    {
+      "name": "Lafayette",
+      "price_per_metre": 19.95
+    },
+    {
+      "name": "Lancaster Fr",
+      "price_per_metre": 14.65
+    },
+    {
+      "name": "Le,Sabre",
+      "price_per_metre": 18.15
+    },
+    {
+      "name": "Leighton",
+      "price_per_metre": 14.25
+    },
+    {
+      "name": "Lour",
+      "price_per_metre": 17.5
+    },
+    {
+      "name": "Lucern",
+      "price_per_metre": 7.5
+    },
+    {
+      "name": "Lucern.L",
+      "price_per_metre": 8.4
+    },
+    {
+      "name": "Maemo",
+      "price_per_metre": 19.95
+    },
+    {
+      "name": "Marrakesh",
+      "price_per_metre": 18.15
+    },
+    {
+      "name": "Marseille",
+      "price_per_metre": 18.15
+    },
+    {
+      "name": "Messina Fr",
+      "price_per_metre": 8.8
+    },
+    {
+      "name": "Metro",
+      "price_per_metre": 17.25
+    },
+    {
+      "name": "Miet",
+      "price_per_metre": 24.65
+    },
+    {
+      "name": "Mikado",
+      "price_per_metre": 14.65
+    },
+    {
+      "name": "Milano",
+      "price_per_metre": 16.85
+    },
+    {
+      "name": "Mississippi",
+      "price_per_metre": 25.95
+    },
+    {
+      "name": "Modena",
+      "price_per_metre": 16.85
+    },
+    {
+      "name": "Montana.B",
+      "price_per_metre": 12.95
+    },
+    {
+      "name": "Mood.Lw",
+      "price_per_metre": 19.95
+    },
+    {
+      "name": "Mykonos",
+      "price_per_metre": 10.35
+    },
+    {
+      "name": "Napoleon",
+      "price_per_metre": 19.95
+    },
+    {
+      "name": "Newport",
+      "price_per_metre": 9.7
+    },
+    {
+      "name": "Nightrider",
+      "price_per_metre": 10.35
+    },
+    {
+      "name": "Nimbus.Lw",
+      "price_per_metre": 18.15
+    },
+    {
+      "name": "Orion.Lw",
+      "price_per_metre": 18.15
+    },
+    {
+      "name": "Orlando",
+      "price_per_metre": 25.95
+    },
+    {
+      "name": "Osaka",
+      "price_per_metre": 14.9
+    },
+    {
+      "name": "Palm.Springs",
+      "price_per_metre": 25.95
+    },
+    {
+      "name": "Patagonia",
+      "price_per_metre": 22.05
+    },
+    {
+      "name": "Pennines",
+      "price_per_metre": 15.55
+    },
+    {
+      "name": "Petti",
+      "price_per_metre": 24.65
+    },
+    {
+      "name": "Petworth",
+      "price_per_metre": 14.25
+    },
+    {
+      "name": "Rapallo",
+      "price_per_metre": 16.85
+    },
+    {
+      "name": "Ritz",
+      "price_per_metre": 17.25
+    },
+    {
+      "name": "Romeo.Lw",
+      "price_per_metre": 12.95
+    },
+    {
+      "name": "Saratoga.Tr",
+      "price_per_metre": 19.95
+    },
+    {
+      "name": "Seattle",
+      "price_per_metre": 19.95
+    },
+    {
+      "name": "Sherwood",
+      "price_per_metre": 17.25
+    },
+    {
+      "name": "Society",
+      "price_per_metre": 18.15
+    },
+    {
+      "name": "Soho",
+      "price_per_metre": 37.65
+    },
+    {
+      "name": "Soleil",
+      "price_per_metre": 27.95
+    },
+    {
+      "name": "Sombre",
+      "price_per_metre": 16.2
+    },
+    {
+      "name": "Sorbonne",
+      "price_per_metre": 16.2
+    },
+    {
+      "name": "Stratus.Lw",
+      "price_per_metre": 18.15
+    },
+    {
+      "name": "Sumo",
+      "price_per_metre": 16.75
+    },
+    {
+      "name": "Taos",
+      "price_per_metre": 16.85
+    },
+    {
+      "name": "Toscania",
+      "price_per_metre": 16.85
+    },
+    {
+      "name": "Trellis",
+      "price_per_metre": 14.25
+    },
+    {
+      "name": "Trento",
+      "price_per_metre": 16.85
+    },
+    {
+      "name": "Tricolour",
+      "price_per_metre": 20.75
+    },
+    {
+      "name": "Tulsa 150",
+      "price_per_metre": 12.95
+    },
+    {
+      "name": "Tulsa 300",
+      "price_per_metre": 27.95
+    },
+    {
+      "name": "Tundra",
+      "price_per_metre": 14
+    },
+    {
+      "name": "Tyon",
+      "price_per_metre": 24.65
+    },
+    {
+      "name": "Vale",
+      "price_per_metre": 25.95
+    },
+    {
+      "name": "Versailles",
+      "price_per_metre": 16.85
+    },
+    {
+      "name": "Vevey",
+      "price_per_metre": 11
+    },
+    {
+      "name": "Warner",
+      "price_per_metre": 17.25
+    },
+    {
+      "name": "Whisper",
+      "price_per_metre": 24
+    },
+    {
+      "name": "Wilton",
+      "price_per_metre": 14.25
+    },
+    {
+      "name": "Wisconsin.B",
+      "price_per_metre": 12.3
+    },
+    {
+      "name": "York",
+      "price_per_metre": 12.7
+    }
+  ]
+}

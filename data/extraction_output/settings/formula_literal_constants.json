@@ -1,0 +1,75 @@
+{
+  "note": "Magic numbers hardcoded directly inside cell formulas (not named ranges), documented from reading the Blind Quote / Curtain Quote row formulas. Other product families' own literals should be confirmed the same way when their formula chains are ported during pricing-engine build -- this list is not exhaustive across all 40+ price groups, only the two central formula chains analysed so far.",
+  "constants": {
+    "blind_sell_markup_factor": {
+      "value": 1.88,
+      "found_in": "Blind Quote!AR3 (and AW3 Panel track price)",
+      "meaning": "Multiplier applied to the raw Blind_Pricing grid lookup to get sell price."
+    },
+    "blind_freight_flat_fee": {
+      "value": 6,
+      "found_in": "Blind Quote!AS3",
+      "meaning": "Flat freight charge added per blind line, when a price was found (AR3>0)."
+    },
+    "curtain_fabric_waste_factor": {
+      "value": 1.03,
+      "found_in": "Curtain Quote!AO3/AP3",
+      "meaning": "3% extra fabric allowance applied to the raw metreage calculation."
+    },
+    "curtain_fullness_base_percent": {
+      "value": 140,
+      "found_in": "Curtain Quote!AQ3 (denominator)",
+      "meaning": "Base fullness percentage divisor before over/sheer/lining adjustments."
+    },
+    "curtain_over_sheer_fullness_adjustment": {
+      "value": 160,
+      "found_in": "Curtain Quote!AQ3",
+      "meaning": "Added to the fullness base when curtain is Over 270cm AND (Sheer OR Twin/Inverted Lining OH)."
+    },
+    "curtain_twin_inverted_oh_fullness_adjustment": {
+      "value": -20,
+      "found_in": "Curtain Quote!AQ3",
+      "meaning": "Subtracted from the fullness base for Twin Lining OH / Inverted Lining OH styles."
+    },
+    "curtain_making_cost_markup_addend": {
+      "value": 30,
+      "found_in": "Curtain Quote!AS3",
+      "meaning": "Added to the hooks/fullness-derived percentage (AN3) before dividing by 100 to scale the making price."
+    },
+    "curtain_sheer_over_making_multiplier": {
+      "value": 2.2,
+      "found_in": "Curtain Quote!BB3",
+      "meaning": "Multiplier applied to curtain-making cost when (Sheer OR Inverted/Twin Lining OH) AND Over 270cm."
+    },
+    "curtain_lining_cost_per_metre": {
+      "value": 14,
+      "found_in": "Curtain Quote!BD3",
+      "meaning": "Lining cost per metre of drop (AS3), doubled again if the curtain is Extra Wide."
+    },
+    "curtain_installation_tier_threshold_mm": {
+      "value": 901,
+      "found_in": "Curtain Quote!BE3",
+      "meaning": "Below this track length (Y3, mm) installation is tiered; at/above it a flat $250 applies."
+    },
+    "curtain_installation_flat_over_threshold": {
+      "value": 250,
+      "found_in": "Curtain Quote!BE3",
+      "meaning": "Flat installation charge once track length reaches curtain_installation_tier_threshold_mm."
+    },
+    "curtain_installation_tier_step_mm": {
+      "value": 150,
+      "found_in": "Curtain Quote!BE3 (QUOTIENT(Y3-350,150))",
+      "meaning": "Track-length step size (mm) used to add extra half-installation-cost increments below the flat threshold."
+    },
+    "curtain_installation_tier_base_mm": {
+      "value": 350,
+      "found_in": "Curtain Quote!BE3 (QUOTIENT(Y3-350,150))",
+      "meaning": "Base track length (mm) the tiering offset is measured from."
+    },
+    "curtain_over_length_threshold_mm": {
+      "value": 270,
+      "found_in": "Curtain Quote!AL3 (AN3>270)",
+      "meaning": "Drop length (cm, note: compare units when implementing) above which the 'Over' surcharge path applies."
+    }
+  }
+}

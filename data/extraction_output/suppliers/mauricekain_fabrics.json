@@ -1,0 +1,634 @@
+{
+  "supplier": "MauriceKain",
+  "fabric_count": 157,
+  "fabrics": [
+    {
+      "name": "Abaca",
+      "price_per_metre": 34.5
+    },
+    {
+      "name": "Abbey",
+      "price_per_metre": 48.75
+    },
+    {
+      "name": "Adorn",
+      "price_per_metre": 30.95
+    },
+    {
+      "name": "Adriatic (Triple Weave)",
+      "price_per_metre": 24.5
+    },
+    {
+      "name": "Altair (with weighted base)",
+      "price_per_metre": 49.95
+    },
+    {
+      "name": "Arco",
+      "price_per_metre": 35.95
+    },
+    {
+      "name": "Arielle (with weighted base)",
+      "price_per_metre": 32.95
+    },
+    {
+      "name": "Arizona",
+      "price_per_metre": 31.95
+    },
+    {
+      "name": "Aruba (with weighted base)",
+      "price_per_metre": 13.95
+    },
+    {
+      "name": "Aster",
+      "price_per_metre": 31.5
+    },
+    {
+      "name": "Astoria",
+      "price_per_metre": 35.5
+    },
+    {
+      "name": "Audible                                        (triple weave)",
+      "price_per_metre": 37.95
+    },
+    {
+      "name": "Baroda",
+      "price_per_metre": 35.5
+    },
+    {
+      "name": "Bellarine",
+      "price_per_metre": 22.95
+    },
+    {
+      "name": "Berkshire",
+      "price_per_metre": 29.95
+    },
+    {
+      "name": "Bliss",
+      "price_per_metre": 29.95
+    },
+    {
+      "name": "Blythe (with weighted base)",
+      "price_per_metre": 15.95
+    },
+    {
+      "name": "Botanical",
+      "price_per_metre": 48.95
+    },
+    {
+      "name": "Brooklyn Blockout",
+      "price_per_metre": 23.75
+    },
+    {
+      "name": "Brooklyn Uncoated",
+      "price_per_metre": 19.5
+    },
+    {
+      "name": "Calverton",
+      "price_per_metre": 42.95
+    },
+    {
+      "name": "Carnival Blockout",
+      "price_per_metre": 23.5
+    },
+    {
+      "name": "Carnival Uncoated",
+      "price_per_metre": 20.5
+    },
+    {
+      "name": "Carousel Blockout",
+      "price_per_metre": 23.5
+    },
+    {
+      "name": "Carousel Uncoated",
+      "price_per_metre": 20.5
+    },
+    {
+      "name": "Castella (with weighted base)",
+      "price_per_metre": 71.95
+    },
+    {
+      "name": "Casterley",
+      "price_per_metre": 22.5
+    },
+    {
+      "name": "Celeste (with weighted base)",
+      "price_per_metre": 47
+    },
+    {
+      "name": "Charlton (with weighted base)",
+      "price_per_metre": 43.5
+    },
+    {
+      "name": "Chisholm  (with weighted base)",
+      "price_per_metre": 23.95
+    },
+    {
+      "name": "Cleo",
+      "price_per_metre": 29.95
+    },
+    {
+      "name": "Congo",
+      "price_per_metre": 24.5
+    },
+    {
+      "name": "Conway",
+      "price_per_metre": 17.5
+    },
+    {
+      "name": "Copenhagen",
+      "price_per_metre": 45.5
+    },
+    {
+      "name": "Curzon",
+      "price_per_metre": 17.5
+    },
+    {
+      "name": "Daintree (with weighted base)",
+      "price_per_metre": 24.5
+    },
+    {
+      "name": "Destiny (with weighted base)",
+      "price_per_metre": 14.95
+    },
+    {
+      "name": "Dream",
+      "price_per_metre": 20.5
+    },
+    {
+      "name": "Drummond (with weighted base)",
+      "price_per_metre": 17.95
+    },
+    {
+      "name": "Durham",
+      "price_per_metre": 17.5
+    },
+    {
+      "name": "Edgewater",
+      "price_per_metre": 21.95
+    },
+    {
+      "name": "Edgeworth",
+      "price_per_metre": 44.75
+    },
+    {
+      "name": "Emerson",
+      "price_per_metre": 25.95
+    },
+    {
+      "name": "Emery",
+      "price_per_metre": 30.5
+    },
+    {
+      "name": "Evergreen (Blockout)",
+      "price_per_metre": 23.5
+    },
+    {
+      "name": "Evergreen (Uncoated)",
+      "price_per_metre": 20.5
+    },
+    {
+      "name": "Evoke",
+      "price_per_metre": 30.95
+    },
+    {
+      "name": "Evolution",
+      "price_per_metre": 33.95
+    },
+    {
+      "name": "Fleur",
+      "price_per_metre": 30.95
+    },
+    {
+      "name": "Forest Friends",
+      "price_per_metre": 24.95
+    },
+    {
+      "name": "Formation",
+      "price_per_metre": 39.95
+    },
+    {
+      "name": "Forsetti",
+      "price_per_metre": 19
+    },
+    {
+      "name": "Fox & Badger",
+      "price_per_metre": 24.95
+    },
+    {
+      "name": "Fresco",
+      "price_per_metre": 48.95
+    },
+    {
+      "name": "Frey",
+      "price_per_metre": 22.5
+    },
+    {
+      "name": "Friends Forever",
+      "price_per_metre": 29.95
+    },
+    {
+      "name": "Frontier",
+      "price_per_metre": 22.95
+    },
+    {
+      "name": "Glasshouse",
+      "price_per_metre": 42.95
+    },
+    {
+      "name": "Gobi",
+      "price_per_metre": 24.5
+    },
+    {
+      "name": "Grampians",
+      "price_per_metre": 45.5
+    },
+    {
+      "name": "Haiku (with weighted base)",
+      "price_per_metre": 38.95
+    },
+    {
+      "name": "Hairy Maclary",
+      "price_per_metre": 29.95
+    },
+    {
+      "name": "Hamlyn (with weighted base)",
+      "price_per_metre": 28.95
+    },
+    {
+      "name": "Harrington  (with weighted base)",
+      "price_per_metre": 22.95
+    },
+    {
+      "name": "Hastings",
+      "price_per_metre": 22.95
+    },
+    {
+      "name": "Hazel",
+      "price_per_metre": 16.95
+    },
+    {
+      "name": "Helsinki",
+      "price_per_metre": 45.5
+    },
+    {
+      "name": "Highgarden",
+      "price_per_metre": 22.5
+    },
+    {
+      "name": "Hilton",
+      "price_per_metre": 35.5
+    },
+    {
+      "name": "Himalaya (with weighted base)",
+      "price_per_metre": 32.95
+    },
+    {
+      "name": "Hinterland",
+      "price_per_metre": 22.95
+    },
+    {
+      "name": "Ingrid",
+      "price_per_metre": 44.75
+    },
+    {
+      "name": "Infinity",
+      "price_per_metre": 24.5
+    },
+    {
+      "name": "Innsbruck Blockout",
+      "price_per_metre": 23.95
+    },
+    {
+      "name": "Interstellar (with weighted base)",
+      "price_per_metre": 26.5
+    },
+    {
+      "name": "Isabella",
+      "price_per_metre": 42.95
+    },
+    {
+      "name": "Juniper",
+      "price_per_metre": 44.5
+    },
+    {
+      "name": "Jupiter",
+      "price_per_metre": 32.5
+    },
+    {
+      "name": "Kalani",
+      "price_per_metre": 42.95
+    },
+    {
+      "name": "Kalhari (with weighted base)",
+      "price_per_metre": 24.5
+    },
+    {
+      "name": "Latitude",
+      "price_per_metre": 60.95
+    },
+    {
+      "name": "Leilani (with weighted base)",
+      "price_per_metre": 61.95
+    },
+    {
+      "name": "Lewes",
+      "price_per_metre": 17.5
+    },
+    {
+      "name": "Linz Blockout",
+      "price_per_metre": 23.95
+    },
+    {
+      "name": "Lithgow (with weighted base)",
+      "price_per_metre": 46.5
+    },
+    {
+      "name": "Lorne",
+      "price_per_metre": 22.95
+    },
+    {
+      "name": "Louisiana (with weighted base)",
+      "price_per_metre": 48.95
+    },
+    {
+      "name": "Malia (with weighted base)",
+      "price_per_metre": 32.95
+    },
+    {
+      "name": "Manorville",
+      "price_per_metre": 42.95
+    },
+    {
+      "name": "Marsden (with weighted base)",
+      "price_per_metre": 40.95
+    },
+    {
+      "name": "Mauritius (wuth weighted base)",
+      "price_per_metre": 24.95
+    },
+    {
+      "name": "Mawson",
+      "price_per_metre": 44.75
+    },
+    {
+      "name": "Mayflower (with weighted base)",
+      "price_per_metre": 20.5
+    },
+    {
+      "name": "Meadowbank",
+      "price_per_metre": 23.95
+    },
+    {
+      "name": "Mercury (with weighted base)",
+      "price_per_metre": 26.95
+    },
+    {
+      "name": "Mojave",
+      "price_per_metre": 24.5
+    },
+    {
+      "name": "Mornington",
+      "price_per_metre": 42.95
+    },
+    {
+      "name": "Mr MacGregor's Garden",
+      "price_per_metre": 32.5
+    },
+    {
+      "name": "Mizumi",
+      "price_per_metre": 49.95
+    },
+    {
+      "name": "Night Shade (triple weave)",
+      "price_per_metre": null
+    },
+    {
+      "name": "Oak",
+      "price_per_metre": 16.95
+    },
+    {
+      "name": "Odin (with weighted base)",
+      "price_per_metre": 13.95
+    },
+    {
+      "name": "Omaha Bay (with weighted base)",
+      "price_per_metre": 41.95
+    },
+    {
+      "name": "Opulence (with weighted base)",
+      "price_per_metre": 17.95
+    },
+    {
+      "name": "Orlando",
+      "price_per_metre": 33.95
+    },
+    {
+      "name": "Oslo",
+      "price_per_metre": 45.5
+    },
+    {
+      "name": "Paluma (triple weave)",
+      "price_per_metre": 17.95
+    },
+    {
+      "name": "Pampas",
+      "price_per_metre": 31.5
+    },
+    {
+      "name": "Patina (triple weave)",
+      "price_per_metre": 26.5
+    },
+    {
+      "name": "Peter Rabbit Stripe",
+      "price_per_metre": 29.95
+    },
+    {
+      "name": "Peter's World",
+      "price_per_metre": 32.5
+    },
+    {
+      "name": "Pilbara (with weighted base)",
+      "price_per_metre": 39.95
+    },
+    {
+      "name": "Providence",
+      "price_per_metre": 41.95
+    },
+    {
+      "name": "Re-Fresh",
+      "price_per_metre": 24.95
+    },
+    {
+      "name": "Rejuvenate (with weighted base)",
+      "price_per_metre": 28.75
+    },
+    {
+      "name": "Re-New",
+      "price_per_metre": 24.95
+    },
+    {
+      "name": "Repose",
+      "price_per_metre": 39.5
+    },
+    {
+      "name": "Re-Vive",
+      "price_per_metre": 24.95
+    },
+    {
+      "name": "Riverhead",
+      "price_per_metre": 42.95
+    },
+    {
+      "name": "Rochester",
+      "price_per_metre": 17.5
+    },
+    {
+      "name": "Sage",
+      "price_per_metre": 31.5
+    },
+    {
+      "name": "Salzburg Blockout",
+      "price_per_metre": 23.95
+    },
+    {
+      "name": "San Marino (with weighted base)",
+      "price_per_metre": 43.95
+    },
+    {
+      "name": "Santa Cruz",
+      "price_per_metre": 33.95
+    },
+    {
+      "name": "Sardinia",
+      "price_per_metre": 85
+    },
+    {
+      "name": "Savanna",
+      "price_per_metre": 53.5
+    },
+    {
+      "name": "Sayville",
+      "price_per_metre": 32.95
+    },
+    {
+      "name": "Sensory",
+      "price_per_metre": 36.95
+    },
+    {
+      "name": "Sequence (with weighted base)",
+      "price_per_metre": 40.95
+    },
+    {
+      "name": "Sequoia (with weighted base)",
+      "price_per_metre": 24.5
+    },
+    {
+      "name": "Shackleton",
+      "price_per_metre": 44.75
+    },
+    {
+      "name": "Sherwood",
+      "price_per_metre": 48.95
+    },
+    {
+      "name": "Shimla",
+      "price_per_metre": 33.95
+    },
+    {
+      "name": "Sicily",
+      "price_per_metre": 34.5
+    },
+    {
+      "name": "Silverton (triple weave)",
+      "price_per_metre": 15.95
+    },
+    {
+      "name": "Sonic",
+      "price_per_metre": 26.5
+    },
+    {
+      "name": "Southport 330 (with weighted base)",
+      "price_per_metre": 18.95
+    },
+    {
+      "name": "Stella (with weighted base)",
+      "price_per_metre": 39.95
+    },
+    {
+      "name": "Stockholm",
+      "price_per_metre": 45.5
+    },
+    {
+      "name": "Stratford Blockout",
+      "price_per_metre": 23.5
+    },
+    {
+      "name": "Stratford Uncoated",
+      "price_per_metre": 20.5
+    },
+    {
+      "name": "Sumatra (with weighted base)",
+      "price_per_metre": 24.5
+    },
+    {
+      "name": "Tanami (with weighted base)",
+      "price_per_metre": 24.5
+    },
+    {
+      "name": "Tayalla",
+      "price_per_metre": 25.95
+    },
+    {
+      "name": "Twilight (triple weave)",
+      "price_per_metre": null
+    },
+    {
+      "name": "Tyrell",
+      "price_per_metre": 22.5
+    },
+    {
+      "name": "Utopia",
+      "price_per_metre": 30.95
+    },
+    {
+      "name": "Vail (triple weave)",
+      "price_per_metre": 15.95
+    },
+    {
+      "name": "Waldorf",
+      "price_per_metre": 35.5
+    },
+    {
+      "name": "Walk Out (with weighted base)",
+      "price_per_metre": 32.5
+    },
+    {
+      "name": "Weylands Blockout",
+      "price_per_metre": 27.5
+    },
+    {
+      "name": "Williamsburg (with weighted base)",
+      "price_per_metre": 39.95
+    },
+    {
+      "name": "Willow",
+      "price_per_metre": 16.95
+    },
+    {
+      "name": "Windermere",
+      "price_per_metre": 33.95
+    },
+    {
+      "name": "Woolamai (with weighted base)",
+      "price_per_metre": 16.5
+    },
+    {
+      "name": "Zala (with weighted base)",
+      "price_per_metre": 20.5
+    },
+    {
+      "name": "Zander",
+      "price_per_metre": 22.5
+    }
+  ]
+}

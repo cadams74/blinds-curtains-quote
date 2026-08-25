@@ -1,0 +1,214 @@
+{
+  "supplier": "Gummerson",
+  "fabric_count": 52,
+  "fabrics": [
+    {
+      "name": "Astra",
+      "price_per_metre": 13.95
+    },
+    {
+      "name": "Avalon-Stripe",
+      "price_per_metre": 19.95
+    },
+    {
+      "name": "Axiom",
+      "price_per_metre": 16.95
+    },
+    {
+      "name": "Beach-Check",
+      "price_per_metre": 19.95
+    },
+    {
+      "name": "Brampton",
+      "price_per_metre": 16.95
+    },
+    {
+      "name": "Broadbeach",
+      "price_per_metre": 16.95
+    },
+    {
+      "name": "Broadway-Stripe",
+      "price_per_metre": 16.95
+    },
+    {
+      "name": "Capri",
+      "price_per_metre": 12.95
+    },
+    {
+      "name": "Cascade",
+      "price_per_metre": 16.95
+    },
+    {
+      "name": "Colorado Softweave",
+      "price_per_metre": 28.95
+    },
+    {
+      "name": "Continuous-Multi -Bo",
+      "price_per_metre": 19.95
+    },
+    {
+      "name": "Continuous-Softweave",
+      "price_per_metre": 15.95
+    },
+    {
+      "name": "Essence",
+      "price_per_metre": 16.95
+    },
+    {
+      "name": "Fairview",
+      "price_per_metre": 16.95
+    },
+    {
+      "name": "Fingal",
+      "price_per_metre": 16.95
+    },
+    {
+      "name": "French-Stripe",
+      "price_per_metre": 21.95
+    },
+    {
+      "name": "Freshwater Softweave",
+      "price_per_metre": 29.95
+    },
+    {
+      "name": "Glow-Softweave",
+      "price_per_metre": 18.95
+    },
+    {
+      "name": "Impact-Softweave",
+      "price_per_metre": 21.95
+    },
+    {
+      "name": "Lexington",
+      "price_per_metre": 16.95
+    },
+    {
+      "name": "Liberty",
+      "price_per_metre": 16.95
+    },
+    {
+      "name": "Link",
+      "price_per_metre": 13.95
+    },
+    {
+      "name": "Magnetic Bo",
+      "price_per_metre": 13.95
+    },
+    {
+      "name": "Magnetic Uc",
+      "price_per_metre": 8.95
+    },
+    {
+      "name": "Magnetic 1P",
+      "price_per_metre": 11.95
+    },
+    {
+      "name": "Marquee Plain Bo",
+      "price_per_metre": 15.95
+    },
+    {
+      "name": "Marquee Plain Uc",
+      "price_per_metre": 9.95
+    },
+    {
+      "name": "Marquee Stripe Bo",
+      "price_per_metre": 15.95
+    },
+    {
+      "name": "Marquee Stripe Uc",
+      "price_per_metre": 9.95
+    },
+    {
+      "name": "Micro-Softweave",
+      "price_per_metre": 12.95
+    },
+    {
+      "name": "Minelli",
+      "price_per_metre": 16.95
+    },
+    {
+      "name": "Monaco",
+      "price_per_metre": 19.95
+    },
+    {
+      "name": "Mondo 320",
+      "price_per_metre": 15.95
+    },
+    {
+      "name": "Multi-Stripe",
+      "price_per_metre": 19.95
+    },
+    {
+      "name": "New York",
+      "price_per_metre": 16.95
+    },
+    {
+      "name": "Orbit",
+      "price_per_metre": 31.95
+    },
+    {
+      "name": "Oasis",
+      "price_per_metre": 16.95
+    },
+    {
+      "name": "Orsini",
+      "price_per_metre": 16.95
+    },
+    {
+      "name": "Palm Cove",
+      "price_per_metre": 22.95
+    },
+    {
+      "name": "Plain",
+      "price_per_metre": 19.95
+    },
+    {
+      "name": "Queenscliff Softweave",
+      "price_per_metre": 29.95
+    },
+    {
+      "name": "Sandon",
+      "price_per_metre": 16.95
+    },
+    {
+      "name": "Silverton",
+      "price_per_metre": 16.95
+    },
+    {
+      "name": "St Moritz",
+      "price_per_metre": 13.95
+    },
+    {
+      "name": "Ticking-Stripe",
+      "price_per_metre": 19.95
+    },
+    {
+      "name": "Trinity",
+      "price_per_metre": 16.95
+    },
+    {
+      "name": "Uno Bo",
+      "price_per_metre": 15.95
+    },
+    {
+      "name": "Uno Uc",
+      "price_per_metre": 9.95
+    },
+    {
+      "name": "Valencia Bo",
+      "price_per_metre": 15.95
+    },
+    {
+      "name": "Valencia Uc",
+      "price_per_metre": 9.95
+    },
+    {
+      "name": "View-Softweave",
+      "price_per_metre": 14.95
+    },
+    {
+      "name": "Yamba",
+      "price_per_metre": 16.95
+    }
+  ]
+}

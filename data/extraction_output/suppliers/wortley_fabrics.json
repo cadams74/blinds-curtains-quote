@@ -1,0 +1,22 @@
+{
+  "supplier": "Wortley",
+  "fabric_count": 4,
+  "fabrics": [
+    {
+      "name": "Wortley1",
+      "price_per_metre": 26.95
+    },
+    {
+      "name": "Wortley2",
+      "price_per_metre": 15.95
+    },
+    {
+      "name": "Wortley3",
+      "price_per_metre": 7.75
+    },
+    {
+      "name": "Wortley4",
+      "price_per_metre": 10.45
+    }
+  ]
+}

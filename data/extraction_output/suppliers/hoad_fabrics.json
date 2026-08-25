@@ -1,0 +1,510 @@
+{
+  "supplier": "Hoad",
+  "fabric_count": 126,
+  "fabrics": [
+    {
+      "name": "Amalfi",
+      "price_per_metre": 17.29
+    },
+    {
+      "name": "Antonia",
+      "price_per_metre": 20.95
+    },
+    {
+      "name": "Arcadia",
+      "price_per_metre": 17.95
+    },
+    {
+      "name": "Arctic",
+      "price_per_metre": 17.95
+    },
+    {
+      "name": "Art Linen",
+      "price_per_metre": 31.95
+    },
+    {
+      "name": "Art Natural",
+      "price_per_metre": 31.95
+    },
+    {
+      "name": "Aspire",
+      "price_per_metre": 21.95
+    },
+    {
+      "name": "Atmosphere",
+      "price_per_metre": 21.95
+    },
+    {
+      "name": "Avena",
+      "price_per_metre": 23.95
+    },
+    {
+      "name": "Avoca",
+      "price_per_metre": 15.95
+    },
+    {
+      "name": "Baccarat",
+      "price_per_metre": 43.95
+    },
+    {
+      "name": "Bali",
+      "price_per_metre": 17.29
+    },
+    {
+      "name": "Belgravia",
+      "price_per_metre": 17.95
+    },
+    {
+      "name": "Bloomsbury",
+      "price_per_metre": 17.29
+    },
+    {
+      "name": "Botanical Linen",
+      "price_per_metre": 31.95
+    },
+    {
+      "name": "Brooklyn-Stripe",
+      "price_per_metre": 24.95
+    },
+    {
+      "name": "Brumby Linen",
+      "price_per_metre": 31.95
+    },
+    {
+      "name": "Brumby Natural",
+      "price_per_metre": 31.95
+    },
+    {
+      "name": "Cabana",
+      "price_per_metre": 17.29
+    },
+    {
+      "name": "Cellini",
+      "price_per_metre": 17.95
+    },
+    {
+      "name": "Charm",
+      "price_per_metre": 31.95
+    },
+    {
+      "name": "Chateau-Stripe",
+      "price_per_metre": 29.95
+    },
+    {
+      "name": "Cloud",
+      "price_per_metre": 17.95
+    },
+    {
+      "name": "Cmb-320",
+      "price_per_metre": 19.95
+    },
+    {
+      "name": "Cocoon",
+      "price_per_metre": 17.29
+    },
+    {
+      "name": "Compass Softweave",
+      "price_per_metre": 17.95
+    },
+    {
+      "name": "Covers Linen",
+      "price_per_metre": 31.95
+    },
+    {
+      "name": "Covers Natural",
+      "price_per_metre": 31.95
+    },
+    {
+      "name": "Dandelion",
+      "price_per_metre": 24.95
+    },
+    {
+      "name": "Dazzle Linen",
+      "price_per_metre": 31.95
+    },
+    {
+      "name": "Dazzle Natural",
+      "price_per_metre": 31.95
+    },
+    {
+      "name": "Deja-Vu",
+      "price_per_metre": 24.95
+    },
+    {
+      "name": "Dream",
+      "price_per_metre": 11.95
+    },
+    {
+      "name": "Eclipse",
+      "price_per_metre": 17.29
+    },
+    {
+      "name": "Empire",
+      "price_per_metre": 17.95
+    },
+    {
+      "name": "Enviro Linen",
+      "price_per_metre": 31.95
+    },
+    {
+      "name": "Enviro Natural",
+      "price_per_metre": 31.95
+    },
+    {
+      "name": "Evo-Linen",
+      "price_per_metre": 59.95
+    },
+    {
+      "name": "Fields",
+      "price_per_metre": 17.95
+    },
+    {
+      "name": "Finley Uc",
+      "price_per_metre": 7.95
+    },
+    {
+      "name": "Finley Bo",
+      "price_per_metre": 14.95
+    },
+    {
+      "name": "Fireblast",
+      "price_per_metre": 24.95
+    },
+    {
+      "name": "Flair",
+      "price_per_metre": 21.95
+    },
+    {
+      "name": "Flora",
+      "price_per_metre": 17.29
+    },
+    {
+      "name": "Folio Linen",
+      "price_per_metre": 31.95
+    },
+    {
+      "name": "Folio Natural",
+      "price_per_metre": 31.95
+    },
+    {
+      "name": "Franklin Linen",
+      "price_per_metre": 31.95
+    },
+    {
+      "name": "Franklin Natural",
+      "price_per_metre": 31.95
+    },
+    {
+      "name": "Fraser Linen",
+      "price_per_metre": 31.95
+    },
+    {
+      "name": "Fraser Natural",
+      "price_per_metre": 31.95
+    },
+    {
+      "name": "Fresco",
+      "price_per_metre": 17.29
+    },
+    {
+      "name": "Gallery Linen",
+      "price_per_metre": 31.95
+    },
+    {
+      "name": "Grampians Linen",
+      "price_per_metre": 31.95
+    },
+    {
+      "name": "Grampians Natural",
+      "price_per_metre": 31.95
+    },
+    {
+      "name": "Habitat Linen",
+      "price_per_metre": 31.95
+    },
+    {
+      "name": "Habitat Natural",
+      "price_per_metre": 31.95
+    },
+    {
+      "name": "Hampstead",
+      "price_per_metre": 49.95
+    },
+    {
+      "name": "Hampton-Stripe",
+      "price_per_metre": 17.95
+    },
+    {
+      "name": "Homespun",
+      "price_per_metre": 17.29
+    },
+    {
+      "name": "Icon Blockout",
+      "price_per_metre": 15.95
+    },
+    {
+      "name": "Icon Uncoated",
+      "price_per_metre": 9.95
+    },
+    {
+      "name": "Jungle",
+      "price_per_metre": 24.95
+    },
+    {
+      "name": "Knightsbridge",
+      "price_per_metre": 49.95
+    },
+    {
+      "name": "Lavish",
+      "price_per_metre": 17.29
+    },
+    {
+      "name": "Linea",
+      "price_per_metre": 14.95
+    },
+    {
+      "name": "Luxor",
+      "price_per_metre": 17.95
+    },
+    {
+      "name": "Lynx",
+      "price_per_metre": 15.95
+    },
+    {
+      "name": "Maine",
+      "price_per_metre": 13.95
+    },
+    {
+      "name": "Manhattan Stripe",
+      "price_per_metre": 17.29
+    },
+    {
+      "name": "Maze",
+      "price_per_metre": 17.29
+    },
+    {
+      "name": "Meadow",
+      "price_per_metre": 17.29
+    },
+    {
+      "name": "Meteor",
+      "price_per_metre": 16.95
+    },
+    {
+      "name": "Mirima Linen",
+      "price_per_metre": 31.95
+    },
+    {
+      "name": "Mirima Natural",
+      "price_per_metre": 31.95
+    },
+    {
+      "name": "Mode",
+      "price_per_metre": 34.95
+    },
+    {
+      "name": "Moonburst",
+      "price_per_metre": 24.95
+    },
+    {
+      "name": "Motif Linen",
+      "price_per_metre": 31.95
+    },
+    {
+      "name": "Nova",
+      "price_per_metre": 12.95
+    },
+    {
+      "name": "Novo",
+      "price_per_metre": 21.95
+    },
+    {
+      "name": "Oasis Linen",
+      "price_per_metre": 31.95
+    },
+    {
+      "name": "Otway Linen",
+      "price_per_metre": 31.95
+    },
+    {
+      "name": "Otway Natural",
+      "price_per_metre": 31.95
+    },
+    {
+      "name": "Palm Beach 290",
+      "price_per_metre": 27.95
+    },
+    {
+      "name": "Palazzo-Stripe",
+      "price_per_metre": 17.29
+    },
+    {
+      "name": "Palisade",
+      "price_per_metre": 21.95
+    },
+    {
+      "name": "Paradise",
+      "price_per_metre": 17.95
+    },
+    {
+      "name": "Picasso",
+      "price_per_metre": 17.29
+    },
+    {
+      "name": "Plantation",
+      "price_per_metre": 17.29
+    },
+    {
+      "name": "Portia",
+      "price_per_metre": 20.95
+    },
+    {
+      "name": "Posie",
+      "price_per_metre": 39.95
+    },
+    {
+      "name": "Renzo",
+      "price_per_metre": 15.95
+    },
+    {
+      "name": "Resort",
+      "price_per_metre": 24.95
+    },
+    {
+      "name": "Ritzy",
+      "price_per_metre": 21.95
+    },
+    {
+      "name": "Salvador",
+      "price_per_metre": 20.95
+    },
+    {
+      "name": "Santana Softweave",
+      "price_per_metre": 13.95
+    },
+    {
+      "name": "Savannah",
+      "price_per_metre": 24.95
+    },
+    {
+      "name": "Savoy",
+      "price_per_metre": 17.29
+    },
+    {
+      "name": "Seasons Linen",
+      "price_per_metre": 31.95
+    },
+    {
+      "name": "Seasons Natural",
+      "price_per_metre": 31.95
+    },
+    {
+      "name": "Seattle",
+      "price_per_metre": 17.29
+    },
+    {
+      "name": "Seeds Linen",
+      "price_per_metre": 31.95
+    },
+    {
+      "name": "Shimmer",
+      "price_per_metre": 17.29
+    },
+    {
+      "name": "Soho",
+      "price_per_metre": 17.29
+    },
+    {
+      "name": "Spectrum",
+      "price_per_metre": 12.95
+    },
+    {
+      "name": "Spring",
+      "price_per_metre": 14.95
+    },
+    {
+      "name": "St-Clair Linen",
+      "price_per_metre": 31.95
+    },
+    {
+      "name": "St-Clair Natural",
+      "price_per_metre": 31.95
+    },
+    {
+      "name": "Stirling Linen",
+      "price_per_metre": 31.95
+    },
+    {
+      "name": "Stirling Natural",
+      "price_per_metre": 31.95
+    },
+    {
+      "name": "Stokes Linen",
+      "price_per_metre": 31.95
+    },
+    {
+      "name": "Storm",
+      "price_per_metre": 17.95
+    },
+    {
+      "name": "Tivoli",
+      "price_per_metre": 17.29
+    },
+    {
+      "name": "Torquay",
+      "price_per_metre": 16.95
+    },
+    {
+      "name": "Tradewinds",
+      "price_per_metre": 21.95
+    },
+    {
+      "name": "Tribulation Linen",
+      "price_per_metre": 31.95
+    },
+    {
+      "name": "Tribulation Natural",
+      "price_per_metre": 31.95
+    },
+    {
+      "name": "Tropic",
+      "price_per_metre": 17.29
+    },
+    {
+      "name": "Tulip",
+      "price_per_metre": 24.95
+    },
+    {
+      "name": "Tuscan",
+      "price_per_metre": 17.29
+    },
+    {
+      "name": "Tweet",
+      "price_per_metre": 17.29
+    },
+    {
+      "name": "Vermont 320",
+      "price_per_metre": 18.95
+    },
+    {
+      "name": "Versailles",
+      "price_per_metre": 29.95
+    },
+    {
+      "name": "Vibe",
+      "price_per_metre": 31.95
+    },
+    {
+      "name": "Vivid",
+      "price_per_metre": 17.29
+    },
+    {
+      "name": "Wild",
+      "price_per_metre": 17.95
+    },
+    {
+      "name": "Zulu Softweave",
+      "price_per_metre": 17.95
+    }
+  ]
+}

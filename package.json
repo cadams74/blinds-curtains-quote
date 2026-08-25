@@ -1,0 +1,42 @@
+{
+  "name": "blinds-quoting-app",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "tsx src/db/migrate.ts",
+    "db:push": "drizzle-kit push",
+    "seed": "tsx src/db/seed.ts",
+    "seed:admin": "tsx src/db/seedAdmin.ts",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@react-pdf/renderer": "^4.6.1",
+    "bcryptjs": "^3.0.3",
+    "drizzle-orm": "^0.36.4",
+    "exceljs": "^4.4.0",
+    "next": "^15.5.23",
+    "next-auth": "^5.0.0-beta.32",
+    "pdfjs-dist": "^4.10.38",
+    "pg": "^8.13.1",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/node": "^22.10.2",
+    "@types/pg": "^8.11.10",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "drizzle-kit": "^0.28.1",
+    "pdf-lib": "^1.17.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}

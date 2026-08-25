@@ -1,0 +1,162 @@
+{
+  "Blind Quote": [
+    {
+      "range": "D3:D44",
+      "type": "list",
+      "formula": "BlindTypes"
+    },
+    {
+      "range": "M3:M44",
+      "type": "list",
+      "formula": "BlindFittings"
+    },
+    {
+      "range": "N3:N11 N17:N44",
+      "type": "list",
+      "formula": "ComponentColours"
+    },
+    {
+      "range": "X3:X44",
+      "type": "list",
+      "formula": "\"Y,D,N\""
+    },
+    {
+      "range": "I3:I44",
+      "type": "list",
+      "formula": "INDIRECT(D3 & \"ControlSides\")"
+    },
+    {
+      "range": "K3:K44",
+      "type": "list",
+      "formula": "INDIRECT(D3 & \"ChainLengths\")"
+    },
+    {
+      "range": "L3:L44",
+      "type": "list",
+      "formula": "INDIRECT(D3 & \"Links\")"
+    },
+    {
+      "range": "S3:S44",
+      "type": "list",
+      "formula": "INDIRECT(D3 & \"BaseStyles\")"
+    },
+    {
+      "range": "T3:T44",
+      "type": "list",
+      "formula": "INDIRECT(D3 & \"Rolls\")"
+    },
+    {
+      "range": "V3:V44",
+      "type": "list",
+      "formula": "INDIRECT(D3 & \"Cassettes\")"
+    },
+    {
+      "range": "W3:W44",
+      "type": "list",
+      "formula": "INDIRECT(D3 & \"Channels\")"
+    },
+    {
+      "range": "U3:U44",
+      "type": "list",
+      "formula": "INDIRECT(D3 & \"Brackets\")"
+    },
+    {
+      "range": "P3:P11 P17:P44",
+      "type": "list",
+      "formula": "INDIRECT(O3 & \"FabricNames\")"
+    },
+    {
+      "range": "O3:O11 O17:O44",
+      "type": "list",
+      "formula": "INDIRECT(D3 & \"Sources\")"
+    },
+    {
+      "range": "J3:J11 J17:J37 J40:J44",
+      "type": "list",
+      "formula": "IF($D3=\"Accessory\",BlindAccessoryNames,INDIRECT($D3 & \"ControlTypes\"))"
+    }
+  ],
+  "Curtain Quote": [
+    {
+      "range": "D3:D15 D17:D19 D21:D42",
+      "type": "list",
+      "formula": "Styles"
+    },
+    {
+      "range": "F3:F15 F17:F19 F21:F42",
+      "type": "list",
+      "formula": "Finish"
+    },
+    {
+      "range": "E3:E15 E17:E19 E21:E42",
+      "type": "list",
+      "formula": "\"U,L\""
+    },
+    {
+      "range": "I3:I42",
+      "type": "list",
+      "formula": "Manufacturers"
+    },
+    {
+      "range": "G3:G42",
+      "type": "list",
+      "formula": "Controls"
+    },
+    {
+      "range": "H3:H42",
+      "type": "list",
+      "formula": "Stacks"
+    },
+    {
+      "range": "O3:O42",
+      "type": "list",
+      "formula": "TrackColours"
+    },
+    {
+      "range": "U3:U42",
+      "type": "list",
+      "formula": "Layouts"
+    },
+    {
+      "range": "S3:S42",
+      "type": "list",
+      "formula": "Fittings"
+    },
+    {
+      "range": "AA3:AA42",
+      "type": "list",
+      "formula": "\"Y,D,N\""
+    },
+    {
+      "range": "T3:T42",
+      "type": "list",
+      "formula": "\"LW,RW,WW\""
+    },
+    {
+      "range": "AG3:AG42",
+      "type": "list",
+      "formula": "\"1,2 on Setpleat,3 on Setpleat,4 on Setpleat,Spike @ 1,Spike @ 2,Spike @ 3,Spike @ 4,USpike\""
+    },
+    {
+      "range": "K3:K42",
+      "type": "list",
+      "formula": "INDIRECT(SUBSTITUTE(I3,\" \",\"\"))"
+    },
+    {
+      "range": "J3:J42",
+      "type": "list",
+      "formula": "INDIRECT(SUBSTITUTE(I3,\" \",\"\")&\"Favs\")"
+    },
+    {
+      "range": "N3:N42",
+      "type": "list",
+      "formula": "IF($D3=\"Accessory\",AccessoryNames,Tracks)"
+    },
+    {
+      "range": "AF3:AF42",
+      "type": "list",
+      "formula": "\"Single,Single Motor,Dual, Dual Motor, On Dual Motor, On Dual\""
+    }
+  ],
+  "Misc Quote": []
+}

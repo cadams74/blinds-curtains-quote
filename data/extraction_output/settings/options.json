@@ -1,0 +1,102 @@
+[
+  {
+    "label": "QUOTE CHECKS REQUIRED",
+    "value": null
+  },
+  {
+    "label": "Is the quote cleared for issuing",
+    "value": "Yes"
+  },
+  {
+    "label": "Have you assigned the required Hooks?",
+    "value": "Yes"
+  },
+  {
+    "label": "Have you checked the fullness settings?",
+    "value": "Yes"
+  },
+  {
+    "label": "Have you checked that discount is applied?",
+    "value": "Yes"
+  },
+  {
+    "label": "Have you checked price overrides?",
+    "value": "Yes"
+  },
+  {
+    "label": "Is a check measure required for everything?",
+    "value": "Yes"
+  },
+  {
+    "label": "QUOTE DETAILS AND SETTINGS",
+    "value": null
+  },
+  {
+    "label": "Number of front pages for the quote",
+    "value": 3
+  },
+  {
+    "label": "Curtains are included in the quote",
+    "value": "Yes"
+  },
+  {
+    "label": "Blinds are included in the quote",
+    "value": "Yes"
+  },
+  {
+    "label": "Miscellaneous items are included in the quote",
+    "value": "Yes"
+  },
+  {
+    "label": "The quote number is",
+    "value": "12254 - Basso, Krista & Carl"
+  },
+  {
+    "label": "CUSTOMER DETAILS - OTHER",
+    "value": null
+  },
+  {
+    "label": "Where did the customer hear about us?",
+    "value": null
+  },
+  {
+    "label": "OUTPUT SELECTIONS",
+    "value": null
+  },
+  {
+    "label": "Customer Quote Documentation",
+    "value": null
+  },
+  {
+    "label": "Full Quote Documentation",
+    "value": null
+  },
+  {
+    "label": "Curtain Making Sheet",
+    "value": null
+  },
+  {
+    "label": "Curtain Installation Sheet",
+    "value": null
+  },
+  {
+    "label": "Blind Installation Sheet",
+    "value": null
+  },
+  {
+    "label": "Track Order Form",
+    "value": null
+  },
+  {
+    "label": "Roller Order Form",
+    "value": null
+  },
+  {
+    "label": "Venetian Order Form",
+    "value": null
+  },
+  {
+    "label": "Roman Order Form",
+    "value": null
+  }
+]

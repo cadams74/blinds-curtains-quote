@@ -1,0 +1,550 @@
+{
+  "supplier": "CP",
+  "fabric_count": 136,
+  "fabrics": [
+    {
+      "name": "Akoya*",
+      "price_per_metre": 57
+    },
+    {
+      "name": "Amanda",
+      "price_per_metre": 21
+    },
+    {
+      "name": "Amara",
+      "price_per_metre": 27
+    },
+    {
+      "name": "Anise*",
+      "price_per_metre": 31
+    },
+    {
+      "name": "Arcadia",
+      "price_per_metre": 42
+    },
+    {
+      "name": "Ashburton",
+      "price_per_metre": 42
+    },
+    {
+      "name": "Ashridge",
+      "price_per_metre": 26
+    },
+    {
+      "name": "Aspen",
+      "price_per_metre": 70
+    },
+    {
+      "name": "Athens",
+      "price_per_metre": 29
+    },
+    {
+      "name": "Athina",
+      "price_per_metre": 30
+    },
+    {
+      "name": "Barrow Creek*",
+      "price_per_metre": 40
+    },
+    {
+      "name": "Beaumonde",
+      "price_per_metre": 55
+    },
+    {
+      "name": "Benares*",
+      "price_per_metre": 40
+    },
+    {
+      "name": "Berkshire",
+      "price_per_metre": 27.5
+    },
+    {
+      "name": "Beverly Hills*",
+      "price_per_metre": 17
+    },
+    {
+      "name": "Boyd",
+      "price_per_metre": 32
+    },
+    {
+      "name": "Brackwell",
+      "price_per_metre": 27.5
+    },
+    {
+      "name": "Brompton",
+      "price_per_metre": 26
+    },
+    {
+      "name": "Bronte",
+      "price_per_metre": 29
+    },
+    {
+      "name": "Brookhaven",
+      "price_per_metre": 30
+    },
+    {
+      "name": "Brussels",
+      "price_per_metre": 24
+    },
+    {
+      "name": "Brussels Wide*",
+      "price_per_metre": 47
+    },
+    {
+      "name": "Butler",
+      "price_per_metre": 21.5
+    },
+    {
+      "name": "Calle",
+      "price_per_metre": 25.5
+    },
+    {
+      "name": "Callisto 3P",
+      "price_per_metre": 40
+    },
+    {
+      "name": "Camarillo",
+      "price_per_metre": 37
+    },
+    {
+      "name": "Camden",
+      "price_per_metre": 27
+    },
+    {
+      "name": "Canaria",
+      "price_per_metre": 55
+    },
+    {
+      "name": "Capri",
+      "price_per_metre": 27
+    },
+    {
+      "name": "Caracas*",
+      "price_per_metre": 33
+    },
+    {
+      "name": "Carter",
+      "price_per_metre": 20
+    },
+    {
+      "name": "Casa",
+      "price_per_metre": 25
+    },
+    {
+      "name": "Catalina 4P*",
+      "price_per_metre": 21.5
+    },
+    {
+      "name": "Clarence",
+      "price_per_metre": 12
+    },
+    {
+      "name": "Cooper",
+      "price_per_metre": 22
+    },
+    {
+      "name": "Cornelli Milano",
+      "price_per_metre": 17
+    },
+    {
+      "name": "Cornelli Napoli",
+      "price_per_metre": 20
+    },
+    {
+      "name": "Cornelli Rhodes",
+      "price_per_metre": 17
+    },
+    {
+      "name": "Cornelli Turin",
+      "price_per_metre": 20
+    },
+    {
+      "name": "Cosmo",
+      "price_per_metre": 24
+    },
+    {
+      "name": "Cromwell",
+      "price_per_metre": 26
+    },
+    {
+      "name": "Daintree",
+      "price_per_metre": 25.5
+    },
+    {
+      "name": "Dash",
+      "price_per_metre": 37
+    },
+    {
+      "name": "Delany",
+      "price_per_metre": 30
+    },
+    {
+      "name": "Delray",
+      "price_per_metre": 34
+    },
+    {
+      "name": "Drake",
+      "price_per_metre": 18.5
+    },
+    {
+      "name": "Eco Line",
+      "price_per_metre": 23
+    },
+    {
+      "name": "Edo",
+      "price_per_metre": 56
+    },
+    {
+      "name": "Estoria*",
+      "price_per_metre": 26.5
+    },
+    {
+      "name": "Etoile",
+      "price_per_metre": 17
+    },
+    {
+      "name": "Eton",
+      "price_per_metre": 24
+    },
+    {
+      "name": "Federation",
+      "price_per_metre": 26
+    },
+    {
+      "name": "Fenwick",
+      "price_per_metre": 48
+    },
+    {
+      "name": "Ferrara",
+      "price_per_metre": 39.5
+    },
+    {
+      "name": "Flaxton",
+      "price_per_metre": 36
+    },
+    {
+      "name": "Floria",
+      "price_per_metre": 45
+    },
+    {
+      "name": "Florida",
+      "price_per_metre": 34
+    },
+    {
+      "name": "Gemini",
+      "price_per_metre": 47
+    },
+    {
+      "name": "Gemona *",
+      "price_per_metre": 61
+    },
+    {
+      "name": "Grandiflora",
+      "price_per_metre": 45
+    },
+    {
+      "name": "Hampton Bay",
+      "price_per_metre": 33
+    },
+    {
+      "name": "Hargrave",
+      "price_per_metre": 19.95
+    },
+    {
+      "name": "Harper",
+      "price_per_metre": 51.5
+    },
+    {
+      "name": "Hempstead",
+      "price_per_metre": 30
+    },
+    {
+      "name": "Hertfordshire",
+      "price_per_metre": 26
+    },
+    {
+      "name": "Hinterland",
+      "price_per_metre": 25.5
+    },
+    {
+      "name": "Jardin",
+      "price_per_metre": 28.5
+    },
+    {
+      "name": "Joe",
+      "price_per_metre": 50.5
+    },
+    {
+      "name": "Jordan",
+      "price_per_metre": 16
+    },
+    {
+      "name": "Karo",
+      "price_per_metre": 55
+    },
+    {
+      "name": "Karratha",
+      "price_per_metre": 37.5
+    },
+    {
+      "name": "Kendrick",
+      "price_per_metre": 40
+    },
+    {
+      "name": "Kiev",
+      "price_per_metre": 36
+    },
+    {
+      "name": "Kokomo",
+      "price_per_metre": 48
+    },
+    {
+      "name": "La Palma",
+      "price_per_metre": 36
+    },
+    {
+      "name": "Lambeth",
+      "price_per_metre": 27.5
+    },
+    {
+      "name": "Lansdowne",
+      "price_per_metre": 25
+    },
+    {
+      "name": "Lima",
+      "price_per_metre": 17
+    },
+    {
+      "name": "Long Island",
+      "price_per_metre": 33
+    },
+    {
+      "name": "Madeleine Sheer",
+      "price_per_metre": 29.5
+    },
+    {
+      "name": "Marlowe",
+      "price_per_metre": 29.5
+    },
+    {
+      "name": "Marlowe Stripe",
+      "price_per_metre": 29.5
+    },
+    {
+      "name": "Matisse B/O",
+      "price_per_metre": 22.5
+    },
+    {
+      "name": "Minorca",
+      "price_per_metre": 56
+    },
+    {
+      "name": "Mirage",
+      "price_per_metre": 12.95
+    },
+    {
+      "name": "Miramar",
+      "price_per_metre": 26
+    },
+    {
+      "name": "Miramar Garden",
+      "price_per_metre": 26
+    },
+    {
+      "name": "Modena*",
+      "price_per_metre": 36
+    },
+    {
+      "name": "Montego",
+      "price_per_metre": 45
+    },
+    {
+      "name": "Monterey",
+      "price_per_metre": 39
+    },
+    {
+      "name": "Napier",
+      "price_per_metre": 40
+    },
+    {
+      "name": "Olena",
+      "price_per_metre": 31
+    },
+    {
+      "name": "Olivia*",
+      "price_per_metre": 20
+    },
+    {
+      "name": "Orion",
+      "price_per_metre": 17.5
+    },
+    {
+      "name": "Orion FR",
+      "price_per_metre": 23
+    },
+    {
+      "name": "Paddington",
+      "price_per_metre": 27
+    },
+    {
+      "name": "Parisi",
+      "price_per_metre": 52
+    },
+    {
+      "name": "Pilbara",
+      "price_per_metre": 37.5
+    },
+    {
+      "name": "Provence",
+      "price_per_metre": 49
+    },
+    {
+      "name": "Regents Park",
+      "price_per_metre": 26
+    },
+    {
+      "name": "Roebourne",
+      "price_per_metre": 37.5
+    },
+    {
+      "name": "Roof Garden",
+      "price_per_metre": 37
+    },
+    {
+      "name": "Sable",
+      "price_per_metre": 17
+    },
+    {
+      "name": "Sakura",
+      "price_per_metre": 31.5
+    },
+    {
+      "name": "Santa Maria",
+      "price_per_metre": 37
+    },
+    {
+      "name": "Santana",
+      "price_per_metre": 35
+    },
+    {
+      "name": "Sarasota",
+      "price_per_metre": 62
+    },
+    {
+      "name": "Seraphina",
+      "price_per_metre": 53
+    },
+    {
+      "name": "Silverado*",
+      "price_per_metre": 38
+    },
+    {
+      "name": "Softdrape Plus",
+      "price_per_metre": 12
+    },
+    {
+      "name": "Softdrape Plus",
+      "price_per_metre": 24
+    },
+    {
+      "name": "Solaris*",
+      "price_per_metre": 35
+    },
+    {
+      "name": "Southhampton",
+      "price_per_metre": 30
+    },
+    {
+      "name": "Southhampton Stripe",
+      "price_per_metre": 30
+    },
+    {
+      "name": "Southport",
+      "price_per_metre": 33
+    },
+    {
+      "name": "Springbrook",
+      "price_per_metre": 25.5
+    },
+    {
+      "name": "Sylvan V2",
+      "price_per_metre": 26
+    },
+    {
+      "name": "Symphony",
+      "price_per_metre": 35
+    },
+    {
+      "name": "Tavis",
+      "price_per_metre": 28
+    },
+    {
+      "name": "Tenerife",
+      "price_per_metre": 59
+    },
+    {
+      "name": "Tennant Creek",
+      "price_per_metre": 40
+    },
+    {
+      "name": "Topanga",
+      "price_per_metre": 37
+    },
+    {
+      "name": "Totteridge",
+      "price_per_metre": 26
+    },
+    {
+      "name": "Toulouse",
+      "price_per_metre": 53
+    },
+    {
+      "name": "Tulsehill",
+      "price_per_metre": 27.5
+    },
+    {
+      "name": "Tumbridge Wells",
+      "price_per_metre": 26
+    },
+    {
+      "name": "Uluru*",
+      "price_per_metre": 40
+    },
+    {
+      "name": "Valencia",
+      "price_per_metre": 28
+    },
+    {
+      "name": "Ventura",
+      "price_per_metre": 37
+    },
+    {
+      "name": "Verdure",
+      "price_per_metre": 49.5
+    },
+    {
+      "name": "Vichy",
+      "price_per_metre": 29
+    },
+    {
+      "name": "Vida*",
+      "price_per_metre": 57
+    },
+    {
+      "name": "Westhampton",
+      "price_per_metre": 33
+    },
+    {
+      "name": "Windsor",
+      "price_per_metre": 27.5
+    },
+    {
+      "name": "Wycliffe",
+      "price_per_metre": 40
+    },
+    {
+      "name": "Xenia*",
+      "price_per_metre": 56
+    }
+  ]
+}

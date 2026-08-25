@@ -1,0 +1,1531 @@
+{
+  "source_sheet": "Blind_Settings",
+  "count": 63,
+  "ranges": {
+    "BlindFittings": [
+      "Face Alum",
+      "Face Arch",
+      "Face Brick",
+      "Face Con",
+      "Face Gyp",
+      "Face Tile",
+      "Face Tim",
+      "Rev Alum",
+      "Rev Porc",
+      "Rev Steel",
+      "Rev Tiles",
+      "Rev Tim",
+      "Top Con",
+      "Top Gyp",
+      "Top Tim",
+      "Top Rec",
+      "See note"
+    ],
+    "BlindSources": [
+      "Blindware",
+      "Four_Families",
+      "Hunter_Douglas",
+      "Mermet",
+      "Shaw",
+      "Uniline",
+      "Wilson",
+      "Texstyle",
+      "Louvolite",
+      "Venetian",
+      "Verishade",
+      "Honeycomb",
+      "Vertical"
+    ],
+    "BlindTypes": [
+      "Roller",
+      "Panel",
+      "Venetian",
+      "Vertical",
+      "Roman",
+      "Honeycomb",
+      "Verishade",
+      "Accessory"
+    ],
+    "BlindwareFabricNames": [
+      "Picturesque Screen 4303",
+      "Picturesque Screen 4505",
+      "Signum (Non Metallic)",
+      "Signum Blockout",
+      "Signum Metallic",
+      "Sunbloc"
+    ],
+    "BlindwareFabricPrices": [
+      [
+        "Picturesque Screen 4303",
+        2
+      ],
+      [
+        "Picturesque Screen 4505",
+        2
+      ],
+      [
+        "Signum (Non Metallic)",
+        6
+      ],
+      [
+        "Signum Blockout",
+        7
+      ],
+      [
+        "Signum Metallic",
+        8
+      ],
+      [
+        "Sunbloc",
+        3
+      ]
+    ],
+    "ComponentColours": [
+      "White",
+      "Cream",
+      "Grey",
+      "Black"
+    ],
+    "Four_FamiliesFabricNames": [
+      "Bauhaus",
+      "Matka Blockout",
+      "Milford B/Out",
+      "Resene B/Out   ",
+      "Southport",
+      "St Lucia",
+      "Tasman B/Out",
+      "Tasman L/Filtering"
+    ],
+    "Four_FamiliesFabricPrices": [
+      [
+        "Bauhaus",
+        2
+      ],
+      [
+        "Matka Blockout",
+        2
+      ],
+      [
+        "Milford B/Out",
+        3
+      ],
+      [
+        "Resene B/Out   ",
+        1
+      ],
+      [
+        "Southport",
+        2
+      ],
+      [
+        "St Lucia",
+        2
+      ],
+      [
+        "Tasman B/Out",
+        2
+      ],
+      [
+        "Tasman L/Filtering",
+        2
+      ]
+    ],
+    "HoneycombControlSides": [
+      "Left",
+      "Right"
+    ],
+    "HoneycombControlTypes": [
+      "Classic",
+      "Easy_Rise",
+      "Cordless"
+    ],
+    "HoneycombFabricNames": [
+      "Harlem TL",
+      "Harlem BO",
+      "Clarity Sheer"
+    ],
+    "HoneycombFabricPrices": [
+      [
+        "Harlem TL",
+        1
+      ],
+      [
+        "Harlem BO",
+        2
+      ],
+      [
+        "Clarity Sheer",
+        3
+      ]
+    ],
+    "HoneycombSources": "Honeycomb",
+    "Hunter_DouglasFabricNames": [
+      "E Screen 6%",
+      "E Screen 7510",
+      "E Screen Chrome ",
+      "Kenross B/Out",
+      "Kenross Translucent",
+      "M-Screen 8505 ",
+      "M-Screen Deco",
+      "Scarborough B/Out",
+      "Scarborough Translucent",
+      "Willandra Blackout",
+      "Willandra Translucent"
+    ],
+    "Hunter_DouglasFabricPrices": [
+      [
+        "E Screen 6%",
+        6
+      ],
+      [
+        "E Screen 7510",
+        6
+      ],
+      [
+        "E Screen Chrome ",
+        8
+      ],
+      [
+        "Kenross B/Out",
+        5
+      ],
+      [
+        "Kenross Translucent",
+        5
+      ],
+      [
+        "M-Screen 8505 ",
+        5
+      ],
+      [
+        "M-Screen Deco",
+        6
+      ],
+      [
+        "Scarborough B/Out",
+        5
+      ],
+      [
+        "Scarborough Translucent",
+        4
+      ],
+      [
+        "Willandra Blackout",
+        5
+      ],
+      [
+        "Willandra Translucent",
+        5
+      ]
+    ],
+    "LouvoliteFabricNames": [
+      "Abc",
+      "Acacia B/O",
+      "Argent B/O",
+      "Arlo",
+      "Aztec",
+      "Bayside B/O",
+      "Birdsong",
+      "Boleyn B/O",
+      "Carnival  (New Colours)",
+      "Carnival B/O (New Colours)",
+      "Chatsworth",
+      "Cherry Blossom B/O",
+      "Cheviot ",
+      "Cheviot B/O",
+      "Chrysanthemum B/O",
+      "Collina B/O",
+      "Como ",
+      "Cosmic Dream B/O",
+      "Crush",
+      "Denim B/O",
+      "Dinosaurs B/O",
+      "Flores",
+      "Grove",
+      "Hampton",
+      "Ikat",
+      "Iona",
+      "Iona B/0",
+      "Kenzo",
+      "Lily",
+      "Magnolia B/O (New Colours)",
+      "Marley B/O",
+      "Matrix B/O",
+      "Monterey",
+      "Night Night B/O",
+      "Night Safari",
+      "Ophelia B/O",
+      "Oslo",
+      "Oxley",
+      "Oxley B/O",
+      "Planetarium B/O",
+      "Shot Silk B/O",
+      "Strand B/O",
+      "Swedish Birch",
+      "Sweet Pea",
+      "Valencia B/O",
+      "Willow B/O (New Colours)",
+      "Windsor",
+      "Zen B/O"
+    ],
+    "LouvoliteFabricPrices": [
+      [
+        "Abc",
+        4
+      ],
+      [
+        "Acacia B/O",
+        4
+      ],
+      [
+        "Argent B/O",
+        6
+      ],
+      [
+        "Arlo",
+        3
+      ],
+      [
+        "Aztec",
+        3
+      ],
+      [
+        "Bayside B/O",
+        4
+      ],
+      [
+        "Birdsong",
+        3
+      ],
+      [
+        "Boleyn B/O",
+        4
+      ],
+      [
+        "Carnival  (New Colours)",
+        4
+      ],
+      [
+        "Carnival B/O (New Colours)",
+        5
+      ],
+      [
+        "Chatsworth",
+        4
+      ],
+      [
+        "Cherry Blossom B/O",
+        8
+      ],
+      [
+        "Cheviot ",
+        3
+      ],
+      [
+        "Cheviot B/O",
+        4
+      ],
+      [
+        "Chrysanthemum B/O",
+        4
+      ],
+      [
+        "Collina B/O",
+        8
+      ],
+      [
+        "Como ",
+        3
+      ],
+      [
+        "Cosmic Dream B/O",
+        4
+      ],
+      [
+        "Crush",
+        6
+      ],
+      [
+        "Denim B/O",
+        4
+      ],
+      [
+        "Dinosaurs B/O",
+        4
+      ],
+      [
+        "Flores",
+        3
+      ],
+      [
+        "Grove",
+        3
+      ],
+      [
+        "Hampton",
+        5
+      ],
+      [
+        "Ikat",
+        3
+      ],
+      [
+        "Iona",
+        3
+      ],
+      [
+        "Iona B/0",
+        4
+      ],
+      [
+        "Kenzo",
+        3
+      ],
+      [
+        "Lily",
+        3
+      ],
+      [
+        "Magnolia B/O (New Colours)",
+        8
+      ],
+      [
+        "Marley B/O",
+        4
+      ],
+      [
+        "Matrix B/O",
+        5
+      ],
+      [
+        "Monterey",
+        4
+      ],
+      [
+        "Night Night B/O",
+        6
+      ],
+      [
+        "Night Safari",
+        5
+      ],
+      [
+        "Ophelia B/O",
+        4
+      ],
+      [
+        "Oslo",
+        4
+      ],
+      [
+        "Oxley",
+        3
+      ],
+      [
+        "Oxley B/O",
+        4
+      ],
+      [
+        "Planetarium B/O",
+        4
+      ],
+      [
+        "Shot Silk B/O",
+        8
+      ],
+      [
+        "Strand B/O",
+        6
+      ],
+      [
+        "Swedish Birch",
+        3
+      ],
+      [
+        "Sweet Pea",
+        3
+      ],
+      [
+        "Valencia B/O",
+        6
+      ],
+      [
+        "Willow B/O (New Colours)",
+        4
+      ],
+      [
+        "Windsor",
+        5
+      ],
+      [
+        "Zen B/O",
+        4
+      ]
+    ],
+    "MermetFabricNames": [
+      "E Screen 6%",
+      "E Screen 7510",
+      "E Screen Chrome ",
+      "Kenross B/Out",
+      "Kenross Translucent",
+      "M-Screen 8505 Transparent",
+      "M-Screen Deco",
+      "Scarborough B/Out",
+      "Scarborough Translucent",
+      "Willandra Blackout",
+      "Willandra Translucent"
+    ],
+    "MermetFabricPrices": [
+      [
+        "E Screen 6%",
+        4
+      ],
+      [
+        "E Screen 7510",
+        4
+      ],
+      [
+        "E Screen Chrome ",
+        8
+      ],
+      [
+        "Kenross B/Out",
+        4
+      ],
+      [
+        "Kenross Translucent",
+        3
+      ],
+      [
+        "M-Screen 8505 Transparent",
+        3
+      ],
+      [
+        "M-Screen Deco",
+        5
+      ],
+      [
+        "Scarborough B/Out",
+        4
+      ],
+      [
+        "Scarborough Translucent",
+        3
+      ],
+      [
+        "Willandra Blackout",
+        4
+      ],
+      [
+        "Willandra Translucent",
+        3
+      ]
+    ],
+    "PanelBaseStyles": [
+      "Teardrop",
+      "D-30 Plain",
+      "D-30 Bush",
+      "Oval Anodised",
+      "Oval Dune",
+      "Oval Barley",
+      "Oval Bronze Pearl",
+      "Oval Sandstone",
+      "Oval Black",
+      "Oval Pure White",
+      "Flat White",
+      "Flat Sandstone",
+      "Flat Black",
+      "Flat Anodised"
+    ],
+    "PanelBrackets": [
+      "2 Track 2 Panel",
+      "3 Track 3 Panel",
+      "4 Track 4 Panel",
+      "5 Track 5 Panel",
+      "6 Track 6 Panel",
+      "3 Track 4 Panel",
+      "4 Track 6 Panel",
+      "5 Track 8 Panel",
+      "6 Track 12 Panel"
+    ],
+    "PanelControlSides": [
+      "Stack Left",
+      "Stack Right",
+      "Centre Open"
+    ],
+    "PanelControlTypes": "Wand",
+    "PanelSources": [
+      "Blindware",
+      "Four_Families",
+      "Hunter_Douglas",
+      "Mermet",
+      "Shaw",
+      "Uniline",
+      "Wilson",
+      "Texstyle",
+      "Louvolite"
+    ],
+    "RollerBaseStyles": [
+      "Teardrop",
+      "D-30 Plain",
+      "D-30 Bush",
+      "Oval Anodised",
+      "Oval Dune",
+      "Oval Barley",
+      "Oval Bronze Pearl",
+      "Oval Sandstone",
+      "Oval Black",
+      "Oval Pure White",
+      "Flat White",
+      "Flat Sandstone",
+      "Flat Black",
+      "Flat Anodised"
+    ],
+    "RollerBrackets": [
+      "Single",
+      "Dual Compact",
+      "On Dual",
+      "Long Standard",
+      "Long Motorised",
+      "Single Motorised",
+      "Single W/Cover"
+    ],
+    "RollerCassettes": [
+      "Round",
+      "Square"
+    ],
+    "RollerChainLengths": [
+      0.4,
+      0.45,
+      0.5,
+      0.55,
+      0.6,
+      0.65,
+      0.7,
+      0.75,
+      0.8,
+      0.85,
+      0.9,
+      0.95,
+      1,
+      1.25,
+      1.5,
+      1.75,
+      2,
+      2.25,
+      2.5,
+      2.75,
+      3,
+      3.25,
+      3.5,
+      3.75,
+      4,
+      4.25,
+      4.5,
+      4.75,
+      5
+    ],
+    "RollerChannels": [
+      "Yes",
+      "No"
+    ],
+    "RollerControlPrices": [
+      [
+        "Stain Steel",
+        0
+      ],
+      [
+        "Black Plastic",
+        0
+      ],
+      [
+        "White Plastic",
+        0
+      ],
+      [
+        "Grey Plastic",
+        0
+      ],
+      [
+        "Cream Plastic",
+        0
+      ],
+      [
+        "Sonesse RTS 3/30 (M)",
+        550
+      ],
+      [
+        "Sonesse Home Automation 3/30 (M)",
+        590
+      ],
+      [
+        "Altus RTS 3/30 (M)",
+        450
+      ],
+      [
+        "Sonesse 6/20 Home Automation (Cbus) (M)",
+        640
+      ],
+      [
+        "Somfy Sonesse RTS 6/20 (M)",
+        640
+      ],
+      [
+        "Somfy 40mm Sonesse RTS 6/20 (M)",
+        660
+      ],
+      [
+        "Somfy Wirefree 2nm RTS (M)",
+        490
+      ],
+      [
+        "Acmeda Motor ARC (M)",
+        350
+      ],
+      [
+        "Acmeda Wirefree 1.1Nm (M)",
+        450
+      ],
+      [
+        "Acmeda Wirefree 2Nm (M)",
+        490
+      ],
+      [
+        "Acmeda Wirefree 3Nm (M)",
+        550
+      ]
+    ],
+    "RollerControlSides": [
+      "Left",
+      "Right"
+    ],
+    "RollerControlTypes": [
+      "Stain Steel",
+      "Black Plastic",
+      "White Plastic",
+      "Grey Plastic",
+      "Cream Plastic",
+      "Sonesse RTS 3/30 (M)",
+      "Sonesse Home Automation 3/30 (M)",
+      "Altus RTS 3/30 (M)",
+      "Sonesse 6/20 Home Automation (Cbus) (M)",
+      "Somfy Sonesse RTS 6/20 (M)",
+      "Somfy 40mm Sonesse RTS 6/20 (M)",
+      "Somfy Wirefree 2nm RTS (M)",
+      "Acmeda Motor ARC (M)",
+      "Acmeda Wirefree 1.1Nm (M)",
+      "Acmeda Wirefree 2Nm (M)",
+      "Acmeda Wirefree 3Nm (M)"
+    ],
+    "RollerFabricNames": [
+      "BlindwareFabrics",
+      "Picturesque Screen 4303",
+      "Picturesque Screen 4505",
+      "Signum (Non Metallic)",
+      "Signum Blockout",
+      "Signum Metallic",
+      "Sunbloc",
+      null,
+      "FourFamiliesFabrics",
+      "Bauhaus",
+      "Matka Blockout",
+      "Milford B/Out",
+      "Resene B/Out   ",
+      "Southport",
+      "St Lucia",
+      "Tasman B/Out",
+      "Tasman L/Filtering",
+      null,
+      "HunterDouglasFabrics",
+      "E Screen 6%",
+      "E Screen 7510",
+      "E Screen Chrome ",
+      "Kenross B/Out",
+      "Kenross Translucent",
+      "M-Screen 8505 ",
+      "M-Screen Deco",
+      "Scarborough B/Out",
+      "Scarborough Translucent",
+      "Willandra Blackout",
+      "Willandra Translucent",
+      null,
+      "MermetFabrics",
+      "E Screen 6%",
+      "E Screen 7510",
+      "E Screen Chrome ",
+      "Kenross B/Out",
+      "Kenross Translucent",
+      "M-Screen 8505 Transparent",
+      "M-Screen Deco"
+    ],
+    "RollerFabricPrices": [
+      [
+        "BlindwareFabrics",
+        null
+      ],
+      [
+        "Picturesque Screen 4303",
+        2
+      ],
+      [
+        "Picturesque Screen 4505",
+        2
+      ],
+      [
+        "Signum (Non Metallic)",
+        6
+      ],
+      [
+        "Signum Blockout",
+        7
+      ],
+      [
+        "Signum Metallic",
+        8
+      ],
+      [
+        "Sunbloc",
+        3
+      ],
+      [
+        null,
+        null
+      ],
+      [
+        "FourFamiliesFabrics",
+        null
+      ],
+      [
+        "Bauhaus",
+        2
+      ],
+      [
+        "Matka Blockout",
+        2
+      ],
+      [
+        "Milford B/Out",
+        3
+      ],
+      [
+        "Resene B/Out   ",
+        1
+      ],
+      [
+        "Southport",
+        2
+      ],
+      [
+        "St Lucia",
+        2
+      ],
+      [
+        "Tasman B/Out",
+        2
+      ],
+      [
+        "Tasman L/Filtering",
+        2
+      ],
+      [
+        null,
+        null
+      ],
+      [
+        "HunterDouglasFabrics",
+        null
+      ],
+      [
+        "E Screen 6%",
+        6
+      ],
+      [
+        "E Screen 7510",
+        6
+      ],
+      [
+        "E Screen Chrome ",
+        8
+      ],
+      [
+        "Kenross B/Out",
+        5
+      ],
+      [
+        "Kenross Translucent",
+        5
+      ],
+      [
+        "M-Screen 8505 ",
+        5
+      ],
+      [
+        "M-Screen Deco",
+        6
+      ],
+      [
+        "Scarborough B/Out",
+        5
+      ],
+      [
+        "Scarborough Translucent",
+        4
+      ],
+      [
+        "Willandra Blackout",
+        5
+      ],
+      [
+        "Willandra Translucent",
+        5
+      ],
+      [
+        null,
+        null
+      ],
+      [
+        "MermetFabrics",
+        null
+      ],
+      [
+        "E Screen 6%",
+        4
+      ],
+      [
+        "E Screen 7510",
+        4
+      ],
+      [
+        "E Screen Chrome ",
+        8
+      ],
+      [
+        "Kenross B/Out",
+        4
+      ],
+      [
+        "Kenross Translucent",
+        3
+      ],
+      [
+        "M-Screen 8505 Transparent",
+        3
+      ],
+      [
+        "M-Screen Deco",
+        5
+      ]
+    ],
+    "RollerLinks": [
+      "Link A",
+      "Link B",
+      "Link C"
+    ],
+    "RollerRolls": [
+      "Front",
+      "Back"
+    ],
+    "RollerSources": [
+      "Blindware",
+      "Four_Families",
+      "Hunter_Douglas",
+      "Mermet",
+      "Shaw",
+      "Uniline",
+      "Wilson",
+      "Texstyle",
+      "Louvolite"
+    ],
+    "RomanControlSides": [
+      "Left",
+      "Right"
+    ],
+    "RomanControlTypes": [
+      "Chain",
+      "Cord",
+      "HD Cord",
+      "Motorised"
+    ],
+    "RomanSources": [
+      "Blindware",
+      "Four_Families",
+      "Hunter_Douglas",
+      "Mermet",
+      "Shaw",
+      "Uniline",
+      "Wilson",
+      "Texstyle",
+      "Louvolite"
+    ],
+    "ShawFabricNames": [
+      "Aventus Screen 3%, 5%, 10% ",
+      "Chatsworth B/Out",
+      "Chatsworth Light Filtering",
+      "Duo Block",
+      "Duo Light L/Filtering",
+      "Duo Screen 5%",
+      "Eco  4300 Screen ",
+      "Eco 4500 Screen",
+      "Eco 4510 Screen ",
+      "Enviro Vision",
+      "Icon Fr 3.2",
+      "Karma Blackout ",
+      "Le Reve B/Out ",
+      "Le Reve L/F",
+      "Linesque Blackout",
+      "Linesque Lightfiltering",
+      "Mantra B/Out ",
+      "Mantra L/F",
+      "Orora",
+      "Palm Beach B/Out",
+      "Palm Beach L/F",
+      "Skye Blockout",
+      "Skye Light Filtering ",
+      "Spectre Sheer ",
+      "Urban Shade - Blackout",
+      "Vibe Blackout"
+    ],
+    "ShawFabricPrices": [
+      [
+        "Aventus Screen 3%, 5%, 10% ",
+        1
+      ],
+      [
+        "Chatsworth B/Out",
+        3
+      ],
+      [
+        "Chatsworth Light Filtering",
+        2
+      ],
+      [
+        "Duo Block",
+        1
+      ],
+      [
+        "Duo Light L/Filtering",
+        1
+      ],
+      [
+        "Duo Screen 5%",
+        1
+      ],
+      [
+        "Eco  4300 Screen ",
+        2
+      ],
+      [
+        "Eco 4500 Screen",
+        2
+      ],
+      [
+        "Eco 4510 Screen ",
+        2
+      ],
+      [
+        "Enviro Vision",
+        5
+      ],
+      [
+        "Icon Fr 3.2",
+        3
+      ],
+      [
+        "Karma Blackout ",
+        2
+      ],
+      [
+        "Le Reve B/Out ",
+        3
+      ],
+      [
+        "Le Reve L/F",
+        2
+      ],
+      [
+        "Linesque Blackout",
+        3
+      ],
+      [
+        "Linesque Lightfiltering",
+        2
+      ],
+      [
+        "Mantra B/Out ",
+        3
+      ],
+      [
+        "Mantra L/F",
+        2
+      ],
+      [
+        "Orora",
+        3
+      ],
+      [
+        "Palm Beach B/Out",
+        3
+      ],
+      [
+        "Palm Beach L/F",
+        2
+      ],
+      [
+        "Skye Blockout",
+        3
+      ],
+      [
+        "Skye Light Filtering ",
+        2
+      ],
+      [
+        "Spectre Sheer ",
+        3
+      ],
+      [
+        "Urban Shade - Blackout",
+        4
+      ],
+      [
+        "Vibe Blackout",
+        1
+      ]
+    ],
+    "TexstyleFabricNames": [
+      "Balmoral B/Out",
+      "Balmoral L/Filtering",
+      "Barbados",
+      "Dakota",
+      "Enviroshade (Non Metalised)",
+      "Enviroshade (Metallised)",
+      "Enviroblock",
+      "Gala B/Out",
+      "Jersey B/Out",
+      "Jersey L/Filtering",
+      "Kew B/Out",
+      "Kleenscreen",
+      "Metro Shade B/Out",
+      "Metro Shade L/F",
+      "One Screen",
+      "One Block",
+      "Sanctuary",
+      "Serengetti B/Out",
+      "Serengetti L/F",
+      "Tusk B/Out",
+      "Tusk L/F",
+      "Vivid Shade",
+      "Vivd Block"
+    ],
+    "TexstyleFabricPrices": [
+      [
+        "Balmoral B/Out",
+        4
+      ],
+      [
+        "Balmoral L/Filtering",
+        3
+      ],
+      [
+        "Barbados",
+        4
+      ],
+      [
+        "Dakota",
+        4
+      ],
+      [
+        "Enviroshade (Non Metalised)",
+        7
+      ],
+      [
+        "Enviroshade (Metallised)",
+        8
+      ],
+      [
+        "Enviroblock",
+        8
+      ],
+      [
+        "Gala B/Out",
+        4
+      ],
+      [
+        "Jersey B/Out",
+        3
+      ],
+      [
+        "Jersey L/Filtering",
+        2
+      ],
+      [
+        "Kew B/Out",
+        3
+      ],
+      [
+        "Kleenscreen",
+        2
+      ],
+      [
+        "Metro Shade B/Out",
+        3
+      ],
+      [
+        "Metro Shade L/F",
+        2
+      ],
+      [
+        "One Screen",
+        1
+      ],
+      [
+        "One Block",
+        1
+      ],
+      [
+        "Sanctuary",
+        3
+      ],
+      [
+        "Serengetti B/Out",
+        5
+      ],
+      [
+        "Serengetti L/F",
+        5
+      ],
+      [
+        "Tusk B/Out",
+        4
+      ],
+      [
+        "Tusk L/F",
+        3
+      ],
+      [
+        "Vivid Shade",
+        1
+      ],
+      [
+        "Vivd Block",
+        1
+      ]
+    ],
+    "UnilineFabricNames": [
+      "Belice B/Out",
+      "Belice Translucent",
+      "Dawn",
+      "Evolution",
+      "Manadaly Room Darkeneing  ",
+      "Miami B/Out",
+      "Palmero Sheer",
+      "Spectrum 3% Aluminised Screen",
+      "Sunset",
+      "Tapestry B/Out",
+      "Tapestry L/Filtering",
+      "Uniview Interior 2% /5%/10%"
+    ],
+    "UnilineFabricPrices": [
+      [
+        "Belice B/Out",
+        2
+      ],
+      [
+        "Belice Translucent",
+        1
+      ],
+      [
+        "Dawn",
+        1
+      ],
+      [
+        "Evolution",
+        1
+      ],
+      [
+        "Manadaly Room Darkeneing  ",
+        3
+      ],
+      [
+        "Miami B/Out",
+        2
+      ],
+      [
+        "Palmero Sheer",
+        1
+      ],
+      [
+        "Spectrum 3% Aluminised Screen",
+        6
+      ],
+      [
+        "Sunset",
+        1
+      ],
+      [
+        "Tapestry B/Out",
+        3
+      ],
+      [
+        "Tapestry L/Filtering",
+        2
+      ],
+      [
+        "Uniview Interior 2% /5%/10%",
+        1
+      ]
+    ],
+    "VenetianControlSides": [
+      "Left",
+      "Right"
+    ],
+    "VenetianControlTypes": "Cord",
+    "VenetianFabricNames": [
+      "Slimline",
+      "Rhapsody Slimline",
+      "Rhapsody Woodgrain",
+      "Rhapsody 16mm",
+      "Aluminium 50mm",
+      "Western Red Cedar",
+      "Paris Blanc",
+      "New York",
+      "Black Label",
+      "Tuscany"
+    ],
+    "VenetianFabricPrices": [
+      [
+        "Slimline",
+        1
+      ],
+      [
+        "Rhapsody Slimline",
+        2
+      ],
+      [
+        "Rhapsody Woodgrain",
+        3
+      ],
+      [
+        "Rhapsody 16mm",
+        4
+      ],
+      [
+        "Aluminium 50mm",
+        5
+      ],
+      [
+        "Western Red Cedar",
+        6
+      ],
+      [
+        "Paris Blanc",
+        7
+      ],
+      [
+        "New York",
+        8
+      ],
+      [
+        "Black Label",
+        8
+      ],
+      [
+        "Tuscany",
+        9
+      ]
+    ],
+    "VenetianSources": "Venetian",
+    "VerishadeControlSides": [
+      "Left",
+      "Right",
+      "CO"
+    ],
+    "VerishadeControlTypes": "Wand",
+    "VerishadeFabricNames": "Verishade",
+    "VerishadeFabricPrices": [
+      [
+        "Verishade",
+        1
+      ]
+    ],
+    "VerishadeSources": "Verishade",
+    "VerticalControlSides": [
+      "Stack Left",
+      "Stack Right",
+      "Centre Open"
+    ],
+    "VerticalControlTypes": [
+      "Wand",
+      "Chain Left",
+      "Chain Right"
+    ],
+    "VerticalFabricNames": [
+      "Vertical 127mm",
+      "Vertical 89mm"
+    ],
+    "VerticalFabricPrices": [
+      [
+        "Vertical 127mm",
+        1
+      ],
+      [
+        "Vertical 89mm",
+        2
+      ]
+    ],
+    "VerticalSources": "Vertical",
+    "WilsonFabricNames": [
+      "Aruba Sheer",
+      "Aspen B/Out",
+      "Barrier Reef B/Out ",
+      "Barrier Reef Translucent",
+      "Boston Ii Blockout",
+      "Boston Ii Uncoated",
+      "Broome Ii Blockout",
+      "Broome Ii Uncoated",
+      "Buxton B/Out",
+      "Concord Ii Blockout",
+      "Concord Ii Uncoated",
+      "Daintree B/Out ",
+      "Daintree Translucent",
+      "Husk Sheer ",
+      "Longreach B/Out ",
+      "Longreach Translucent",
+      "Mercury Ii  Uncoated",
+      "Mercury Ii Blockout",
+      "Noosa B/Out ",
+      "Noosa Translucent",
+      "Phoenix (10% Openess)",
+      "Sensory  Sheer",
+      "Sydney B/Out ",
+      "Sydney Translucent",
+      "Thredbo B/Out",
+      "Thredbo Translucent",
+      "Tuscany Ii Coated",
+      "Tuscany Ii Uncoated",
+      "Uluru B/Out ",
+      "Whitsundays (Sheer)"
+    ],
+    "WilsonFabricPrices": [
+      [
+        "Aruba Sheer",
+        3
+      ],
+      [
+        "Aspen B/Out",
+        3
+      ],
+      [
+        "Barrier Reef B/Out ",
+        3
+      ],
+      [
+        "Barrier Reef Translucent",
+        2
+      ],
+      [
+        "Boston Ii Blockout",
+        3
+      ],
+      [
+        "Boston Ii Uncoated",
+        2
+      ],
+      [
+        "Broome Ii Blockout",
+        3
+      ],
+      [
+        "Broome Ii Uncoated",
+        2
+      ],
+      [
+        "Buxton B/Out",
+        3
+      ],
+      [
+        "Concord Ii Blockout",
+        5
+      ],
+      [
+        "Concord Ii Uncoated",
+        4
+      ],
+      [
+        "Daintree B/Out ",
+        3
+      ],
+      [
+        "Daintree Translucent",
+        2
+      ],
+      [
+        "Husk Sheer ",
+        3
+      ],
+      [
+        "Longreach B/Out ",
+        3
+      ],
+      [
+        "Longreach Translucent",
+        2
+      ],
+      [
+        "Mercury Ii  Uncoated",
+        2
+      ],
+      [
+        "Mercury Ii Blockout",
+        3
+      ],
+      [
+        "Noosa B/Out ",
+        3
+      ],
+      [
+        "Noosa Translucent",
+        2
+      ],
+      [
+        "Phoenix (10% Openess)",
+        3
+      ],
+      [
+        "Sensory  Sheer",
+        3
+      ],
+      [
+        "Sydney B/Out ",
+        3
+      ],
+      [
+        "Sydney Translucent",
+        2
+      ],
+      [
+        "Thredbo B/Out",
+        3
+      ],
+      [
+        "Thredbo Translucent",
+        2
+      ],
+      [
+        "Tuscany Ii Coated",
+        3
+      ],
+      [
+        "Tuscany Ii Uncoated",
+        2
+      ],
+      [
+        "Uluru B/Out ",
+        3
+      ],
+      [
+        "Whitsundays (Sheer)",
+        3
+      ]
+    ]
+  }
+}

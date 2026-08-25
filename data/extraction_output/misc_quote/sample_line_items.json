@@ -1,0 +1,33 @@
+{
+  "note": "Real line items from the sample quote's Misc Quote sheet. No pricing formula exists for this sheet (verified above) -- these are manual-entry examples, not golden test fixtures for a calculation the way roller/curtain fixtures are.",
+  "line_items": [
+    {
+      "row": 3,
+      "description": "Assortment of remotes",
+      "additional_details": "2 x 2 Channel + 4 x 5 Channel + 1 x 16 Channel",
+      "price": 2200,
+      "install_time_minutes": null
+    },
+    {
+      "row": 4,
+      "description": "Unique to suply Molex Cables.",
+      "additional_details": "11 Leads for FF & SF collected 17/12/2025",
+      "price": "N/C",
+      "install_time_minutes": null
+    },
+    {
+      "row": 5,
+      "description": "Location of power leads",
+      "additional_details": "Floor plans highlighted and sent to Carl 17/12/2025",
+      "price": "N/C",
+      "install_time_minutes": null
+    },
+    {
+      "row": 6,
+      "description": "Clients' set of floor plans are at Unique - bay 13 as of 17/12/25",
+      "additional_details": null,
+      "price": null,
+      "install_time_minutes": null
+    }
+  ]
+}

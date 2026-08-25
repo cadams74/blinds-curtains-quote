@@ -1,0 +1,72 @@
+{
+  "suppliers": [
+    {
+      "name": "Zepel",
+      "slug": "zepel",
+      "fabric_count": 952,
+      "sheet_dimensions": "A1:E1172"
+    },
+    {
+      "name": "CP",
+      "slug": "cp",
+      "fabric_count": 136,
+      "sheet_dimensions": "A1:H166"
+    },
+    {
+      "name": "JamesDunlop",
+      "slug": "jamesdunlop",
+      "fabric_count": 1109,
+      "sheet_dimensions": "A1:E1111"
+    },
+    {
+      "name": "Warwick",
+      "slug": "warwick",
+      "fabric_count": 621,
+      "sheet_dimensions": "A1:E623"
+    },
+    {
+      "name": "Nettex",
+      "slug": "nettex",
+      "fabric_count": 105,
+      "sheet_dimensions": "A1:E107"
+    },
+    {
+      "name": "Wilson",
+      "slug": "wilson",
+      "fabric_count": 30,
+      "sheet_dimensions": "A1:E32"
+    },
+    {
+      "name": "MauriceKain",
+      "slug": "mauricekain",
+      "fabric_count": 157,
+      "sheet_dimensions": "A1:E159"
+    },
+    {
+      "name": "Filigree",
+      "slug": "filigree",
+      "fabric_count": 21,
+      "sheet_dimensions": "A1:E23"
+    },
+    {
+      "name": "Wortley",
+      "slug": "wortley",
+      "fabric_count": 4,
+      "sheet_dimensions": "A1:E6"
+    },
+    {
+      "name": "Gummerson",
+      "slug": "gummerson",
+      "fabric_count": 52,
+      "sheet_dimensions": "A1:E54"
+    },
+    {
+      "name": "Hoad",
+      "slug": "hoad",
+      "fabric_count": 126,
+      "sheet_dimensions": "A1:E128"
+    }
+  ],
+  "total_fabrics": 3313,
+  "note": "Per-supplier 'favourites' shortlists were dropped -- every supplier's list was placeholder test data, not real curated favourites (see module docstring)."
+}

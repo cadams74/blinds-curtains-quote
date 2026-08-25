@@ -1,0 +1,679 @@
+{
+  "note": "These are referenced by raw cell address (not named range) in the Curtain Quote AN3/Y3 formulas.",
+  "finish_make_height_adjustment_D9_E102": [
+    [
+      "  Standard",
+      -2.5
+    ],
+    [
+      "  Top Fix",
+      -1
+    ],
+    [
+      "  Face to Ceil",
+      -1.5
+    ],
+    [
+      " Brushing",
+      -0.5
+    ],
+    [
+      "Half Drop",
+      0
+    ],
+    [
+      "Pud  1cm",
+      0.5
+    ],
+    [
+      "Pud  2cm",
+      1.5
+    ],
+    [
+      "Pud  3cm",
+      2.5
+    ],
+    [
+      "Pud  4cm",
+      3.5
+    ],
+    [
+      "Pud  5cm",
+      4.5
+    ],
+    [
+      "Pud  6cm",
+      5.5
+    ],
+    [
+      "Pud  7cm",
+      6.5
+    ],
+    [
+      "Pud  8cm",
+      7.5
+    ],
+    [
+      "Pud  9cm",
+      8.5
+    ],
+    [
+      "Pud 10cm",
+      9.5
+    ],
+    [
+      "Pud 15cm",
+      14.5
+    ],
+    [
+      "Pud 20cm",
+      19.5
+    ],
+    [
+      "TF Brushing",
+      0
+    ],
+    [
+      "TF Pud  1cm",
+      1
+    ],
+    [
+      "TF Pud  2cm",
+      2
+    ],
+    [
+      "TF Pud  3cm",
+      3
+    ],
+    [
+      "TF Pud  4cm",
+      4
+    ],
+    [
+      "TF Pud  5cm",
+      5
+    ],
+    [
+      "TF Pud  6cm",
+      6
+    ],
+    [
+      "TF Pud  7cm",
+      7
+    ],
+    [
+      "TF Pud  8cm",
+      8
+    ],
+    [
+      "TF Pud  9cm",
+      9
+    ],
+    [
+      "TF Pud 10cm",
+      10
+    ],
+    [
+      "TF Pud 15cm",
+      15
+    ],
+    [
+      "TF Pud 20cm",
+      20
+    ]
+  ],
+  "track_make_height_adjustment_H9_I126": [
+    [
+      "  TW Series 74 Venice",
+      -3.5
+    ],
+    [
+      "  TW Series 74 Venice S wave",
+      -3.5
+    ],
+    [
+      "  Classic",
+      -3.5
+    ],
+    [
+      "  Slimline",
+      -3.5
+    ],
+    [
+      "  Slimline Plus",
+      -5.5
+    ],
+    [
+      " Decor",
+      -5.5
+    ],
+    [
+      " Diva",
+      -7
+    ],
+    [
+      "SlimlineOnPlus",
+      -5.5
+    ],
+    [
+      "SlimlineOnDiva",
+      -7
+    ],
+    [
+      "SlimlineOnDecor",
+      -5.5
+    ],
+    [
+      " Existing Track",
+      -3.5
+    ],
+    [
+      "Coralea Princess",
+      0
+    ],
+    [
+      "Coralea Simplicity",
+      0
+    ],
+    [
+      "TW K Series 35",
+      0
+    ],
+    [
+      "TW K Series 600",
+      0
+    ],
+    [
+      "TW K Series 600 S wave",
+      0
+    ],
+    [
+      "TW K Series smoothline",
+      0
+    ],
+    [
+      "TW K Series smoothline S wave",
+      0
+    ],
+    [
+      "TW Motor Acmeda ",
+      -3.5
+    ],
+    [
+      "TW Motor Acmeda S wave",
+      -4.5
+    ],
+    [
+      "TW Motor Acmeda Battery",
+      -3.5
+    ],
+    [
+      "TW Motor Acmeda Battery S wave",
+      -4.5
+    ],
+    [
+      "TW Motor Series 81 turbo",
+      -3.5
+    ],
+    [
+      "TW Motor Series 81 turbo S wave",
+      -4.5
+    ],
+    [
+      "TW Series 81 manual",
+      -3.5
+    ],
+    [
+      "TW Series 81 manual S wave",
+      -4.5
+    ],
+    [
+      "TW Motor Series 84",
+      -3.5
+    ],
+    [
+      "TW Motor Series 84 S wave",
+      -4.5
+    ],
+    [
+      "TW Series 84 manual",
+      -3.5
+    ],
+    [
+      "TW Series 84 manual S wave",
+      -4.5
+    ],
+    [
+      "TW Motor Somfy Glydea DCT",
+      -3.5
+    ],
+    [
+      "TW Motor Somfy Glydea DCT S wave",
+      -4.5
+    ],
+    [
+      "TW Motor Somfy Glydea RTS",
+      -3.5
+    ],
+    [
+      "TW Motor Somfy Glydea RTS S wave",
+      -4.5
+    ],
+    [
+      "TW Motor Somfy Glydea WT",
+      -3.5
+    ],
+    [
+      "TW Motor Somfy Glydea WT S wave",
+      -4.5
+    ],
+    [
+      "TW Motor Somfy Series 82 DCT",
+      -3.5
+    ],
+    [
+      "TW Motor Somfy Series 82 DCT S wave",
+      -4.5
+    ],
+    [
+      "TW Motor Somfy Series 82 RTS",
+      -3.5
+    ],
+    [
+      "TW Motor Somfy Series 82 RTS S wave",
+      -4.5
+    ],
+    [
+      "TW Motor Somfy Series 82 WT",
+      -3.5
+    ],
+    [
+      "TW Motor Somfy Series 82 WT S wave",
+      -4.5
+    ],
+    [
+      "TW Ripple black rod 25mm",
+      0
+    ],
+    [
+      "TW Series 50 Milan",
+      -3.5
+    ],
+    [
+      "TW Series 50 Milan S wave",
+      -3.5
+    ],
+    [
+      "TW Series 51",
+      0
+    ],
+    [
+      "TW Series 51 S wave",
+      0
+    ],
+    [
+      "TW Series 52",
+      0
+    ],
+    [
+      "TW Series 52 S wave",
+      0
+    ],
+    [
+      "TW Series 58",
+      0
+    ],
+    [
+      "TW Series 58 S wave",
+      0
+    ],
+    [
+      "TW Series 59 Flexitrack",
+      0
+    ],
+    [
+      "TW Series 61",
+      0
+    ],
+    [
+      "TW Series 63 Capri",
+      0
+    ],
+    [
+      "TW Series 63 Capri S wave",
+      0
+    ],
+    [
+      "TW Series 65",
+      0
+    ],
+    [
+      "TW Series 67 Siena",
+      0
+    ],
+    [
+      "TW Series 67 Siena S wave",
+      0
+    ],
+    [
+      "TW Series 70 Recess",
+      -1
+    ],
+    [
+      "TW Series 70 Recess S wave",
+      -1
+    ],
+    [
+      "TW Series 71 Recess Housing",
+      0
+    ],
+    [
+      "TW Series 79",
+      0
+    ],
+    [
+      "TW Series 98",
+      0
+    ],
+    [
+      "TW Series 99",
+      0
+    ],
+    [
+      "TW Tube slider 25mm",
+      0
+    ],
+    [
+      "UniQ Motolox Battery",
+      -3.5
+    ],
+    [
+      "UniQ Motolux Hardwired",
+      -3.5
+    ],
+    [
+      "Vanda Versatrack double 25mm",
+      0
+    ],
+    [
+      "Vanda Versatrack double 25mm SC",
+      0
+    ],
+    [
+      "Vanda Versatrak 16mm",
+      0
+    ],
+    [
+      "Vanda Versatrak 16mm SC",
+      0
+    ],
+    [
+      "Vanda Versatrak 25mm glides",
+      0
+    ],
+    [
+      "Vanda Versatrak 25mm glides SC",
+      0
+    ],
+    [
+      "Vanda Versatrak 25mm rings",
+      0
+    ],
+    [
+      "Vanda Versatrak 25mm rings SC",
+      0
+    ]
+  ],
+  "hook_make_height_adjustment_O9_P17": [
+    [
+      1,
+      0
+    ],
+    [
+      "2 on Setpleat",
+      1
+    ],
+    [
+      "3 on Setpleat",
+      2.5
+    ],
+    [
+      "4 on Setpleat",
+      3.5
+    ],
+    [
+      "Spike @ 1",
+      0
+    ],
+    [
+      "Spike @ 2",
+      1
+    ],
+    [
+      "Spike @ 3",
+      2.5
+    ],
+    [
+      "Spike @ 4",
+      3.5
+    ],
+    [
+      "Uspike",
+      0
+    ]
+  ],
+  "layout_track_length_adjustment_K10_L102": [
+    [
+      " 90' Cnr Bend Double (Front)",
+      -39
+    ],
+    [
+      " 90' Cnr Bend Double (Back)",
+      -19
+    ],
+    [
+      " 90' Cnr Bend Single",
+      -23
+    ],
+    [
+      " 90' Cnr Standard Single Left",
+      -7
+    ],
+    [
+      " 90' Cnr Standard Single Right",
+      -7
+    ],
+    [
+      "45' Bay Back Left",
+      -3
+    ],
+    [
+      "45' Bay Back Mid",
+      -6
+    ],
+    [
+      "45' Bay Back Right",
+      -3
+    ],
+    [
+      "45' Bay Bend Back",
+      -8
+    ],
+    [
+      "45' Bay Bend Front",
+      -16
+    ],
+    [
+      "45' Bay Front Left",
+      -7
+    ],
+    [
+      "45' Bay Front Mid",
+      -14
+    ],
+    [
+      "45' Bay Front Right",
+      -7
+    ],
+    [
+      "45' Bay Int Back Left",
+      3
+    ],
+    [
+      "45' Bay Int Back Mid",
+      6
+    ],
+    [
+      "45' Bay Int Back Right",
+      3
+    ],
+    [
+      "45' Bay Int Front Left",
+      6
+    ],
+    [
+      "45' Bay Int Front Mid",
+      12
+    ],
+    [
+      "45' Bay Int Front Right",
+      6
+    ],
+    [
+      "45' Half Bay Bend Back",
+      -4
+    ],
+    [
+      "45' Half Bay Bend Front",
+      -8
+    ],
+    [
+      "45\" Half Bay Int Back Left",
+      3
+    ],
+    [
+      "45\" Half Bay Int Back Right",
+      3
+    ],
+    [
+      "45\" Half Bay Int Front Left",
+      6
+    ],
+    [
+      "45\" Half Bay Int Front Right",
+      6
+    ],
+    [
+      "90' Cnr Int Back Left",
+      7
+    ],
+    [
+      "90' Cnr Int Back Right",
+      7
+    ],
+    [
+      "90' Cnr Int Front Left",
+      17
+    ],
+    [
+      "90' Cnr Int Front Right",
+      17
+    ],
+    [
+      "90' Cnr Standard Back Left",
+      -7
+    ],
+    [
+      "90' Cnr Standard Back Right",
+      -7
+    ],
+    [
+      "90' Cnr Standard Front Left",
+      -17
+    ],
+    [
+      "90' Cnr Standard Front Right",
+      -17
+    ],
+    [
+      "90' Reverse Bend Back",
+      9
+    ],
+    [
+      "90' Reverse Bend Front",
+      25
+    ],
+    [
+      "Curved",
+      0
+    ],
+    [
+      "Square Bay Back Left",
+      -7
+    ],
+    [
+      "Square Bay Back Mid",
+      -14
+    ],
+    [
+      "Square Bay Back Right",
+      -7
+    ],
+    [
+      "Square Bay Bend Back",
+      -38
+    ],
+    [
+      "Square Bay Bend Front",
+      -76
+    ],
+    [
+      "Square Bay Front Left",
+      -17
+    ],
+    [
+      "Square Bay Front Mid",
+      -34
+    ],
+    [
+      "Square Bay Front Right",
+      -17
+    ],
+    [
+      "Square Bay Int Back Left",
+      7
+    ],
+    [
+      "Square Bay Int Back Mid",
+      14
+    ],
+    [
+      "Square Bay Int Back Right",
+      7
+    ],
+    [
+      "Square Bay Int Front Left",
+      17
+    ],
+    [
+      "Square Bay Int Front Mid",
+      34
+    ],
+    [
+      "Square Bay Int Front Right",
+      17
+    ],
+    [
+      "Wall Left",
+      0
+    ],
+    [
+      "Wall Right",
+      0
+    ],
+    [
+      "Wall to Wall",
+      -1
+    ]
+  ]
+}
