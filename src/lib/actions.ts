@@ -201,6 +201,46 @@ export async function deleteLineItem(quoteId: number, lineItemId: number) {
   revalidatePath(`/quotes/${quoteId}`);
 }
 
+/** Copies an existing line item to a new row at the end of the quote --
+ * same room/attributes/price breakdown/override, nothing recomputed. For
+ * quoting several near-identical windows (a common real workflow: three
+ * roller blinds off the one fabric, just slightly different sizes) this
+ * saves re-picking the fabric/source/control from scratch each time --
+ * duplicate, then use Edit on the copy to change just what's different.
+ * A literal copy, deliberately including any active price override: this
+ * is "make another one just like this", not "reprice a similar item" --
+ * clearing an override that shouldn't carry over is one click away via the
+ * existing Override control on the new row. */
+export async function duplicateLineItem(quoteId: number, lineItemId: number) {
+  await requireUser();
+
+  const [source] = await db
+    .select()
+    .from(schema.quoteLineItems)
+    .where(and(eq(schema.quoteLineItems.id, lineItemId), eq(schema.quoteLineItems.quoteId, quoteId)));
+  if (!source) throw new Error("Line item not found.");
+
+  const [{ value: maxLine }] = await db
+    .select({ value: max(schema.quoteLineItems.lineNumber) })
+    .from(schema.quoteLineItems)
+    .where(eq(schema.quoteLineItems.quoteId, quoteId));
+
+  await db.insert(schema.quoteLineItems).values({
+    quoteId,
+    lineNumber: (maxLine ?? 0) + 1,
+    room: source.room,
+    familySlug: source.familySlug,
+    attributes: source.attributes,
+    priceBreakdown: source.priceBreakdown,
+    calculatedPrice: source.calculatedPrice,
+    priceOverride: source.priceOverride,
+    priceOverrideReason: source.priceOverrideReason,
+    finalPrice: source.finalPrice,
+  });
+
+  revalidatePath(`/quotes/${quoteId}`);
+}
+
 export async function setPriceOverride(quoteId: number, lineItemId: number, formData: FormData) {
   await requireUser();
   const override = formData.get("priceOverride");

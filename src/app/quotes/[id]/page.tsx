@@ -4,7 +4,7 @@ import { asc, eq } from "drizzle-orm";
 import { db } from "@/db/client";
 import * as schema from "@/db/schema";
 import { Topbar } from "@/components/Topbar";
-import { deleteLineItem, setPriceOverride } from "@/lib/actions";
+import { deleteLineItem, duplicateLineItem, setPriceOverride } from "@/lib/actions";
 import { GENERIC_BLIND_FAMILIES } from "@/lib/blindFamilies";
 
 export const dynamic = "force-dynamic";
@@ -148,6 +148,14 @@ export default async function QuoteDetailPage({ params }: { params: Promise<{ id
                         >
                           Edit
                         </Link>
+                        <form
+                          action={duplicateLineItem.bind(null, quoteId, li.id)}
+                          style={{ display: "inline-block", marginRight: 8 }}
+                        >
+                          <button className="btn secondary" type="submit" style={{ fontSize: 13, padding: "4px 10px" }}>
+                            Duplicate
+                          </button>
+                        </form>
                         <details style={{ display: "inline-block", marginRight: 8 }}>
                           <summary className="muted" style={{ cursor: "pointer", fontSize: 13 }}>
                             Override
