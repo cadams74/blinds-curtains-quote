@@ -141,6 +141,13 @@ export default async function QuoteDetailPage({ params }: { params: Promise<{ id
                           : `$${Number(li.finalPrice).toFixed(2)}`}
                       </td>
                       <td style={{ textAlign: "right" }}>
+                        <Link
+                          href={`/quotes/${quoteId}/line-items/${li.id}/edit`}
+                          className="btn secondary"
+                          style={{ fontSize: 13, padding: "4px 10px", marginRight: 8 }}
+                        >
+                          Edit
+                        </Link>
                         <details style={{ display: "inline-block", marginRight: 8 }}>
                           <summary className="muted" style={{ cursor: "pointer", fontSize: 13 }}>
                             Override

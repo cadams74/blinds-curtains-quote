@@ -1,8 +1,23 @@
 "use client";
 
 import { Fragment, useEffect, useState, useTransition } from "react";
-import { addGenericBlindLineItem, getFabricNamesForSource, previewGenericBlindPrice } from "@/lib/actions";
+import {
+  addGenericBlindLineItem,
+  getFabricNamesForSource,
+  previewGenericBlindPrice,
+  updateGenericBlindLineItem,
+} from "@/lib/actions";
 import type { GenericBlindResult } from "@/pricing/genericBlind";
+
+export interface GenericBlindLineItemInitial {
+  room: string;
+  fabricSource: string;
+  fabricName: string;
+  widthMm: string;
+  heightMm: string;
+  controlType: string;
+  bracketTrack: string;
+}
 
 interface Props {
   quoteId: number;
@@ -11,6 +26,11 @@ interface Props {
   controlTypes: string[];
   bracketTrackOptions?: string[]; // only Panel has a bracket/track list -- see blindFamilies.ts
   bracketTrackLabel?: string;
+  // When set, the form edits this existing line item (via
+  // updateGenericBlindLineItem) instead of creating a new one -- see
+  // /quotes/[id]/line-items/[lineItemId]/edit/page.tsx.
+  lineItemId?: number;
+  initial?: GenericBlindLineItemInitial;
 }
 
 const BREAKDOWN_LABELS: Record<string, string> = {
@@ -34,21 +54,28 @@ export function GenericBlindLineItemForm({
   controlTypes,
   bracketTrackOptions,
   bracketTrackLabel = "Bracket / track",
+  lineItemId,
+  initial,
 }: Props) {
+  const isEdit = lineItemId !== undefined;
   // Sources/control types with exactly one valid option are common in this
   // data (Venetian/Verishade/Vertical each have exactly one Fabric Source,
   // named after the family itself) -- auto-select rather than make the
   // estimator pick the only choice. This is the fix for the same failure
   // mode documented in honeycomb.ts: the source workbook left a single-
   // option Fabric Source blank often enough to break 5 real quote lines.
-  const [fabricSource, setFabricSource] = useState(sources.length === 1 ? sources[0] : "");
+  const [fabricSource, setFabricSource] = useState(
+    initial?.fabricSource ?? (sources.length === 1 ? sources[0] : "")
+  );
   const [fabricNames, setFabricNames] = useState<string[]>([]);
-  const [fabricName, setFabricName] = useState("");
-  const [widthMm, setWidthMm] = useState("");
-  const [heightMm, setHeightMm] = useState("");
-  const [controlType, setControlType] = useState(controlTypes.length === 1 ? controlTypes[0] : "");
-  const [bracketTrack, setBracketTrack] = useState("");
-  const [room, setRoom] = useState("");
+  const [fabricName, setFabricName] = useState(initial?.fabricName ?? "");
+  const [widthMm, setWidthMm] = useState(initial?.widthMm ?? "");
+  const [heightMm, setHeightMm] = useState(initial?.heightMm ?? "");
+  const [controlType, setControlType] = useState(
+    initial?.controlType ?? (controlTypes.length === 1 ? controlTypes[0] : "")
+  );
+  const [bracketTrack, setBracketTrack] = useState(initial?.bracketTrack ?? "");
+  const [room, setRoom] = useState(initial?.room ?? "");
 
   const [preview, setPreview] = useState<GenericBlindResult | null>(null);
   const [previewError, setPreviewError] = useState<string | null>(null);
@@ -57,9 +84,16 @@ export function GenericBlindLineItemForm({
   const [isSubmitting, startSubmit] = useTransition();
 
   // Auto-selected source needs its fabric names loaded on mount too, not
-  // just on a user-driven change event.
+  // just on a user-driven change event -- and so does an edit's already-
+  // chosen source, which also gets an initial preview so the current saved
+  // price shows immediately rather than only after the next field change.
   useEffect(() => {
-    if (fabricSource) getFabricNamesForSource(fabricSource).then(setFabricNames);
+    if (fabricSource) {
+      getFabricNamesForSource(fabricSource).then((names) => {
+        setFabricNames(names);
+        if (initial) runPreview();
+      });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -126,7 +160,11 @@ export function GenericBlindLineItemForm({
     setSubmitError(null);
     startSubmit(async () => {
       try {
-        await addGenericBlindLineItem(quoteId, familySlug, formData);
+        if (isEdit) {
+          await updateGenericBlindLineItem(quoteId, lineItemId, familySlug, formData);
+        } else {
+          await addGenericBlindLineItem(quoteId, familySlug, formData);
+        }
       } catch (err) {
         if (err instanceof Error && err.message !== "NEXT_REDIRECT") {
           setSubmitError(err.message);
@@ -303,7 +341,7 @@ export function GenericBlindLineItemForm({
       {submitError && <p className="error">{submitError}</p>}
 
       <button className="btn" type="submit" disabled={isSubmitting || !preview?.ok}>
-        {isSubmitting ? "Saving..." : "Add line item"}
+        {isSubmitting ? "Saving..." : isEdit ? "Save changes" : "Add line item"}
       </button>
     </form>
   );

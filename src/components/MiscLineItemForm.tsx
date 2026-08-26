@@ -1,11 +1,24 @@
 "use client";
 
 import { useMemo, useState, useTransition } from "react";
-import { addMiscLineItem } from "@/lib/actions";
+import { addMiscLineItem, updateMiscLineItem } from "@/lib/actions";
 import { priceMisc } from "@/pricing/misc";
+
+export interface MiscLineItemInitial {
+  room: string;
+  description: string;
+  additionalDetails: string;
+  price: string;
+  installTimeMinutes: string;
+}
 
 interface Props {
   quoteId: number;
+  // When set, the form edits this existing line item (via
+  // updateMiscLineItem) instead of creating a new one -- see
+  // /quotes/[id]/line-items/[lineItemId]/edit/page.tsx.
+  lineItemId?: number;
+  initial?: MiscLineItemInitial;
 }
 
 const PRICE_KIND_LABELS: Record<string, string> = {
@@ -14,12 +27,13 @@ const PRICE_KIND_LABELS: Record<string, string> = {
   note_only: "Note only -- no price line",
 };
 
-export function MiscLineItemForm({ quoteId }: Props) {
-  const [room, setRoom] = useState("");
-  const [description, setDescription] = useState("");
-  const [additionalDetails, setAdditionalDetails] = useState("");
-  const [price, setPrice] = useState("");
-  const [installTimeMinutes, setInstallTimeMinutes] = useState("");
+export function MiscLineItemForm({ quoteId, lineItemId, initial }: Props) {
+  const isEdit = lineItemId !== undefined;
+  const [room, setRoom] = useState(initial?.room ?? "");
+  const [description, setDescription] = useState(initial?.description ?? "");
+  const [additionalDetails, setAdditionalDetails] = useState(initial?.additionalDetails ?? "");
+  const [price, setPrice] = useState(initial?.price ?? "");
+  const [installTimeMinutes, setInstallTimeMinutes] = useState(initial?.installTimeMinutes ?? "");
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [isSubmitting, startSubmit] = useTransition();
 
@@ -40,7 +54,11 @@ export function MiscLineItemForm({ quoteId }: Props) {
     setSubmitError(null);
     startSubmit(async () => {
       try {
-        await addMiscLineItem(quoteId, formData);
+        if (isEdit) {
+          await updateMiscLineItem(quoteId, lineItemId, formData);
+        } else {
+          await addMiscLineItem(quoteId, formData);
+        }
       } catch (err) {
         if (err instanceof Error && err.message !== "NEXT_REDIRECT") {
           setSubmitError(err.message);
@@ -125,7 +143,7 @@ export function MiscLineItemForm({ quoteId }: Props) {
       {submitError && <p className="error">{submitError}</p>}
 
       <button className="btn" type="submit" disabled={isSubmitting || !preview.ok}>
-        {isSubmitting ? "Saving..." : "Add line item"}
+        {isSubmitting ? "Saving..." : isEdit ? "Save changes" : "Add line item"}
       </button>
     </form>
   );

@@ -103,6 +103,96 @@ export async function addRollerLineItem(quoteId: number, formData: FormData) {
   redirect(`/quotes/${quoteId}`);
 }
 
+/** Shared by every family's updateXLineItem action below -- applies a
+ * recomputed price/attributes to an existing line item in place (same
+ * quoteId + lineNumber, nothing re-ordered) rather than duplicating this
+ * update+redirect logic four times.
+ *
+ * A price override, once set via setPriceOverride, is a deliberate manual
+ * decision -- editing the line's underlying attributes (e.g. correcting a
+ * mistyped width) recomputes calculatedPrice, but must not silently discard
+ * that override. finalPrice only follows the newly recomputed price when no
+ * override is currently in effect, mirroring setPriceOverride's own
+ * "overrideStr ?? item.calculatedPrice" precedence exactly. */
+async function updateLineItemRow(
+  quoteId: number,
+  lineItemId: number,
+  patch: {
+    room: string | null;
+    familySlug: string;
+    attributes: Record<string, unknown>;
+    priceBreakdown: object;
+    calculatedPrice: number;
+  }
+) {
+  const [existing] = await db
+    .select()
+    .from(schema.quoteLineItems)
+    .where(and(eq(schema.quoteLineItems.id, lineItemId), eq(schema.quoteLineItems.quoteId, quoteId)));
+  if (!existing) throw new Error("Line item not found.");
+
+  await db
+    .update(schema.quoteLineItems)
+    .set({
+      room: patch.room,
+      familySlug: patch.familySlug,
+      attributes: patch.attributes,
+      priceBreakdown: patch.priceBreakdown,
+      calculatedPrice: String(patch.calculatedPrice),
+      finalPrice: existing.priceOverride ?? String(patch.calculatedPrice),
+    })
+    .where(eq(schema.quoteLineItems.id, lineItemId));
+
+  revalidatePath(`/quotes/${quoteId}`);
+  redirect(`/quotes/${quoteId}`);
+}
+
+export async function updateRollerLineItem(quoteId: number, lineItemId: number, formData: FormData) {
+  const user = await requireUser();
+
+  const widthMm = Number(formData.get("widthMm"));
+  const heightMm = Number(formData.get("heightMm"));
+  const fabricSource = String(formData.get("fabricSource") ?? "");
+  const fabricName = String(formData.get("fabricName") ?? "");
+  const controlType = String(formData.get("controlType") ?? "");
+  const bracketTrackRaw = String(formData.get("bracketTrack") ?? "");
+  const cassetteRaw = String(formData.get("cassette") ?? "");
+  const sideChannels = formData.get("sideChannels") === "on";
+  const linkChoice = String(formData.get("linkChoice") ?? "");
+  const room = String(formData.get("room") ?? "").trim() || null;
+
+  const input: RollerBlindInput = {
+    widthMm,
+    heightMm,
+    fabricSource,
+    fabricName,
+    controlType,
+    bracketTrack: bracketTrackRaw || undefined,
+    cassette: cassetteRaw === "Round" || cassetteRaw === "Square" ? cassetteRaw : undefined,
+    sideChannels,
+    linked: Boolean(linkChoice && linkChoice !== "None"),
+  };
+
+  const data = await loadBlindDataSource(db, "Roller");
+  const result = priceRollerBlind(input, data);
+
+  if (!result.ok) {
+    throw new Error(
+      result.reason === "fabric_not_found"
+        ? "That fabric wasn't found in the price list -- pick a fabric source and name from the list."
+        : "That width/height is larger than every published price band for this fabric group -- needs a manual price (see app README)."
+    );
+  }
+
+  await updateLineItemRow(quoteId, lineItemId, {
+    room,
+    familySlug: "roller",
+    attributes: { ...input, linkChoice, enteredBy: user.email },
+    priceBreakdown: result.breakdown,
+    calculatedPrice: result.breakdown.calculatedPrice,
+  });
+}
+
 export async function deleteLineItem(quoteId: number, lineItemId: number) {
   await requireUser();
   await db
@@ -226,6 +316,53 @@ export async function addGenericBlindLineItem(quoteId: number, familySlug: strin
   redirect(`/quotes/${quoteId}`);
 }
 
+export async function updateGenericBlindLineItem(
+  quoteId: number,
+  lineItemId: number,
+  familySlug: string,
+  formData: FormData
+) {
+  const user = await requireUser();
+  const config = getBlindFamilyConfig(familySlug);
+  if (!config) throw new Error(`Unknown blind family "${familySlug}".`);
+
+  const widthMm = Number(formData.get("widthMm"));
+  const heightMm = Number(formData.get("heightMm"));
+  const fabricSource = String(formData.get("fabricSource") ?? "");
+  const fabricName = String(formData.get("fabricName") ?? "");
+  const controlType = String(formData.get("controlType") ?? "");
+  const bracketTrackRaw = String(formData.get("bracketTrack") ?? "");
+  const room = String(formData.get("room") ?? "").trim() || null;
+
+  const input: Omit<GenericBlindInput, "family"> = {
+    widthMm,
+    heightMm,
+    fabricSource,
+    fabricName,
+    controlType: controlType || undefined,
+    bracketTrack: bracketTrackRaw || undefined,
+  };
+
+  const data = await loadBlindDataSource(db, config.pricingFamily);
+  const result = priceGenericBlind({ family: config.pricingFamily, ...input }, data);
+
+  if (!result.ok) {
+    throw new Error(
+      result.reason === "fabric_not_found"
+        ? "That fabric wasn't found in the price list -- pick a fabric source and name from the list."
+        : "That width/height is larger than every published price band for this fabric group -- needs a manual price (see app README)."
+    );
+  }
+
+  await updateLineItemRow(quoteId, lineItemId, {
+    room,
+    familySlug: config.slug,
+    attributes: { ...input, enteredBy: user.email },
+    priceBreakdown: result.breakdown,
+    calculatedPrice: result.breakdown.calculatedPrice,
+  });
+}
+
 // ---------------------------------------------------------------------------
 // Sheer curtains -- curtain.ts's pricing engine isn't (yet) DB-backed like
 // the blind families (see app/README.md's "What's not here yet"), so these
@@ -324,6 +461,52 @@ export async function addCurtainLineItem(quoteId: number, formData: FormData) {
   redirect(`/quotes/${quoteId}`);
 }
 
+export async function updateCurtainLineItem(quoteId: number, lineItemId: number, formData: FormData) {
+  const user = await requireUser();
+
+  const input: CurtainInput = {
+    style: String(formData.get("style") ?? ""),
+    liningInput: String(formData.get("liningInput") ?? "U") === "L" ? "L" : "U",
+    finish: String(formData.get("finish") ?? ""),
+    trackName: String(formData.get("trackName") ?? ""),
+    pricePerMetre: Number(formData.get("pricePerMetre")),
+    layout: String(formData.get("layout") ?? ""),
+    leftReturnCm: Number(formData.get("leftReturnCm") ?? 0),
+    rightReturnCm: Number(formData.get("rightReturnCm") ?? 0),
+    overlapCm: formData.get("overlapCm") ? Number(formData.get("overlapCm")) : undefined,
+    lpwCm: formData.get("lpwCm") ? Number(formData.get("lpwCm")) : undefined,
+    wwCm: formData.get("wwCm") ? Number(formData.get("wwCm")) : undefined,
+    rpwCm: formData.get("rpwCm") ? Number(formData.get("rpwCm")) : undefined,
+    heightCm: Number(formData.get("heightCm")),
+    hooks: String(formData.get("hooks") ?? ""),
+  };
+  const fabricSupplier = String(formData.get("fabricSupplier") ?? "");
+  const fabricName = String(formData.get("fabricName") ?? "");
+  const room = String(formData.get("room") ?? "").trim() || null;
+
+  const curtainData = await loadCurtainDataSource(db);
+  const result = priceCurtain(input, curtainData);
+
+  if (!result.ok) {
+    const messages: Record<typeof result.reason, string> = {
+      fullness_not_found: "That style isn't in the fullness table -- pick a style from the list.",
+      track_length_exceeds_bands:
+        "That track length is longer than every published price band for this track -- needs a manual price (a real, recurring case in the source data -- see app README).",
+      unvalidated_style_variant:
+        "This style's pricing formula hasn't been validated against real data yet (only sheer, non-\"OH\" styles are) -- needs a manual price for now. See app README.",
+    };
+    throw new Error(messages[result.reason]);
+  }
+
+  await updateLineItemRow(quoteId, lineItemId, {
+    room,
+    familySlug: "s_wave_sheer",
+    attributes: { ...input, fabricSupplier, fabricName, enteredBy: user.email },
+    priceBreakdown: result.breakdown,
+    calculatedPrice: result.breakdown.calculatedPrice,
+  });
+}
+
 // ---------------------------------------------------------------------------
 // Misc Quote items -- priceMisc() is a pure, synchronous normalizer with no
 // DB dependency (see misc.ts), so unlike the blind/curtain families there's
@@ -373,4 +556,38 @@ export async function addMiscLineItem(quoteId: number, formData: FormData) {
 
   revalidatePath(`/quotes/${quoteId}`);
   redirect(`/quotes/${quoteId}`);
+}
+
+export async function updateMiscLineItem(quoteId: number, lineItemId: number, formData: FormData) {
+  const user = await requireUser();
+
+  const description = String(formData.get("description") ?? "").trim();
+  const additionalDetails = String(formData.get("additionalDetails") ?? "").trim() || undefined;
+  const priceRaw = String(formData.get("price") ?? "").trim();
+  const installTimeRaw = formData.get("installTimeMinutes");
+  const room = String(formData.get("room") ?? "").trim() || null;
+
+  const input: MiscInput = {
+    description,
+    additionalDetails,
+    price: priceRaw === "" ? undefined : Number.isNaN(Number(priceRaw)) ? priceRaw : Number(priceRaw),
+    installTimeMinutes: installTimeRaw ? Number(installTimeRaw) : undefined,
+  };
+
+  const result: MiscResult = priceMisc(input);
+  if (!result.ok) {
+    throw new Error(
+      result.reason === "missing_description"
+        ? "A description is required."
+        : 'Price must be a number, "N/C", or left blank for a note-only line.'
+    );
+  }
+
+  await updateLineItemRow(quoteId, lineItemId, {
+    room,
+    familySlug: "misc",
+    attributes: { ...input, enteredBy: user.email },
+    priceBreakdown: result.breakdown,
+    calculatedPrice: result.breakdown.calculatedPrice,
+  });
 }

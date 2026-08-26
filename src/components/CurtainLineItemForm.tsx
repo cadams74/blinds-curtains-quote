@@ -1,8 +1,33 @@
 "use client";
 
-import { Fragment, useState, useTransition } from "react";
-import { addCurtainLineItem, getCurtainFabricsForSupplier, previewCurtainPrice } from "@/lib/actions";
+import { Fragment, useEffect, useState, useTransition } from "react";
+import {
+  addCurtainLineItem,
+  getCurtainFabricsForSupplier,
+  previewCurtainPrice,
+  updateCurtainLineItem,
+} from "@/lib/actions";
 import type { CurtainResult } from "@/pricing/curtain";
+
+export interface CurtainLineItemInitial {
+  room: string;
+  style: string;
+  liningInput: "U" | "L";
+  finish: string;
+  trackName: string;
+  fabricSupplier: string;
+  fabricName: string;
+  pricePerMetre: string;
+  layout: string;
+  hooksValue: string;
+  leftReturnCm: string;
+  rightReturnCm: string;
+  overlapCm: string;
+  lpwCm: string;
+  wwCm: string;
+  rpwCm: string;
+  heightCm: string;
+}
 
 interface Props {
   quoteId: number;
@@ -12,6 +37,11 @@ interface Props {
   layouts: string[];
   hooks: string[];
   suppliers: string[];
+  // When set, the form edits this existing line item (via
+  // updateCurtainLineItem) instead of creating a new one -- see
+  // /quotes/[id]/line-items/[lineItemId]/edit/page.tsx.
+  lineItemId?: number;
+  initial?: CurtainLineItemInitial;
 }
 
 const BREAKDOWN_LABELS: Record<string, string> = {
@@ -36,31 +66,56 @@ function trimLabel(s: string) {
   return s.trim();
 }
 
-export function CurtainLineItemForm({ quoteId, styles, finishes, tracks, layouts, hooks, suppliers }: Props) {
-  const [room, setRoom] = useState("");
-  const [style, setStyle] = useState("");
-  const [liningInput, setLiningInput] = useState<"U" | "L">("U");
-  const [finish, setFinish] = useState("");
-  const [trackName, setTrackName] = useState("");
-  const [layout, setLayout] = useState("");
-  const [hooksValue, setHooksValue] = useState("");
-  const [fabricSupplier, setFabricSupplier] = useState("");
+export function CurtainLineItemForm({
+  quoteId,
+  styles,
+  finishes,
+  tracks,
+  layouts,
+  hooks,
+  suppliers,
+  lineItemId,
+  initial,
+}: Props) {
+  const isEdit = lineItemId !== undefined;
+  const [room, setRoom] = useState(initial?.room ?? "");
+  const [style, setStyle] = useState(initial?.style ?? "");
+  const [liningInput, setLiningInput] = useState<"U" | "L">(initial?.liningInput ?? "U");
+  const [finish, setFinish] = useState(initial?.finish ?? "");
+  const [trackName, setTrackName] = useState(initial?.trackName ?? "");
+  const [layout, setLayout] = useState(initial?.layout ?? "");
+  const [hooksValue, setHooksValue] = useState(initial?.hooksValue ?? "");
+  const [fabricSupplier, setFabricSupplier] = useState(initial?.fabricSupplier ?? "");
   const [fabricOptions, setFabricOptions] = useState<{ name: string; pricePerMetre: number }[]>([]);
-  const [fabricName, setFabricName] = useState("");
-  const [pricePerMetre, setPricePerMetre] = useState("");
-  const [leftReturnCm, setLeftReturnCm] = useState("");
-  const [rightReturnCm, setRightReturnCm] = useState("");
-  const [overlapCm, setOverlapCm] = useState("");
-  const [lpwCm, setLpwCm] = useState("");
-  const [wwCm, setWwCm] = useState("");
-  const [rpwCm, setRpwCm] = useState("");
-  const [heightCm, setHeightCm] = useState("");
+  const [fabricName, setFabricName] = useState(initial?.fabricName ?? "");
+  const [pricePerMetre, setPricePerMetre] = useState(initial?.pricePerMetre ?? "");
+  const [leftReturnCm, setLeftReturnCm] = useState(initial?.leftReturnCm ?? "");
+  const [rightReturnCm, setRightReturnCm] = useState(initial?.rightReturnCm ?? "");
+  const [overlapCm, setOverlapCm] = useState(initial?.overlapCm ?? "");
+  const [lpwCm, setLpwCm] = useState(initial?.lpwCm ?? "");
+  const [wwCm, setWwCm] = useState(initial?.wwCm ?? "");
+  const [rpwCm, setRpwCm] = useState(initial?.rpwCm ?? "");
+  const [heightCm, setHeightCm] = useState(initial?.heightCm ?? "");
 
   const [preview, setPreview] = useState<CurtainResult | null>(null);
   const [previewError, setPreviewError] = useState<string | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [isPreviewing, startPreview] = useTransition();
   const [isSubmitting, startSubmit] = useTransition();
+
+  // Editing starts with a fabric supplier already chosen -- load its fabric
+  // options on mount so the Fabric dropdown is populated, and run an
+  // initial preview so the current saved price shows immediately rather
+  // than only after the next field change.
+  useEffect(() => {
+    if (initial?.fabricSupplier) {
+      getCurtainFabricsForSupplier(initial.fabricSupplier).then((options) => {
+        setFabricOptions(options);
+        runPreview();
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   async function onSupplierChange(supplier: string) {
     setFabricSupplier(supplier);
@@ -178,7 +233,11 @@ export function CurtainLineItemForm({ quoteId, styles, finishes, tracks, layouts
     setSubmitError(null);
     startSubmit(async () => {
       try {
-        await addCurtainLineItem(quoteId, formData);
+        if (isEdit) {
+          await updateCurtainLineItem(quoteId, lineItemId, formData);
+        } else {
+          await addCurtainLineItem(quoteId, formData);
+        }
       } catch (err) {
         if (err instanceof Error && err.message !== "NEXT_REDIRECT") {
           setSubmitError(err.message);
@@ -461,7 +520,7 @@ export function CurtainLineItemForm({ quoteId, styles, finishes, tracks, layouts
       {submitError && <p className="error">{submitError}</p>}
 
       <button className="btn" type="submit" disabled={isSubmitting || !preview?.ok}>
-        {isSubmitting ? "Saving..." : "Add line item"}
+        {isSubmitting ? "Saving..." : isEdit ? "Save changes" : "Add line item"}
       </button>
     </form>
   );

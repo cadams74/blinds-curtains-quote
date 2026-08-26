@@ -1,8 +1,26 @@
 "use client";
 
-import { Fragment, useState, useTransition } from "react";
-import { addRollerLineItem, getFabricNamesForSource, previewRollerPrice } from "@/lib/actions";
+import { Fragment, useEffect, useState, useTransition } from "react";
+import {
+  addRollerLineItem,
+  getFabricNamesForSource,
+  previewRollerPrice,
+  updateRollerLineItem,
+} from "@/lib/actions";
 import type { RollerBlindResult } from "@/pricing/roller";
+
+export interface RollerLineItemInitial {
+  room: string;
+  fabricSource: string;
+  fabricName: string;
+  widthMm: string;
+  heightMm: string;
+  controlType: string;
+  bracketTrack: string;
+  cassette: string;
+  sideChannels: boolean;
+  linkChoice: string;
+}
 
 interface Props {
   quoteId: number;
@@ -12,6 +30,11 @@ interface Props {
   channels: string[];
   links: string[];
   controlTypes: string[];
+  // When set, the form edits this existing line item (via
+  // updateRollerLineItem) instead of creating a new one -- see
+  // /quotes/[id]/line-items/[lineItemId]/edit/page.tsx.
+  lineItemId?: number;
+  initial?: RollerLineItemInitial;
 }
 
 const BREAKDOWN_LABELS: Record<string, string> = {
@@ -28,24 +51,50 @@ const BREAKDOWN_LABELS: Record<string, string> = {
   installationCost: "Installation",
 };
 
-export function RollerLineItemForm({ quoteId, sources, brackets, cassettes, channels, links, controlTypes }: Props) {
-  const [fabricSource, setFabricSource] = useState("");
+export function RollerLineItemForm({
+  quoteId,
+  sources,
+  brackets,
+  cassettes,
+  channels,
+  links,
+  controlTypes,
+  lineItemId,
+  initial,
+}: Props) {
+  const isEdit = lineItemId !== undefined;
+  const [fabricSource, setFabricSource] = useState(initial?.fabricSource ?? "");
   const [fabricNames, setFabricNames] = useState<string[]>([]);
-  const [fabricName, setFabricName] = useState("");
-  const [widthMm, setWidthMm] = useState("");
-  const [heightMm, setHeightMm] = useState("");
-  const [controlType, setControlType] = useState("");
-  const [bracketTrack, setBracketTrack] = useState("");
-  const [cassette, setCassette] = useState("");
-  const [sideChannels, setSideChannels] = useState(false);
-  const [linkChoice, setLinkChoice] = useState("");
-  const [room, setRoom] = useState("");
+  const [fabricName, setFabricName] = useState(initial?.fabricName ?? "");
+  const [widthMm, setWidthMm] = useState(initial?.widthMm ?? "");
+  const [heightMm, setHeightMm] = useState(initial?.heightMm ?? "");
+  const [controlType, setControlType] = useState(initial?.controlType ?? "");
+  const [bracketTrack, setBracketTrack] = useState(initial?.bracketTrack ?? "");
+  const [cassette, setCassette] = useState(initial?.cassette ?? "");
+  const [sideChannels, setSideChannels] = useState(initial?.sideChannels ?? false);
+  const [linkChoice, setLinkChoice] = useState(initial?.linkChoice ?? "");
+  const [room, setRoom] = useState(initial?.room ?? "");
 
   const [preview, setPreview] = useState<RollerBlindResult | null>(null);
   const [previewError, setPreviewError] = useState<string | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [isPreviewing, startPreview] = useTransition();
   const [isSubmitting, startSubmit] = useTransition();
+
+  // Editing starts with a fabric source already chosen -- load its fabric
+  // names on mount (same reasoning as GenericBlindLineItemForm's
+  // single-option auto-select effect) and run an initial preview so the
+  // current saved price shows immediately rather than only after the next
+  // field change.
+  useEffect(() => {
+    if (initial?.fabricSource) {
+      getFabricNamesForSource(initial.fabricSource).then((names) => {
+        setFabricNames(names);
+        runPreview();
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   async function onSourceChange(source: string) {
     setFabricSource(source);
@@ -125,7 +174,11 @@ export function RollerLineItemForm({ quoteId, sources, brackets, cassettes, chan
     setSubmitError(null);
     startSubmit(async () => {
       try {
-        await addRollerLineItem(quoteId, formData);
+        if (isEdit) {
+          await updateRollerLineItem(quoteId, lineItemId, formData);
+        } else {
+          await addRollerLineItem(quoteId, formData);
+        }
       } catch (err) {
         // NEXT_REDIRECT throws internally on success -- only a real error
         // reaches here with a message.
@@ -347,7 +400,7 @@ export function RollerLineItemForm({ quoteId, sources, brackets, cassettes, chan
       {submitError && <p className="error">{submitError}</p>}
 
       <button className="btn" type="submit" disabled={isSubmitting || !preview?.ok}>
-        {isSubmitting ? "Saving..." : "Add line item"}
+        {isSubmitting ? "Saving..." : isEdit ? "Save changes" : "Add line item"}
       </button>
     </form>
   );
