@@ -26,6 +26,7 @@ interface CurtainFixture {
   track_length_cm: number;
   height_cm: number;
   hooks: string;
+  stack: string;
   calculated_price: number | string; // "#N/A" for the 3 real oversized rows
   fullness: number;
   make_height: number;
@@ -37,6 +38,7 @@ interface CurtainFixture {
   fabric_pricing: number;
   lining_pricing: number;
   installation: number;
+  width_definition: string;
 }
 
 const fixtures: CurtainFixture[] = JSON.parse(
@@ -59,6 +61,7 @@ function toInput(f: CurtainFixture) {
     rpwCm: f.rpw_cm,
     heightCm: f.height_cm,
     hooks: f.hooks,
+    stack: f.stack,
   };
 }
 
@@ -88,6 +91,7 @@ describe("priceCurtain — validated against real historical 'S Wave Sheer' quot
       expect(result.breakdown.liningPricing).toBe(f.lining_pricing);
       expect(result.breakdown.installation).toBe(f.installation);
       expect(result.breakdown.calculatedPrice).toBe(f.calculated_price);
+      expect(result.breakdown.widthDefinition).toBe(f.width_definition);
     });
   }
 

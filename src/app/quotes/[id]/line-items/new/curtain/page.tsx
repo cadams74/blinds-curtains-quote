@@ -18,13 +18,14 @@ export default async function NewCurtainLineItemPage({ params }: { params: Promi
   const [quote] = await db.select().from(schema.quotes).where(eq(schema.quotes.id, quoteId));
   if (!quote) notFound();
 
-  const [styles, finishes, tracks, layouts, suppliers, hooks] = await Promise.all([
+  const [styles, finishes, tracks, layouts, suppliers, hooks, stacks] = await Promise.all([
     getOptionListValues(db, "Styles"),
     getOptionListValues(db, "Finish"),
     getOptionListValues(db, "Tracks"),
     getOptionListValues(db, "Layouts"),
     getCurtainFabricSuppliers(),
     getCurtainHookNames(db),
+    getOptionListValues(db, "Stacks"),
   ]);
 
   return (
@@ -48,6 +49,7 @@ export default async function NewCurtainLineItemPage({ params }: { params: Promi
             tracks={tracks as string[]}
             layouts={layouts as string[]}
             hooks={hooks}
+            stacks={stacks as string[]}
             suppliers={suppliers}
           />
         </div>

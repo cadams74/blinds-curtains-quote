@@ -80,6 +80,15 @@ export interface CurtainInput {
   rpwCm?: number; // X
   heightCm: number; // Z
   hooks: string; // AG column, e.g. "USpike"
+  // H column, e.g. "2W" -- the "Stacks" named range (Curtain_Settings!$G$9:
+  // $G$13: "1WL","1WR","2W","1ANY","2ANY"). Only feeds the "2way?" flag (AM
+  // column) that drives Width Definition below -- confirmed against the
+  // source formulas that it plays no part in trackLengthCm, makeHeightCm, or
+  // fabricQuantityM, so it was never needed for calculatedPrice and got
+  // dropped when this engine was first ported. Needed now to reproduce AT's
+  // "Width Definition" string, which the (not yet built) Curtain Install
+  // document pulls by raw cell reference.
+  stack: string;
 }
 
 export interface CurtainBreakdown {
@@ -95,6 +104,13 @@ export interface CurtainBreakdown {
   liningPricing: number; // BD
   installation: number; // BE
   calculatedPrice: number; // ROUNDUP(SUM(AY:BE), 0)
+  // AT column -- a workroom-facing shorthand for how many fabric widths
+  // (leaves) make up the curtain and how much fabric each needs, e.g.
+  // "2x7.4m" (a pair, 7.4m of fabric each side) or "1x9.7m" (a single
+  // panel). Doesn't feed calculatedPrice at all -- purely descriptive, but
+  // it's what the Curtain Install document (Curtain Install!D5 etc., via
+  // VLOOKUP(...,'Curtain Quote'!...,46,0)) shows installers per line.
+  widthDefinition: string;
 }
 
 export type CurtainResult =
@@ -121,6 +137,13 @@ function isWide(style: string) {
 }
 function isTwinOrInvertedLining(style: string) {
   return ["Twin Lining", "Twin Lining OH", "Inverted Lining", "Inverted Lining OH"].includes(style);
+}
+// AM3: IF(OR(H3="2W",H3="2ANY"),2,""). Excel's "=" comparison is
+// case-insensitive, so match the same way rather than assume the DB-seeded
+// "Stacks" values always arrive in the exact case shown in the dropdown.
+function isTwoWay(stack: string) {
+  const s = stack.trim().toUpperCase();
+  return s === "2W" || s === "2ANY";
 }
 
 /** 1D ascending band lookup: smallest published length >= target, else null
@@ -246,6 +269,19 @@ export function priceCurtain(
 
   const sum = trackPricing + mitres + bends + curtainMaking + fabricPricing + liningPricing + installation;
 
+  // --- width definition (AT) --------------------------------------------
+  // AT3: IF(AM3=2,"2x","1x") & ROUNDUP(IF(AR3="",ROUNDUP(AQ3,0),AR3)/IF(AM3=2,2,1),2) & IF(AR3="","d","m")
+  // AR (Metres) is only ever blank on the non-sheer/non-Wide/non-Twin-
+  // Inverted-Lining path, which already returned "unvalidated_style_variant"
+  // above -- so on every reachable path here AR is populated (it's exactly
+  // fabricQuantityM, see the usesSheerMetresFormula branch), meaning the "d"
+  // (Drops-based) suffix is unreachable today and only the "m" suffix
+  // applies. Re-derive the "d" branch alongside the Drops-based fabric
+  // quantity formula if that style variant ever gets validated.
+  const twoWay = isTwoWay(input.stack);
+  const widthDefinitionValue = Math.ceil((fabricQuantityM / (twoWay ? 2 : 1)) * 100) / 100;
+  const widthDefinition = `${twoWay ? "2x" : "1x"}${widthDefinitionValue}m`;
+
   return {
     ok: true,
     breakdown: {
@@ -261,6 +297,7 @@ export function priceCurtain(
       liningPricing,
       installation,
       calculatedPrice: Math.ceil(sum),
+      widthDefinition,
     },
   };
 }

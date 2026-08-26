@@ -462,6 +462,7 @@ export async function addCurtainLineItem(quoteId: number, formData: FormData) {
     rpwCm: formData.get("rpwCm") ? Number(formData.get("rpwCm")) : undefined,
     heightCm: Number(formData.get("heightCm")),
     hooks: String(formData.get("hooks") ?? ""),
+    stack: String(formData.get("stack") ?? ""),
   };
   const fabricSupplier = String(formData.get("fabricSupplier") ?? "");
   const fabricName = String(formData.get("fabricName") ?? "");
@@ -519,6 +520,7 @@ export async function updateCurtainLineItem(quoteId: number, lineItemId: number,
     rpwCm: formData.get("rpwCm") ? Number(formData.get("rpwCm")) : undefined,
     heightCm: Number(formData.get("heightCm")),
     hooks: String(formData.get("hooks") ?? ""),
+    stack: String(formData.get("stack") ?? ""),
   };
   const fabricSupplier = String(formData.get("fabricSupplier") ?? "");
   const fabricName = String(formData.get("fabricName") ?? "");

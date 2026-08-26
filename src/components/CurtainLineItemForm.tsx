@@ -20,6 +20,7 @@ export interface CurtainLineItemInitial {
   pricePerMetre: string;
   layout: string;
   hooksValue: string;
+  stack: string;
   leftReturnCm: string;
   rightReturnCm: string;
   overlapCm: string;
@@ -36,6 +37,7 @@ interface Props {
   tracks: string[];
   layouts: string[];
   hooks: string[];
+  stacks: string[];
   suppliers: string[];
   // When set, the form edits this existing line item (via
   // updateCurtainLineItem) instead of creating a new one -- see
@@ -56,7 +58,20 @@ const BREAKDOWN_LABELS: Record<string, string> = {
   fabricPricing: "Fabric pricing",
   liningPricing: "Lining",
   installation: "Installation",
+  widthDefinition: "Width Definition",
 };
+
+// Every other breakdown value is a plain number ($ by default, or bare for
+// the Cm/fullness/fabricQuantityM cases below) -- widthDefinition is the one
+// breakdown field that's a string ("2x7.4m"), not a number, so it needs its
+// own case rather than falling into the `$${Number(v).toFixed(2)}` default.
+function formatBreakdownValue(key: string, value: number | string): string | number {
+  if (key === "widthDefinition") return value;
+  if (typeof value === "number" && (key.endsWith("Cm") || key === "fullness" || key === "fabricQuantityM")) {
+    return value;
+  }
+  return `$${Number(value).toFixed(2)}`;
+}
 
 // The source workbook's own labels have inconsistent leading whitespace
 // (e.g. "  Top Fix" with two leading spaces, " Brushing" with one) -- that's
@@ -73,6 +88,7 @@ export function CurtainLineItemForm({
   tracks,
   layouts,
   hooks,
+  stacks,
   suppliers,
   lineItemId,
   initial,
@@ -85,6 +101,7 @@ export function CurtainLineItemForm({
   const [trackName, setTrackName] = useState(initial?.trackName ?? "");
   const [layout, setLayout] = useState(initial?.layout ?? "");
   const [hooksValue, setHooksValue] = useState(initial?.hooksValue ?? "");
+  const [stack, setStack] = useState(initial?.stack ?? "");
   const [fabricSupplier, setFabricSupplier] = useState(initial?.fabricSupplier ?? "");
   const [fabricOptions, setFabricOptions] = useState<{ name: string; pricePerMetre: number }[]>([]);
   const [fabricName, setFabricName] = useState(initial?.fabricName ?? "");
@@ -174,6 +191,7 @@ export function CurtainLineItemForm({
       trackName?: string;
       layout?: string;
       hooksValue?: string;
+      stack?: string;
       lpwCm?: string;
       wwCm?: string;
       rpwCm?: string;
@@ -192,13 +210,23 @@ export function CurtainLineItemForm({
     const currentTrackName = overrides.trackName ?? trackName;
     const currentLayout = overrides.layout ?? layout;
     const currentHooksValue = overrides.hooksValue ?? hooksValue;
+    const currentStack = overrides.stack ?? stack;
     const currentLpwCm = overrides.lpwCm ?? lpwCm;
     const currentWwCm = overrides.wwCm ?? wwCm;
     const currentRpwCm = overrides.rpwCm ?? rpwCm;
     const currentLeftReturnCm = overrides.leftReturnCm ?? leftReturnCm;
     const currentRightReturnCm = overrides.rightReturnCm ?? rightReturnCm;
     const currentOverlapCm = overrides.overlapCm ?? overlapCm;
-    if (!currentStyle || !currentFinish || !currentTrackName || !currentLayout || !currentHooksValue || !ppm || !h) {
+    if (
+      !currentStyle ||
+      !currentFinish ||
+      !currentTrackName ||
+      !currentLayout ||
+      !currentHooksValue ||
+      !currentStack ||
+      !ppm ||
+      !h
+    ) {
       setPreview(null);
       setPreviewError(null);
       return;
@@ -221,6 +249,7 @@ export function CurtainLineItemForm({
           rpwCm: currentRpwCm ? Number(currentRpwCm) : undefined,
           heightCm: h,
           hooks: currentHooksValue,
+          stack: currentStack,
         });
         setPreview(result);
       } catch (err) {
@@ -433,6 +462,27 @@ export function CurtainLineItemForm({
         </div>
       </div>
 
+      <div className="field">
+        <label htmlFor="stack">Stack</label>
+        <select
+          id="stack"
+          name="stack"
+          value={stack}
+          onChange={(e) => {
+            setStack(e.target.value);
+            runPreview({ stack: e.target.value });
+          }}
+          required
+        >
+          <option value="">-- select --</option>
+          {stacks.map((s) => (
+            <option key={s} value={s}>
+              {s}
+            </option>
+          ))}
+        </select>
+      </div>
+
       <p className="muted" style={{ fontSize: 13, marginBottom: 4 }}>
         Track length (cm): fill in whichever of Left-of-Window / Wall Width / Right-of-Window your
         layout uses -- leave the others blank (matches how the source sheet is filled in per layout).
@@ -499,7 +549,7 @@ export function CurtainLineItemForm({
                   .map(([k, v]) => (
                     <Fragment key={k}>
                       <dt>{BREAKDOWN_LABELS[k] ?? k}</dt>
-                      <dd>{typeof v === "number" && k.endsWith("Cm") ? v : typeof v === "number" && (k === "fullness" || k === "fabricQuantityM") ? v : `$${Number(v).toFixed(2)}`}</dd>
+                      <dd>{formatBreakdownValue(k, v as number | string)}</dd>
                     </Fragment>
                   ))}
               </dl>
