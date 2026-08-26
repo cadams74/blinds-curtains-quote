@@ -40,6 +40,13 @@ function describeLineItemAttrs(familySlug: string, attrs: Record<string, unknown
   return parts.join(" -- ");
 }
 
+// Shared sizing for every per-line-item action control (Edit, Duplicate,
+// Override, Remove) so they read as one uniform row of buttons -- Override
+// used to be a bare "muted" text toggle rather than a button, the one
+// visibly inconsistent one; Remove keeps its "btn danger" red, everything
+// else uses "btn secondary" with this same size.
+const lineItemActionStyle = { fontSize: 13, padding: "4px 10px" } as const;
+
 export default async function QuoteDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const quoteId = Number(id);
@@ -144,7 +151,7 @@ export default async function QuoteDetailPage({ params }: { params: Promise<{ id
                         <Link
                           href={`/quotes/${quoteId}/line-items/${li.id}/edit`}
                           className="btn secondary"
-                          style={{ fontSize: 13, padding: "4px 10px", marginRight: 8 }}
+                          style={{ ...lineItemActionStyle, marginRight: 8 }}
                         >
                           Edit
                         </Link>
@@ -152,12 +159,15 @@ export default async function QuoteDetailPage({ params }: { params: Promise<{ id
                           action={duplicateLineItem.bind(null, quoteId, li.id)}
                           style={{ display: "inline-block", marginRight: 8 }}
                         >
-                          <button className="btn secondary" type="submit" style={{ fontSize: 13, padding: "4px 10px" }}>
+                          <button className="btn secondary" type="submit" style={lineItemActionStyle}>
                             Duplicate
                           </button>
                         </form>
                         <details style={{ display: "inline-block", marginRight: 8 }}>
-                          <summary className="muted" style={{ cursor: "pointer", fontSize: 13 }}>
+                          <summary
+                            className="btn secondary"
+                            style={{ ...lineItemActionStyle, listStyle: "none" }}
+                          >
                             Override
                           </summary>
                           <form
@@ -186,7 +196,7 @@ export default async function QuoteDetailPage({ params }: { params: Promise<{ id
                           </form>
                         </details>
                         <form action={deleteLineItem.bind(null, quoteId, li.id)} style={{ display: "inline" }}>
-                          <button className="btn danger" type="submit" style={{ fontSize: 13, padding: "4px 10px" }}>
+                          <button className="btn danger" type="submit" style={lineItemActionStyle}>
                             Remove
                           </button>
                         </form>
