@@ -965,11 +965,43 @@ it's worth generating a real migration file for, is a genuinely useful thing to 
 that it's no longer how a schema change is expected to reach any database other than a disposable
 local one; see "Running it" above for the new expected flow.
 
+### Width Definition (curtain quote lines)
+
+The source workbook's Curtain Quote sheet computes a value in its AT column ("Width Definition") that
+never got ported when `curtain.ts` was first built -- a workroom-facing shorthand for how many fabric
+widths make up a curtain and how much fabric each needs, e.g. `"2x7.4m"` (a pair, 7.4m of fabric each
+side) or `"1x9.7m"` (a single panel). It's purely descriptive -- confirmed against the source formulas
+that it plays no part in `calculatedPrice` -- but the Curtain Install document (not yet built; see
+"What's not here yet") pulls it by raw cell reference (`VLOOKUP(...,'Curtain Quote'!...,46,0)`) for
+every line, so it's needed now even though nothing consumes it yet beyond the line-item price preview.
+
+Reproducing it needed one input that was also never captured: the "Stack" field (Curtain Quote's H
+column, validated against the `Stacks` named range -- `1WL`/`1WR`/`2W`/`1ANY`/`2ANY`), which drives the
+source's "2way?" flag (`AM` column). Traced through every formula that reads `AM` to confirm it's
+otherwise unused -- `trackLengthCm`, `makeHeightCm`, and `fabricQuantityM` don't reference it, so this
+was safe to add without touching any existing calculated price. Added as a required dropdown on the
+curtain form (backed by the `Stacks` option list, which turned out to already be seeded -- it's one of
+the ~75 lists from Phase 9, just not wired to a form until now), wired through `priceCurtain()`, and
+shown as "Width Definition" in the price-preview breakdown alongside the existing calculated fields.
+
+Verified against all 11 real historical quote lines -- matches the workbook's own AT values exactly,
+covering both the `1x` and `2x` cases -- and live end to end with Playwright against a real production
+build and a local Postgres seeded from the existing extraction data: added a curtain line item with a
+`1WL` Stack, confirmed "Width Definition: 1x7.3m" in the live preview and on the saved line, then opened
+it via Edit and confirmed the Stack came back pre-filled with the same value shown immediately in the
+initial preview (same pattern as every other field, see Phase 18 above).
+
 ## What's not here yet
 
 - The non-sheer and Upleat curtain styles, the Lined lining-cost path, and
   the "Over"/"OH" 2.2x surcharge -- transcribed from the formulas but no
-  real data to validate against yet (see above).
+  real data to validate against yet (see above). Width Definition's
+  Drops-based ("...d" suffix) branch belongs to this same unvalidated path
+  and is deferred alongside it -- see "Width Definition" above.
+- The Curtain Install document itself -- Width Definition (above) is ready
+  for it, but the document/PDF isn't built yet, same status as every other
+  order/production form (Track/Roller/Venetian/Roman Order Form, Blind
+  Install, Curtain Making, Install Time).
 - A live quoting route for Honeycomb blinds -- the pricing engine
   (`honeycomb.ts`) has been validated since Phase 3, but there's no form
   anywhere in the app to actually create a Honeycomb line item. Found while
