@@ -103,7 +103,7 @@ export function CurtainLineItemForm({
   const [hooksValue, setHooksValue] = useState(initial?.hooksValue ?? "");
   const [stack, setStack] = useState(initial?.stack ?? "");
   const [fabricSupplier, setFabricSupplier] = useState(initial?.fabricSupplier ?? "");
-  const [fabricOptions, setFabricOptions] = useState<{ name: string; pricePerMetre: number }[]>([]);
+  const [fabricOptions, setFabricOptions] = useState<{ name: string; pricePerMetre: number | null }[]>([]);
   const [fabricName, setFabricName] = useState(initial?.fabricName ?? "");
   const [pricePerMetre, setPricePerMetre] = useState(initial?.pricePerMetre ?? "");
   const [leftReturnCm, setLeftReturnCm] = useState(initial?.leftReturnCm ?? "");
@@ -150,8 +150,23 @@ export function CurtainLineItemForm({
   function onFabricChange(name: string) {
     setFabricName(name);
     const match = fabricOptions.find((f) => f.name === name);
-    if (match) setPricePerMetre(String(match.pricePerMetre));
-    runPreview({ pricePerMetreOverride: match ? String(match.pricePerMetre) : undefined });
+    if (match && match.pricePerMetre !== null) {
+      setPricePerMetre(String(match.pricePerMetre));
+      runPreview({ pricePerMetreOverride: String(match.pricePerMetre) });
+    } else {
+      // This fabric's cost is high enough that doubling it exceeds every
+      // published sell-price band (see curtainFabricSellPrice.ts) -- rather
+      // than guess, leave the price blank so the estimator enters one by
+      // hand, the same "needs a manual price" pattern used everywhere else
+      // in this app rather than a silent/wrong auto-fill.
+      setPricePerMetre("");
+      setPreview(null);
+      setPreviewError(
+        match
+          ? "This fabric's cost exceeds every published sell-price band -- enter a price per metre manually."
+          : null
+      );
+    }
   }
 
   // See RollerLineItemForm.tsx's comment on this pattern -- every dropdown
@@ -396,7 +411,7 @@ export function CurtainLineItemForm({
             <option value="">-- select --</option>
             {fabricOptions.map((f) => (
               <option key={f.name} value={f.name}>
-                {f.name} (${f.pricePerMetre.toFixed(2)}/m)
+                {f.name} {f.pricePerMetre !== null ? `($${f.pricePerMetre.toFixed(2)}/m)` : "(enter price manually)"}
               </option>
             ))}
           </select>

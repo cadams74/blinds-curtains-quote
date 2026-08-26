@@ -991,6 +991,56 @@ build and a local Postgres seeded from the existing extraction data: added a cur
 it via Edit and confirmed the Stack came back pre-filled with the same value shown immediately in the
 initial preview (same pattern as every other field, see Phase 18 above).
 
+### Curtain fabric price: cost vs. sell price
+
+Reported directly by Clive: picking a fabric on the curtain form brought across the fabric's raw cost
+price, not the sell price the source workbook actually quotes to a customer. Confirmed as a real bug,
+not a misunderstanding -- `fabrics.pricePerMetre` in the database is exactly each supplier sheet's own
+"Price" column (a cost, unchanged since Phase 1's extraction), but Curtain Quote's own `$ P/M` field (M
+column) is a *computed* value:
+
+```
+=MIN(IF(SellPricePoints>=cost*2, SellPricePoints))
+```
+
+i.e. double the cost, then round up to the nearest of 16 published sell-price bands (`$0, $30, $36, $41,
+$46, $51, $56, $66, $76, $90, $105, $120, $135, $150, $165, $180` -- `Curtain_Pricing!$A$106:$A$121`).
+The curtain fabric-selection UI (built in Phase 7) auto-filled the raw cost directly into Price per
+metre the whole time, because this cost-vs-sell distinction was never traced until now.
+
+- **`priceCurtain()` itself was never wrong.** `pricePerMetre` is an *input* to the pricing formula, not
+  something the engine computes -- and all 11 real historical fixtures already carry the correct,
+  pre-computed sell price extracted straight from the workbook (Zepel "Audiance": cost $35, sell $76), so
+  `curtain.test.ts`'s validation was never exposed to this bug. The gap was entirely in
+  `getCurtainFabricsForSupplier()` (`actions.ts`), the function that auto-fills the form's price field.
+- **`SellPricePoints` was already extracted, like `Stacks` before it, just never seeded or read** --
+  sitting in `curtain_pricing/named_ranges.json` since Phase 1. Now seeded into `option_lists` (`seed.ts`)
+  and read via the same `getOptionListValues()` path as every other option list; no schema change.
+  `computeCurtainFabricSellPrice()` (new, `curtainFabricSellPrice.ts`) is the pure function that applies
+  the formula -- deliberately kept separate from `curtain.ts`, since it's not part of that formula chain.
+- **A real edge case, confirmed by actually recalculating the source workbook (LibreOffice, not guessed).**
+  About 15% of the real fabric library (498 of 3,309 fabrics checked, any cost over $90) has a cost high
+  enough that doubling it exceeds every published band. In the real spreadsheet, that formula silently
+  evaluates to **$0** -- reproducing that literally would trade one silent underpricing bug for a worse
+  one. Matching this app's established "flag rather than guess" pattern (`curtain.ts`'s
+  `track_length_exceeds_bands`, the blind families' oversized handling),
+  `computeCurtainFabricSellPrice()` returns `null` for these instead; the fabric dropdown shows "(enter
+  price manually)" and the form leaves Price per metre blank with an explanatory message rather than
+  auto-filling anything.
+- **Worth checking in production.** Any curtain quotes created since the fabric-selection UI shipped
+  (Phase 7) where the estimator picked a fabric and did *not* manually override the auto-filled price
+  would have been priced at roughly half (or less) of the correct sell price -- the Price per metre field
+  has always been editable, so a quote is only affected if it was left at its auto-filled value. This
+  session has no access to the production database to check itself; worth a look at
+  `quote_line_items` rows with `family_slug = 's_wave_sheer'` where the stored `pricePerMetre` matches a
+  known fabric *cost* rather than its sell price.
+- Verified with 5 new unit tests (`curtainFabricSellPrice.test.ts`, including all 11 real fixtures, a
+  round-up-to-the-next-band case, an exact-band-boundary case, and the null/over-tier case) and live end
+  to end with Playwright against a real production build: selecting Zepel "Audiance" now shows
+  "($76.00/m)" and auto-fills 76 (previously "$35.00/m"/35); selecting a real over-tier fabric (JamesDunlop
+  "Hattusa F0797", cost $215) shows "(enter price manually)", leaves the price field blank, and displays
+  the manual-price message instead of silently filling in a wrong number.
+
 ## What's not here yet
 
 - The non-sheer and Upleat curtain styles, the Lined lining-cost path, and

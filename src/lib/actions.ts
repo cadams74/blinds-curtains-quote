@@ -6,13 +6,14 @@ import { and, asc, count, eq, max } from "drizzle-orm";
 import { db } from "../db/client.js";
 import * as schema from "../db/schema.js";
 import { requireUser } from "./session.js";
-import { loadBlindDataSource } from "./pricingDataSource.js";
+import { loadBlindDataSource, getOptionListValues } from "./pricingDataSource.js";
 import { loadCurtainDataSource } from "./curtainDataSource.js";
 import { priceRollerBlind, type RollerBlindInput, type RollerBlindResult } from "../pricing/roller.js";
 import { priceGenericBlind, type GenericBlindInput, type GenericBlindResult } from "../pricing/genericBlind.js";
 import { getBlindFamilyConfig } from "./blindFamilies.js";
 import { priceCurtain, type CurtainInput, type CurtainResult } from "../pricing/curtain.js";
 import { priceMisc, type MiscInput, type MiscResult } from "../pricing/misc.js";
+import { computeCurtainFabricSellPrice } from "../pricing/curtainFabricSellPrice.js";
 
 export async function createQuote(formData: FormData) {
   await requireUser();
@@ -420,21 +421,36 @@ export async function getCurtainFabricSuppliers(): Promise<string[]> {
 
 export async function getCurtainFabricsForSupplier(
   supplierName: string
-): Promise<{ name: string; pricePerMetre: number }[]> {
+): Promise<{ name: string; pricePerMetre: number | null }[]> {
   await requireUser();
   if (!supplierName) return [];
-  const rows = await db
-    .select({ name: schema.fabrics.name, pricePerMetre: schema.fabrics.pricePerMetre })
-    .from(schema.fabrics)
-    .innerJoin(schema.suppliers, eq(schema.fabrics.supplierId, schema.suppliers.id))
-    .where(and(eq(schema.suppliers.name, supplierName), eq(schema.fabrics.active, true)));
+  const [rows, sellPricePointsRaw] = await Promise.all([
+    db
+      .select({ name: schema.fabrics.name, pricePerMetre: schema.fabrics.pricePerMetre })
+      .from(schema.fabrics)
+      .innerJoin(schema.suppliers, eq(schema.fabrics.supplierId, schema.suppliers.id))
+      .where(and(eq(schema.suppliers.name, supplierName), eq(schema.fabrics.active, true))),
+    getOptionListValues(db, "SellPricePoints"),
+  ]);
+  const sellPricePoints = sellPricePointsRaw as number[];
   // active=true already excludes the null-pricePerMetre rows (see schema.ts's
   // comment on fabrics.pricePerMetre), but the DB column type is still
-  // nullable, so narrow it here rather than pass a possible null into
-  // CurtainInput.pricePerMetre, which curtain.ts's math needs as a real number.
+  // nullable, so narrow it here first.
+  //
+  // `fabrics.pricePerMetre` is the fabric's raw COST price (matches each
+  // supplier sheet's own "Price" column exactly) -- Curtain Quote's own
+  // "$ P/M" field is a computed SELL price (cost x2, rounded up to the
+  // nearest published band), never the cost directly. Bringing the raw cost
+  // across here was a real bug (reported by Clive) -- see
+  // curtainFabricSellPrice.ts for the formula and why it can return null
+  // (a small share of fabrics cost enough that no published band covers
+  // them; those need a manually-entered price rather than a guess).
   return rows
     .filter((r): r is { name: string; pricePerMetre: string } => r.pricePerMetre !== null)
-    .map((r) => ({ name: r.name, pricePerMetre: Number(r.pricePerMetre) }))
+    .map((r) => ({
+      name: r.name,
+      pricePerMetre: computeCurtainFabricSellPrice(Number(r.pricePerMetre), sellPricePoints),
+    }))
     .sort((a, b) => a.name.localeCompare(b.name));
 }
 

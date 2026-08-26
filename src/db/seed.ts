@@ -270,6 +270,30 @@ async function main() {
     );
   }
 
+  // ---- curtain fabric sell-price bands ------------------------------------
+  // "SellPricePoints" (Curtain_Pricing!$A$106:$A$121) is a real named range
+  // in curtainPricing.ranges, same as the TrackLengths/Prices pairs just
+  // above, but it's a single plain array rather than a TrackLengths/Prices
+  // pair, so the loop above (which only picks up "*TrackLengths" keys)
+  // never seeds it. It's what curtain fabric selection needs to turn a
+  // fabric's stored cost price into the sell price the Curtain Quote sheet
+  // actually shows/uses per metre -- see curtainFabricSellPrice.ts, added
+  // once Clive reported the curtain form bringing in cost instead of sell
+  // price. Was already sitting in the extraction JSON, just never read
+  // anywhere until now, same pattern as "Stacks" before Width Definition.
+  const sellPricePoints = curtainPricing.ranges["SellPricePoints"];
+  if (Array.isArray(sellPricePoints)) {
+    if (db) {
+      await db
+        .insert(schema.optionLists)
+        .values({ name: "SellPricePoints", values: sellPricePoints })
+        .onConflictDoNothing();
+    }
+    console.log(`curtain fabric sell-price bands: ${sellPricePoints.length}`);
+  } else {
+    console.log("  (SellPricePoints not found in curtain_pricing/named_ranges.json -- skipped)");
+  }
+
   // ---- curtain direct-address tables (make-height / track-length adjustments) --
   // Also never seeded before this phase. No real named range backs these in
   // the source workbook (see Phase 4's finding: the Curtain Quote row
