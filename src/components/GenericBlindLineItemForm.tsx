@@ -75,11 +75,30 @@ export function GenericBlindLineItemForm({
     setFabricNames(names);
   }
 
-  function runPreview(overrides: Partial<{ fabricSource: string; fabricName: string }> = {}) {
+  // See RollerLineItemForm.tsx's comment on this same pattern -- controlType
+  // and bracketTrack's onChange handlers call runPreview() in the same event
+  // as their own setState(), which hasn't taken effect yet, so without this
+  // override the preview reads the PREVIOUS value: selecting a control type
+  // (or, for Panel, a track) would leave the shown price/breakdown one
+  // selection behind -- confirmed live on Roller's controlType before this
+  // fix, and this form has the identical bug for the same reason. The line
+  // item that gets SAVED is unaffected either way (the server action reads
+  // fresh submitted form data, not this preview), but the on-screen number
+  // during quoting was wrong until some other field changed.
+  function runPreview(
+    overrides: Partial<{
+      fabricSource: string;
+      fabricName: string;
+      controlType: string;
+      bracketTrack: string;
+    }> = {}
+  ) {
     const w = Number(widthMm);
     const h = Number(heightMm);
     const source = overrides.fabricSource ?? fabricSource;
     const name = overrides.fabricName ?? fabricName;
+    const currentControlType = overrides.controlType ?? controlType;
+    const currentBracketTrack = overrides.bracketTrack ?? bracketTrack;
     if (!source || !name || !w || !h) {
       setPreview(null);
       setPreviewError(null);
@@ -93,8 +112,8 @@ export function GenericBlindLineItemForm({
           heightMm: h,
           fabricSource: source,
           fabricName: name,
-          controlType: controlType || undefined,
-          bracketTrack: bracketTrack || undefined,
+          controlType: currentControlType || undefined,
+          bracketTrack: currentBracketTrack || undefined,
         });
         setPreview(result);
       } catch (err) {
@@ -214,7 +233,7 @@ export function GenericBlindLineItemForm({
               value={controlType}
               onChange={(e) => {
                 setControlType(e.target.value);
-                runPreview();
+                runPreview({ controlType: e.target.value });
               }}
             >
               <option value="">-- none --</option>
@@ -235,7 +254,7 @@ export function GenericBlindLineItemForm({
               value={bracketTrack}
               onChange={(e) => {
                 setBracketTrack(e.target.value);
-                runPreview();
+                runPreview({ bracketTrack: e.target.value });
               }}
             >
               <option value="">-- none --</option>

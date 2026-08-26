@@ -82,10 +82,34 @@ export function CurtainLineItemForm({ quoteId, styles, finishes, tracks, layouts
     runPreview({ pricePerMetreOverride: match ? String(match.pricePerMetre) : undefined });
   }
 
-  function runPreview(overrides: { pricePerMetreOverride?: string } = {}) {
+  // See RollerLineItemForm.tsx's comment on this pattern -- every dropdown
+  // below calls runPreview() in the same onChange as its own setState(),
+  // which hasn't taken effect yet, so without passing the new value in
+  // explicitly the preview reads the PREVIOUS value for that field (style,
+  // lining, finish, track, layout, hooks all had this bug). The line item
+  // that gets SAVED is unaffected (the server action reads fresh submitted
+  // form data), but the live price shown while quoting was one selection
+  // behind.
+  function runPreview(
+    overrides: {
+      pricePerMetreOverride?: string;
+      style?: string;
+      liningInput?: "U" | "L";
+      finish?: string;
+      trackName?: string;
+      layout?: string;
+      hooksValue?: string;
+    } = {}
+  ) {
     const ppm = Number(overrides.pricePerMetreOverride ?? pricePerMetre);
     const h = Number(heightCm);
-    if (!style || !finish || !trackName || !layout || !hooksValue || !ppm || !h) {
+    const currentStyle = overrides.style ?? style;
+    const currentLiningInput = overrides.liningInput ?? liningInput;
+    const currentFinish = overrides.finish ?? finish;
+    const currentTrackName = overrides.trackName ?? trackName;
+    const currentLayout = overrides.layout ?? layout;
+    const currentHooksValue = overrides.hooksValue ?? hooksValue;
+    if (!currentStyle || !currentFinish || !currentTrackName || !currentLayout || !currentHooksValue || !ppm || !h) {
       setPreview(null);
       setPreviewError(null);
       return;
@@ -94,12 +118,12 @@ export function CurtainLineItemForm({ quoteId, styles, finishes, tracks, layouts
       setPreviewError(null);
       try {
         const result = await previewCurtainPrice({
-          style,
-          liningInput,
-          finish,
-          trackName,
+          style: currentStyle,
+          liningInput: currentLiningInput,
+          finish: currentFinish,
+          trackName: currentTrackName,
           pricePerMetre: ppm,
-          layout,
+          layout: currentLayout,
           leftReturnCm: Number(leftReturnCm) || 0,
           rightReturnCm: Number(rightReturnCm) || 0,
           overlapCm: overlapCm ? Number(overlapCm) : undefined,
@@ -107,7 +131,7 @@ export function CurtainLineItemForm({ quoteId, styles, finishes, tracks, layouts
           wwCm: wwCm ? Number(wwCm) : undefined,
           rpwCm: rpwCm ? Number(rpwCm) : undefined,
           heightCm: h,
-          hooks: hooksValue,
+          hooks: currentHooksValue,
         });
         setPreview(result);
       } catch (err) {
@@ -145,7 +169,7 @@ export function CurtainLineItemForm({ quoteId, styles, finishes, tracks, layouts
             value={style}
             onChange={(e) => {
               setStyle(e.target.value);
-              runPreview();
+              runPreview({ style: e.target.value });
             }}
             onBlur={() => runPreview()}
             required
@@ -165,8 +189,9 @@ export function CurtainLineItemForm({ quoteId, styles, finishes, tracks, layouts
             name="liningInput"
             value={liningInput}
             onChange={(e) => {
-              setLiningInput(e.target.value === "L" ? "L" : "U");
-              runPreview();
+              const next = e.target.value === "L" ? "L" : "U";
+              setLiningInput(next);
+              runPreview({ liningInput: next });
             }}
           >
             <option value="U">Unlined</option>
@@ -184,7 +209,7 @@ export function CurtainLineItemForm({ quoteId, styles, finishes, tracks, layouts
             value={finish}
             onChange={(e) => {
               setFinish(e.target.value);
-              runPreview();
+              runPreview({ finish: e.target.value });
             }}
             required
           >
@@ -204,7 +229,7 @@ export function CurtainLineItemForm({ quoteId, styles, finishes, tracks, layouts
             value={trackName}
             onChange={(e) => {
               setTrackName(e.target.value);
-              runPreview();
+              runPreview({ trackName: e.target.value });
             }}
             required
           >
@@ -281,7 +306,7 @@ export function CurtainLineItemForm({ quoteId, styles, finishes, tracks, layouts
             value={layout}
             onChange={(e) => {
               setLayout(e.target.value);
-              runPreview();
+              runPreview({ layout: e.target.value });
             }}
             required
           >
@@ -301,7 +326,7 @@ export function CurtainLineItemForm({ quoteId, styles, finishes, tracks, layouts
             value={hooksValue}
             onChange={(e) => {
               setHooksValue(e.target.value);
-              runPreview();
+              runPreview({ hooksValue: e.target.value });
             }}
             required
           >

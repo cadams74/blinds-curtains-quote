@@ -59,11 +59,42 @@ export function RollerLineItemForm({ quoteId, sources, brackets, cassettes, chan
     setFabricNames(names);
   }
 
-  function runPreview(overrides: Partial<{ fabricSource: string; fabricName: string }> = {}) {
+  // Every field below is a controlled input whose onChange both updates its
+  // own state AND immediately calls runPreview() to refresh the live price --
+  // but setState() doesn't take effect until the next render, so a field read
+  // from the closed-over state variable (fabricSource, controlType, etc.)
+  // inside a preview triggered from that same onChange sees the PREVIOUS
+  // value, one interaction behind. Found in production: selecting a
+  // motorised Roller control (e.g. "Sonesse RTS 3/30 (M)", a real $550 cost)
+  // left the preview's Control line and total showing $0.00 -- as if the
+  // control wasn't priced at all -- until some other field's change (or a
+  // blur) triggered a fresh preview. The line item that actually got SAVED
+  // was correctly priced regardless (the server action re-reads the
+  // submitted form data fresh, not this stale client preview), but a
+  // misleading on-screen total is still a real bug -- an estimator has no
+  // reason to trust a number that's about to change. Every changed field is
+  // passed in here explicitly instead, the same fix fabricSource/fabricName
+  // already used for the same reason.
+  function runPreview(
+    overrides: Partial<{
+      fabricSource: string;
+      fabricName: string;
+      controlType: string;
+      bracketTrack: string;
+      cassette: string;
+      linkChoice: string;
+      sideChannels: boolean;
+    }> = {}
+  ) {
     const w = Number(widthMm);
     const h = Number(heightMm);
     const source = overrides.fabricSource ?? fabricSource;
     const name = overrides.fabricName ?? fabricName;
+    const currentControlType = overrides.controlType ?? controlType;
+    const currentBracketTrack = overrides.bracketTrack ?? bracketTrack;
+    const currentCassette = overrides.cassette ?? cassette;
+    const currentLinkChoice = overrides.linkChoice ?? linkChoice;
+    const currentSideChannels = overrides.sideChannels ?? sideChannels;
     if (!source || !name || !w || !h) {
       setPreview(null);
       setPreviewError(null);
@@ -77,11 +108,11 @@ export function RollerLineItemForm({ quoteId, sources, brackets, cassettes, chan
           heightMm: h,
           fabricSource: source,
           fabricName: name,
-          controlType,
-          bracketTrack: bracketTrack || undefined,
-          cassette: cassette === "Round" || cassette === "Square" ? cassette : undefined,
-          sideChannels,
-          linked: Boolean(linkChoice && linkChoice !== ""),
+          controlType: currentControlType,
+          bracketTrack: currentBracketTrack || undefined,
+          cassette: currentCassette === "Round" || currentCassette === "Square" ? currentCassette : undefined,
+          sideChannels: currentSideChannels,
+          linked: Boolean(currentLinkChoice && currentLinkChoice !== ""),
         });
         setPreview(result);
       } catch (err) {
@@ -192,7 +223,7 @@ export function RollerLineItemForm({ quoteId, sources, brackets, cassettes, chan
             value={controlType}
             onChange={(e) => {
               setControlType(e.target.value);
-              runPreview();
+              runPreview({ controlType: e.target.value });
             }}
           >
             <option value="">-- none --</option>
@@ -211,7 +242,7 @@ export function RollerLineItemForm({ quoteId, sources, brackets, cassettes, chan
             value={bracketTrack}
             onChange={(e) => {
               setBracketTrack(e.target.value);
-              runPreview();
+              runPreview({ bracketTrack: e.target.value });
             }}
           >
             <option value="">-- none --</option>
@@ -233,7 +264,7 @@ export function RollerLineItemForm({ quoteId, sources, brackets, cassettes, chan
             value={cassette}
             onChange={(e) => {
               setCassette(e.target.value);
-              runPreview();
+              runPreview({ cassette: e.target.value });
             }}
           >
             <option value="">-- none --</option>
@@ -252,7 +283,7 @@ export function RollerLineItemForm({ quoteId, sources, brackets, cassettes, chan
             value={linkChoice}
             onChange={(e) => {
               setLinkChoice(e.target.value);
-              runPreview();
+              runPreview({ linkChoice: e.target.value });
             }}
           >
             <option value="">No</option>
@@ -274,7 +305,7 @@ export function RollerLineItemForm({ quoteId, sources, brackets, cassettes, chan
             style={{ width: "auto" }}
             onChange={(e) => {
               setSideChannels(e.target.checked);
-              runPreview();
+              runPreview({ sideChannels: e.target.checked });
             }}
           />
           Side channels ({channels.join("/")})
