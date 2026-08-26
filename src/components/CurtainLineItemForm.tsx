@@ -90,6 +90,26 @@ export function CurtainLineItemForm({ quoteId, styles, finishes, tracks, layouts
   // that gets SAVED is unaffected (the server action reads fresh submitted
   // form data), but the live price shown while quoting was one selection
   // behind.
+  // Investigated a "5.7m vs 5.9m" fabric-quantity report from Clive against
+  // this exact formula and these exact inputs (S Wave Sheer / Top Fix / Wall
+  // Right / Uspike, 30+240+24 widths, 10+10 returns, no overlap, 253cm
+  // height): both a hand-calculation of priceCurtain's formula and a live
+  // Playwright run of this form -- fields entered in order and fully
+  // blurred, and a second run with no waits between fields to probe for a
+  // resolve-order race between overlapping preview requests -- reproduced
+  // 5.9m every time, matching the spreadsheet exactly. So the formula, the
+  // option-list data (Fullness, layout adjustment), and the request timing
+  // are all correct; nothing was ever actually saved with the wrong number
+  // either (the server action recomputes fresh from submitted form data
+  // regardless of what the preview showed). The likely explanation is the
+  // same class of issue as RollerLineItemForm's controlType bug: these
+  // numeric fields only refreshed the preview on blur, so glancing at the
+  // total before tabbing out of the last-edited field (or before finishing
+  // typing a multi-digit value) could show a number computed from
+  // incomplete input. Extending the same overrides pattern here removes
+  // that gap entirely -- every keystroke refreshes the preview immediately,
+  // the same as the dropdowns above, so there's no window where the shown
+  // total can lag behind what's actually been typed.
   function runPreview(
     overrides: {
       pricePerMetreOverride?: string;
@@ -99,16 +119,30 @@ export function CurtainLineItemForm({ quoteId, styles, finishes, tracks, layouts
       trackName?: string;
       layout?: string;
       hooksValue?: string;
+      lpwCm?: string;
+      wwCm?: string;
+      rpwCm?: string;
+      leftReturnCm?: string;
+      rightReturnCm?: string;
+      overlapCm?: string;
+      heightCm?: string;
     } = {}
   ) {
     const ppm = Number(overrides.pricePerMetreOverride ?? pricePerMetre);
-    const h = Number(heightCm);
+    const currentHeightCm = overrides.heightCm ?? heightCm;
+    const h = Number(currentHeightCm);
     const currentStyle = overrides.style ?? style;
     const currentLiningInput = overrides.liningInput ?? liningInput;
     const currentFinish = overrides.finish ?? finish;
     const currentTrackName = overrides.trackName ?? trackName;
     const currentLayout = overrides.layout ?? layout;
     const currentHooksValue = overrides.hooksValue ?? hooksValue;
+    const currentLpwCm = overrides.lpwCm ?? lpwCm;
+    const currentWwCm = overrides.wwCm ?? wwCm;
+    const currentRpwCm = overrides.rpwCm ?? rpwCm;
+    const currentLeftReturnCm = overrides.leftReturnCm ?? leftReturnCm;
+    const currentRightReturnCm = overrides.rightReturnCm ?? rightReturnCm;
+    const currentOverlapCm = overrides.overlapCm ?? overlapCm;
     if (!currentStyle || !currentFinish || !currentTrackName || !currentLayout || !currentHooksValue || !ppm || !h) {
       setPreview(null);
       setPreviewError(null);
@@ -124,12 +158,12 @@ export function CurtainLineItemForm({ quoteId, styles, finishes, tracks, layouts
           trackName: currentTrackName,
           pricePerMetre: ppm,
           layout: currentLayout,
-          leftReturnCm: Number(leftReturnCm) || 0,
-          rightReturnCm: Number(rightReturnCm) || 0,
-          overlapCm: overlapCm ? Number(overlapCm) : undefined,
-          lpwCm: lpwCm ? Number(lpwCm) : undefined,
-          wwCm: wwCm ? Number(wwCm) : undefined,
-          rpwCm: rpwCm ? Number(rpwCm) : undefined,
+          leftReturnCm: Number(currentLeftReturnCm) || 0,
+          rightReturnCm: Number(currentRightReturnCm) || 0,
+          overlapCm: currentOverlapCm ? Number(currentOverlapCm) : undefined,
+          lpwCm: currentLpwCm ? Number(currentLpwCm) : undefined,
+          wwCm: currentWwCm ? Number(currentWwCm) : undefined,
+          rpwCm: currentRpwCm ? Number(currentRpwCm) : undefined,
           heightCm: h,
           hooks: currentHooksValue,
         });
@@ -347,30 +381,30 @@ export function CurtainLineItemForm({ quoteId, styles, finishes, tracks, layouts
       <div className="field-row">
         <div className="field">
           <label htmlFor="lpwCm">Left of window (cm)</label>
-          <input id="lpwCm" name="lpwCm" type="number" value={lpwCm} onChange={(e) => { setLpwCm(e.target.value); }} onBlur={() => runPreview()} />
+          <input id="lpwCm" name="lpwCm" type="number" value={lpwCm} onChange={(e) => { setLpwCm(e.target.value); runPreview({ lpwCm: e.target.value }); }} />
         </div>
         <div className="field">
           <label htmlFor="wwCm">Wall width (cm)</label>
-          <input id="wwCm" name="wwCm" type="number" value={wwCm} onChange={(e) => { setWwCm(e.target.value); }} onBlur={() => runPreview()} />
+          <input id="wwCm" name="wwCm" type="number" value={wwCm} onChange={(e) => { setWwCm(e.target.value); runPreview({ wwCm: e.target.value }); }} />
         </div>
         <div className="field">
           <label htmlFor="rpwCm">Right of window (cm)</label>
-          <input id="rpwCm" name="rpwCm" type="number" value={rpwCm} onChange={(e) => { setRpwCm(e.target.value); }} onBlur={() => runPreview()} />
+          <input id="rpwCm" name="rpwCm" type="number" value={rpwCm} onChange={(e) => { setRpwCm(e.target.value); runPreview({ rpwCm: e.target.value }); }} />
         </div>
       </div>
 
       <div className="field-row">
         <div className="field">
           <label htmlFor="leftReturnCm">Left return (cm)</label>
-          <input id="leftReturnCm" name="leftReturnCm" type="number" value={leftReturnCm} onChange={(e) => setLeftReturnCm(e.target.value)} onBlur={() => runPreview()} required />
+          <input id="leftReturnCm" name="leftReturnCm" type="number" value={leftReturnCm} onChange={(e) => { setLeftReturnCm(e.target.value); runPreview({ leftReturnCm: e.target.value }); }} required />
         </div>
         <div className="field">
           <label htmlFor="rightReturnCm">Right return (cm)</label>
-          <input id="rightReturnCm" name="rightReturnCm" type="number" value={rightReturnCm} onChange={(e) => setRightReturnCm(e.target.value)} onBlur={() => runPreview()} required />
+          <input id="rightReturnCm" name="rightReturnCm" type="number" value={rightReturnCm} onChange={(e) => { setRightReturnCm(e.target.value); runPreview({ rightReturnCm: e.target.value }); }} required />
         </div>
         <div className="field">
           <label htmlFor="overlapCm">Overlap (cm)</label>
-          <input id="overlapCm" name="overlapCm" type="number" value={overlapCm} onChange={(e) => setOverlapCm(e.target.value)} onBlur={() => runPreview()} />
+          <input id="overlapCm" name="overlapCm" type="number" value={overlapCm} onChange={(e) => { setOverlapCm(e.target.value); runPreview({ overlapCm: e.target.value }); }} />
         </div>
       </div>
 
@@ -381,8 +415,10 @@ export function CurtainLineItemForm({ quoteId, styles, finishes, tracks, layouts
           name="heightCm"
           type="number"
           value={heightCm}
-          onChange={(e) => setHeightCm(e.target.value)}
-          onBlur={() => runPreview()}
+          onChange={(e) => {
+            setHeightCm(e.target.value);
+            runPreview({ heightCm: e.target.value });
+          }}
           required
         />
       </div>
