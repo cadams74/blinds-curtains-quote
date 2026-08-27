@@ -148,58 +148,65 @@ export default async function QuoteDetailPage({ params }: { params: Promise<{ id
                           : `$${Number(li.finalPrice).toFixed(2)}`}
                       </td>
                       <td style={{ textAlign: "right" }}>
-                        <Link
-                          href={`/quotes/${quoteId}/line-items/${li.id}/edit`}
-                          className="btn secondary"
-                          style={{ ...lineItemActionStyle, marginRight: 8 }}
+                        <div
+                          style={{
+                            display: "flex",
+                            flexWrap: "wrap",
+                            justifyContent: "flex-end",
+                            alignItems: "flex-start",
+                            gap: 8,
+                          }}
                         >
-                          Edit
-                        </Link>
-                        <form
-                          action={duplicateLineItem.bind(null, quoteId, li.id)}
-                          style={{ display: "inline-block", marginRight: 8 }}
-                        >
-                          <button className="btn secondary" type="submit" style={lineItemActionStyle}>
-                            Duplicate
-                          </button>
-                        </form>
-                        <details style={{ display: "inline-block", marginRight: 8 }}>
-                          <summary
+                          <Link
+                            href={`/quotes/${quoteId}/line-items/${li.id}/edit`}
                             className="btn secondary"
-                            style={{ ...lineItemActionStyle, listStyle: "none" }}
+                            style={lineItemActionStyle}
                           >
-                            Override
-                          </summary>
-                          <form
-                            action={setPriceOverride.bind(null, quoteId, li.id)}
-                            style={{ marginTop: 8, minWidth: 220 }}
-                          >
-                            <div className="field">
-                              <label>Override price ($)</label>
-                              <input
-                                name="priceOverride"
-                                type="number"
-                                step="0.01"
-                                defaultValue={li.priceOverride ?? ""}
-                              />
-                            </div>
-                            <div className="field">
-                              <label>Reason</label>
-                              <input
-                                name="priceOverrideReason"
-                                defaultValue={li.priceOverrideReason ?? ""}
-                              />
-                            </div>
-                            <button className="btn secondary" type="submit" style={{ fontSize: 13 }}>
-                              Save
+                            Edit
+                          </Link>
+                          <form action={duplicateLineItem.bind(null, quoteId, li.id)}>
+                            <button className="btn secondary" type="submit" style={lineItemActionStyle}>
+                              Duplicate
                             </button>
                           </form>
-                        </details>
-                        <form action={deleteLineItem.bind(null, quoteId, li.id)} style={{ display: "inline" }}>
-                          <button className="btn danger" type="submit" style={lineItemActionStyle}>
-                            Remove
-                          </button>
-                        </form>
+                          <details>
+                            <summary
+                              className="btn secondary"
+                              style={{ ...lineItemActionStyle, listStyle: "none" }}
+                            >
+                              Override
+                            </summary>
+                            <form
+                              action={setPriceOverride.bind(null, quoteId, li.id)}
+                              style={{ marginTop: 8, minWidth: 220, textAlign: "left" }}
+                            >
+                              <div className="field">
+                                <label>Override price ($)</label>
+                                <input
+                                  name="priceOverride"
+                                  type="number"
+                                  step="0.01"
+                                  defaultValue={li.priceOverride ?? ""}
+                                />
+                              </div>
+                              <div className="field">
+                                <label>Reason</label>
+                                <input
+                                  name="priceOverrideReason"
+                                  defaultValue={li.priceOverrideReason ?? ""}
+                                />
+                              </div>
+                              <button className="btn secondary" type="submit" style={{ fontSize: 13 }}>
+                                Save
+                              </button>
+                            </form>
+                          </details>
+                          <form action={deleteLineItem.bind(null, quoteId, li.id)}>
+                            <button className="btn danger" type="submit" style={lineItemActionStyle}>
+                              Remove
+                            </button>
+                          </form>
+                        </div>
                       </td>
                     </tr>
                   );
