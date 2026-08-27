@@ -40,5 +40,11 @@ export default auth((req) => {
 });
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
+  // logo.png added alongside favicon.ico: public/ assets aren't under a common
+  // URL prefix in Next.js, so each one needs listing here explicitly or an
+  // unauthenticated request for it 307s to /login instead of serving the file
+  // -- harmless while the logo only appears on already-authenticated pages,
+  // but would break it silently the moment it's used anywhere public (the
+  // login page, an error page, etc).
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|logo.png).*)"],
 };

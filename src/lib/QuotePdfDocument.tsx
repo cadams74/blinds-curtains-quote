@@ -1,12 +1,14 @@
-import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
+import { Document, Page, Text, View, Image, StyleSheet } from "@react-pdf/renderer";
 import type { InferSelectModel } from "drizzle-orm";
 import type { quotes, quoteLineItems } from "../db/schema.js";
+import { LOGO_BASE64 } from "./logoBase64.js";
 
 type Quote = InferSelectModel<typeof quotes>;
 type QuoteLineItem = InferSelectModel<typeof quoteLineItems>;
 
 const styles = StyleSheet.create({
   page: { padding: 40, fontSize: 10, fontFamily: "Helvetica" },
+  logo: { width: 160, height: 25.8, marginBottom: 16 },
   title: { fontSize: 20, marginBottom: 4, fontFamily: "Helvetica-Bold" },
   meta: { marginBottom: 20, color: "#444" },
   row: { flexDirection: "row", borderBottomWidth: 1, borderBottomColor: "#ddd", paddingVertical: 6 },
@@ -76,6 +78,7 @@ export function QuotePdfDocument({ quote, lineItems }: { quote: Quote; lineItems
   return (
     <Document>
       <Page size="A4" style={styles.page}>
+        <Image style={styles.logo} src={LOGO_BASE64} />
         <Text style={styles.title}>Quote {quote.quoteNumber}</Text>
         <View style={styles.meta}>
           <Text>Customer: {quote.customerName}</Text>
