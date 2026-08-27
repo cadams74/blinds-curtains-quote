@@ -482,6 +482,11 @@ export async function addCurtainLineItem(quoteId: number, formData: FormData) {
   };
   const fabricSupplier = String(formData.get("fabricSupplier") ?? "");
   const fabricName = String(formData.get("fabricName") ?? "");
+  // Fitting/CTRL Side -- not pricing inputs (see CurtainLineItemForm's
+  // Props comment), carried straight through to attributes for the
+  // Curtain Install document.
+  const fitting = String(formData.get("fitting") ?? "");
+  const ctrlSide = String(formData.get("ctrlSide") ?? "");
   const room = String(formData.get("room") ?? "").trim() || null;
 
   const curtainData = await loadCurtainDataSource(db);
@@ -508,7 +513,7 @@ export async function addCurtainLineItem(quoteId: number, formData: FormData) {
     lineNumber: (maxLine ?? 0) + 1,
     room,
     familySlug: "s_wave_sheer",
-    attributes: { ...input, fabricSupplier, fabricName, enteredBy: user.email },
+    attributes: { ...input, fabricSupplier, fabricName, fitting, ctrlSide, enteredBy: user.email },
     priceBreakdown: result.breakdown,
     calculatedPrice: String(result.breakdown.calculatedPrice),
     finalPrice: String(result.breakdown.calculatedPrice),
@@ -540,6 +545,11 @@ export async function updateCurtainLineItem(quoteId: number, lineItemId: number,
   };
   const fabricSupplier = String(formData.get("fabricSupplier") ?? "");
   const fabricName = String(formData.get("fabricName") ?? "");
+  // Fitting/CTRL Side -- not pricing inputs (see CurtainLineItemForm's
+  // Props comment), carried straight through to attributes for the
+  // Curtain Install document.
+  const fitting = String(formData.get("fitting") ?? "");
+  const ctrlSide = String(formData.get("ctrlSide") ?? "");
   const room = String(formData.get("room") ?? "").trim() || null;
 
   const curtainData = await loadCurtainDataSource(db);
@@ -559,7 +569,7 @@ export async function updateCurtainLineItem(quoteId: number, lineItemId: number,
   await updateLineItemRow(quoteId, lineItemId, {
     room,
     familySlug: "s_wave_sheer",
-    attributes: { ...input, fabricSupplier, fabricName, enteredBy: user.email },
+    attributes: { ...input, fabricSupplier, fabricName, fitting, ctrlSide, enteredBy: user.email },
     priceBreakdown: result.breakdown,
     calculatedPrice: result.breakdown.calculatedPrice,
   });

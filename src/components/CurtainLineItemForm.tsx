@@ -21,6 +21,8 @@ export interface CurtainLineItemInitial {
   layout: string;
   hooksValue: string;
   stack: string;
+  fitting: string;
+  ctrlSide: string;
   leftReturnCm: string;
   rightReturnCm: string;
   overlapCm: string;
@@ -38,6 +40,15 @@ interface Props {
   layouts: string[];
   hooks: string[];
   stacks: string[];
+  // Fitting (Curtain Quote's S column) and CTRL Side (G column) -- these
+  // don't feed priceCurtain() at all (traced and confirmed while porting
+  // the pricing engine in Phase 4, which is why they were never added to
+  // CurtainInput), so they're carried as plain extra attributes rather than
+  // pricing inputs. Added now because the Curtain Install document shows
+  // both per line -- without them, two of its fields would be permanently
+  // blank for every curtain ever quoted.
+  fittings: string[];
+  ctrlSides: string[];
   suppliers: string[];
   // When set, the form edits this existing line item (via
   // updateCurtainLineItem) instead of creating a new one -- see
@@ -89,6 +100,8 @@ export function CurtainLineItemForm({
   layouts,
   hooks,
   stacks,
+  fittings,
+  ctrlSides,
   suppliers,
   lineItemId,
   initial,
@@ -102,6 +115,8 @@ export function CurtainLineItemForm({
   const [layout, setLayout] = useState(initial?.layout ?? "");
   const [hooksValue, setHooksValue] = useState(initial?.hooksValue ?? "");
   const [stack, setStack] = useState(initial?.stack ?? "");
+  const [fitting, setFitting] = useState(initial?.fitting ?? "");
+  const [ctrlSide, setCtrlSide] = useState(initial?.ctrlSide ?? "");
   const [fabricSupplier, setFabricSupplier] = useState(initial?.fabricSupplier ?? "");
   const [fabricOptions, setFabricOptions] = useState<{ name: string; pricePerMetre: number | null }[]>([]);
   const [fabricName, setFabricName] = useState(initial?.fabricName ?? "");
@@ -471,6 +486,43 @@ export function CurtainLineItemForm({
             {hooks.map((h) => (
               <option key={h} value={h}>
                 {h}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      <div className="field-row">
+        <div className="field">
+          <label htmlFor="fitting">Fitting</label>
+          <select
+            id="fitting"
+            name="fitting"
+            value={fitting}
+            onChange={(e) => setFitting(e.target.value)}
+            required
+          >
+            <option value="">-- select --</option>
+            {fittings.map((f) => (
+              <option key={f} value={f}>
+                {f}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="field">
+          <label htmlFor="ctrlSide">Control side</label>
+          <select
+            id="ctrlSide"
+            name="ctrlSide"
+            value={ctrlSide}
+            onChange={(e) => setCtrlSide(e.target.value)}
+            required
+          >
+            <option value="">-- select --</option>
+            {ctrlSides.map((c) => (
+              <option key={c} value={c}>
+                {c}
               </option>
             ))}
           </select>

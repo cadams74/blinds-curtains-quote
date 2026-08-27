@@ -101,15 +101,18 @@ export default async function EditLineItemPage({
   }
 
   if (lineItem.familySlug === "s_wave_sheer") {
-    const [styles, finishes, tracks, layouts, suppliers, hooks, stacks] = await Promise.all([
-      getOptionListValues(db, "Styles"),
-      getOptionListValues(db, "Finish"),
-      getOptionListValues(db, "Tracks"),
-      getOptionListValues(db, "Layouts"),
-      getCurtainFabricSuppliers(),
-      getCurtainHookNames(db),
-      getOptionListValues(db, "Stacks"),
-    ]);
+    const [styles, finishes, tracks, layouts, suppliers, hooks, stacks, fittings, ctrlSides] =
+      await Promise.all([
+        getOptionListValues(db, "Styles"),
+        getOptionListValues(db, "Finish"),
+        getOptionListValues(db, "Tracks"),
+        getOptionListValues(db, "Layouts"),
+        getCurtainFabricSuppliers(),
+        getCurtainHookNames(db),
+        getOptionListValues(db, "Stacks"),
+        getOptionListValues(db, "Fittings"),
+        getOptionListValues(db, "Controls"),
+      ]);
 
     return (
       <>
@@ -127,6 +130,8 @@ export default async function EditLineItemPage({
               layouts={layouts as string[]}
               hooks={hooks}
               stacks={stacks as string[]}
+              fittings={fittings as string[]}
+              ctrlSides={ctrlSides as string[]}
               suppliers={suppliers}
               initial={{
                 room,
@@ -140,6 +145,8 @@ export default async function EditLineItemPage({
                 layout: str(attrs.layout),
                 hooksValue: str(attrs.hooks),
                 stack: str(attrs.stack),
+                fitting: str(attrs.fitting),
+                ctrlSide: str(attrs.ctrlSide),
                 leftReturnCm: str(attrs.leftReturnCm),
                 rightReturnCm: str(attrs.rightReturnCm),
                 overlapCm: str(attrs.overlapCm),

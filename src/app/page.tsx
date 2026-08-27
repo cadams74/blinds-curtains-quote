@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Fragment } from "react";
 import { desc, eq, sql } from "drizzle-orm";
 import { db } from "@/db/client";
 import * as schema from "@/db/schema";
@@ -16,6 +17,11 @@ export default async function DashboardPage() {
       createdAt: schema.quotes.createdAt,
       total: sql<string>`coalesce(sum(${schema.quoteLineItems.finalPrice}), 0)`,
       lineCount: sql<number>`count(${schema.quoteLineItems.id})`,
+      // Drives which per-quote install-document buttons show below the row
+      // -- Curtain Install only makes sense for a quote that actually has
+      // curtain line items. Blind Install (and whatever else follows) will
+      // need its own count the same way once that document exists.
+      curtainCount: sql<number>`count(*) filter (where ${schema.quoteLineItems.familySlug} = 's_wave_sheer')`,
     })
     .from(schema.quotes)
     .leftJoin(schema.quoteLineItems, eq(schema.quoteLineItems.quoteId, schema.quotes.id))
@@ -51,20 +57,49 @@ export default async function DashboardPage() {
                 </tr>
               </thead>
               <tbody>
-                {quotes.map((q) => (
-                  <tr key={q.id}>
-                    <td>
-                      <Link href={`/quotes/${q.id}`}>{q.quoteNumber}</Link>
-                    </td>
-                    <td>{q.customerName}</td>
-                    <td>
-                      <span className="badge">{q.status}</span>
-                    </td>
-                    <td>{q.lineCount}</td>
-                    <td>${Number(q.total).toFixed(2)}</td>
-                    <td className="muted">{new Date(q.createdAt).toLocaleDateString()}</td>
-                  </tr>
-                ))}
+                {quotes.map((q) => {
+                  const hasCurtains = Number(q.curtainCount) > 0;
+                  // More install-document buttons (Blind Install etc.) join
+                  // this row the same way -- one more `has...` flag above,
+                  // one more conditional Link below. The row itself is
+                  // skipped entirely when a quote qualifies for none of them
+                  // yet, rather than rendering an empty strip under every
+                  // quote.
+                  const hasInstallDocs = hasCurtains;
+                  return (
+                    <Fragment key={q.id}>
+                      <tr>
+                        <td>
+                          <Link href={`/quotes/${q.id}`}>{q.quoteNumber}</Link>
+                        </td>
+                        <td>{q.customerName}</td>
+                        <td>
+                          <span className="badge">{q.status}</span>
+                        </td>
+                        <td>{q.lineCount}</td>
+                        <td>${Number(q.total).toFixed(2)}</td>
+                        <td className="muted">{new Date(q.createdAt).toLocaleDateString()}</td>
+                      </tr>
+                      {hasInstallDocs && (
+                        <tr>
+                          <td colSpan={6} style={{ paddingTop: 0, paddingBottom: 10 }}>
+                            <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                              {hasCurtains && (
+                                <Link
+                                  href={`/quotes/${q.id}/curtain-install`}
+                                  className="btn secondary"
+                                  style={{ fontSize: 13, padding: "4px 10px" }}
+                                >
+                                  Curtain Install
+                                </Link>
+                              )}
+                            </div>
+                          </td>
+                        </tr>
+                      )}
+                    </Fragment>
+                  );
+                })}
               </tbody>
             </table>
           )}

@@ -214,3 +214,88 @@ th {
   margin: 0;
   text-align: right;
 }
+
+/* Curtain Install (and any future Blind Install etc.) document styling --
+   one card per curtain line item, laid out to read at a glance on-site.
+   See src/app/quotes/[id]/curtain-install/page.tsx for the field-by-field
+   mapping back to the source workbook's "Curtain Install" sheet. */
+.install-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+.install-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--ink);
+}
+.install-stats {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.install-stat {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 8px;
+}
+.install-stat-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--muted);
+}
+.install-stat-value {
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.install-details {
+  display: grid;
+  grid-template-columns: max-content 1fr max-content 1fr;
+  gap: 4px 16px;
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+.install-details dt {
+  color: var(--muted);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  align-self: center;
+}
+.install-details dd {
+  margin: 0;
+  font-weight: 500;
+  align-self: center;
+}
+.install-notes-line {
+  border-bottom: 1px solid var(--border);
+  height: 22px;
+}
+
+/* Every page in the app shares this stylesheet, so scope the print rule to
+   .no-print rather than assuming only the install sheet ever prints. */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  .topbar {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+  }
+  .install-card {
+    box-shadow: none;
+  }
+}
