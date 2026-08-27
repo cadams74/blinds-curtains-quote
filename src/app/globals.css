@@ -77,13 +77,18 @@ h1, h2, h3 {
 
 .btn {
   display: inline-block;
+  margin: 0;
   padding: 8px 16px;
   border-radius: var(--radius);
   border: 1px solid var(--accent);
   background: var(--accent);
   color: #fff;
+  font-family: inherit;
   font-size: 14px;
   font-weight: 500;
+  line-height: inherit;
+  appearance: none;
+  -webkit-appearance: none;
   cursor: pointer;
 }
 .btn:hover {
