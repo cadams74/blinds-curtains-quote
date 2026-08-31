@@ -60,6 +60,18 @@ export async function addRollerLineItem(quoteId: number, formData: FormData) {
   const sideChannels = formData.get("sideChannels") === "on";
   const linkChoice = String(formData.get("linkChoice") ?? "");
   const room = String(formData.get("room") ?? "").trim() || null;
+  // Non-pricing fields -- see blindFamilies.ts's comment on
+  // controlSidesList/baseStylesList. Carried through as extra attributes
+  // only, the same way curtain's fitting/ctrlSide are.
+  const lhCutOut = String(formData.get("lhCutOut") ?? "");
+  const rhCutOut = String(formData.get("rhCutOut") ?? "");
+  const controlSide = String(formData.get("controlSide") ?? "");
+  const chainLength = String(formData.get("chainLength") ?? "");
+  const fitting = String(formData.get("fitting") ?? "");
+  const componentColour = String(formData.get("componentColour") ?? "");
+  const fabricColour = String(formData.get("fabricColour") ?? "");
+  const baseStyle = String(formData.get("baseStyle") ?? "");
+  const roll = String(formData.get("roll") ?? "");
 
   const input: RollerBlindInput = {
     widthMm,
@@ -94,7 +106,20 @@ export async function addRollerLineItem(quoteId: number, formData: FormData) {
     lineNumber: (maxLine ?? 0) + 1,
     room,
     familySlug: "roller",
-    attributes: { ...input, linkChoice, enteredBy: user.email },
+    attributes: {
+      ...input,
+      linkChoice,
+      lhCutOut,
+      rhCutOut,
+      controlSide,
+      chainLength,
+      fitting,
+      componentColour,
+      fabricColour,
+      baseStyle,
+      roll,
+      enteredBy: user.email,
+    },
     priceBreakdown: result.breakdown,
     calculatedPrice: String(result.breakdown.calculatedPrice),
     finalPrice: String(result.breakdown.calculatedPrice),
@@ -161,6 +186,15 @@ export async function updateRollerLineItem(quoteId: number, lineItemId: number, 
   const sideChannels = formData.get("sideChannels") === "on";
   const linkChoice = String(formData.get("linkChoice") ?? "");
   const room = String(formData.get("room") ?? "").trim() || null;
+  const lhCutOut = String(formData.get("lhCutOut") ?? "");
+  const rhCutOut = String(formData.get("rhCutOut") ?? "");
+  const controlSide = String(formData.get("controlSide") ?? "");
+  const chainLength = String(formData.get("chainLength") ?? "");
+  const fitting = String(formData.get("fitting") ?? "");
+  const componentColour = String(formData.get("componentColour") ?? "");
+  const fabricColour = String(formData.get("fabricColour") ?? "");
+  const baseStyle = String(formData.get("baseStyle") ?? "");
+  const roll = String(formData.get("roll") ?? "");
 
   const input: RollerBlindInput = {
     widthMm,
@@ -188,7 +222,20 @@ export async function updateRollerLineItem(quoteId: number, lineItemId: number, 
   await updateLineItemRow(quoteId, lineItemId, {
     room,
     familySlug: "roller",
-    attributes: { ...input, linkChoice, enteredBy: user.email },
+    attributes: {
+      ...input,
+      linkChoice,
+      lhCutOut,
+      rhCutOut,
+      controlSide,
+      chainLength,
+      fitting,
+      componentColour,
+      fabricColour,
+      baseStyle,
+      roll,
+      enteredBy: user.email,
+    },
     priceBreakdown: result.breakdown,
     calculatedPrice: result.breakdown.calculatedPrice,
   });
@@ -316,6 +363,16 @@ export async function addGenericBlindLineItem(quoteId: number, familySlug: strin
   const controlType = String(formData.get("controlType") ?? "");
   const bracketTrackRaw = String(formData.get("bracketTrack") ?? "");
   const room = String(formData.get("room") ?? "").trim() || null;
+  // Non-pricing fields -- see blindFamilies.ts's comment on
+  // controlSidesList/baseStylesList. Carried through as extra attributes
+  // only, the same way curtain's fitting/ctrlSide are.
+  const lhCutOut = String(formData.get("lhCutOut") ?? "");
+  const rhCutOut = String(formData.get("rhCutOut") ?? "");
+  const controlSide = String(formData.get("controlSide") ?? "");
+  const fitting = String(formData.get("fitting") ?? "");
+  const componentColour = String(formData.get("componentColour") ?? "");
+  const fabricColour = String(formData.get("fabricColour") ?? "");
+  const baseStyle = String(formData.get("baseStyle") ?? "");
 
   const input: Omit<GenericBlindInput, "family"> = {
     widthMm,
@@ -347,7 +404,17 @@ export async function addGenericBlindLineItem(quoteId: number, familySlug: strin
     lineNumber: (maxLine ?? 0) + 1,
     room,
     familySlug: config.slug,
-    attributes: { ...input, enteredBy: user.email },
+    attributes: {
+      ...input,
+      lhCutOut,
+      rhCutOut,
+      controlSide,
+      fitting,
+      componentColour,
+      fabricColour,
+      baseStyle,
+      enteredBy: user.email,
+    },
     priceBreakdown: result.breakdown,
     calculatedPrice: String(result.breakdown.calculatedPrice),
     finalPrice: String(result.breakdown.calculatedPrice),
@@ -374,6 +441,13 @@ export async function updateGenericBlindLineItem(
   const controlType = String(formData.get("controlType") ?? "");
   const bracketTrackRaw = String(formData.get("bracketTrack") ?? "");
   const room = String(formData.get("room") ?? "").trim() || null;
+  const lhCutOut = String(formData.get("lhCutOut") ?? "");
+  const rhCutOut = String(formData.get("rhCutOut") ?? "");
+  const controlSide = String(formData.get("controlSide") ?? "");
+  const fitting = String(formData.get("fitting") ?? "");
+  const componentColour = String(formData.get("componentColour") ?? "");
+  const fabricColour = String(formData.get("fabricColour") ?? "");
+  const baseStyle = String(formData.get("baseStyle") ?? "");
 
   const input: Omit<GenericBlindInput, "family"> = {
     widthMm,
@@ -398,7 +472,17 @@ export async function updateGenericBlindLineItem(
   await updateLineItemRow(quoteId, lineItemId, {
     room,
     familySlug: config.slug,
-    attributes: { ...input, enteredBy: user.email },
+    attributes: {
+      ...input,
+      lhCutOut,
+      rhCutOut,
+      controlSide,
+      fitting,
+      componentColour,
+      fabricColour,
+      baseStyle,
+      enteredBy: user.email,
+    },
     priceBreakdown: result.breakdown,
     calculatedPrice: result.breakdown.calculatedPrice,
   });

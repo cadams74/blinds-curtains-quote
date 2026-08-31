@@ -56,13 +56,32 @@ export default async function EditLineItemPage({
   );
 
   if (lineItem.familySlug === "roller") {
-    const [sources, brackets, cassettes, channels, links, controlTypes] = await Promise.all([
+    const [
+      sources,
+      brackets,
+      cassettes,
+      channels,
+      links,
+      controlTypes,
+      controlSides,
+      chainLengths,
+      fittings,
+      componentColours,
+      baseStyles,
+      rolls,
+    ] = await Promise.all([
       getOptionListValues(db, "RollerSources"),
       getOptionListValues(db, "RollerBrackets"),
       getOptionListValues(db, "RollerCassettes"),
       getOptionListValues(db, "RollerChannels"),
       getOptionListValues(db, "RollerLinks"),
       getOptionListValues(db, "RollerControlTypes"),
+      getOptionListValues(db, "RollerControlSides"),
+      getOptionListValues(db, "RollerChainLengths"),
+      getOptionListValues(db, "BlindFittings"),
+      getOptionListValues(db, "ComponentColours"),
+      getOptionListValues(db, "RollerBaseStyles"),
+      getOptionListValues(db, "RollerRolls"),
     ]);
 
     return (
@@ -81,6 +100,12 @@ export default async function EditLineItemPage({
               channels={channels as string[]}
               links={links as string[]}
               controlTypes={controlTypes as string[]}
+              controlSides={controlSides as string[]}
+              chainLengths={chainLengths as string[]}
+              fittings={fittings as string[]}
+              componentColours={componentColours as string[]}
+              baseStyles={baseStyles as string[]}
+              rolls={rolls as string[]}
               initial={{
                 room,
                 fabricSource: str(attrs.fabricSource),
@@ -92,6 +117,15 @@ export default async function EditLineItemPage({
                 cassette: str(attrs.cassette),
                 sideChannels: Boolean(attrs.sideChannels),
                 linkChoice: str(attrs.linkChoice),
+                lhCutOut: str(attrs.lhCutOut),
+                rhCutOut: str(attrs.rhCutOut),
+                controlSide: str(attrs.controlSide),
+                chainLength: str(attrs.chainLength),
+                fitting: str(attrs.fitting),
+                componentColour: str(attrs.componentColour),
+                fabricColour: str(attrs.fabricColour),
+                baseStyle: str(attrs.baseStyle),
+                roll: str(attrs.roll),
               }}
             />
           </div>
@@ -192,11 +226,16 @@ export default async function EditLineItemPage({
   const config = getBlindFamilyConfig(lineItem.familySlug);
   if (!config) notFound();
 
-  const [sources, controlTypes, bracketTrackOptions] = await Promise.all([
-    getOptionListValues(db, config.sourcesList),
-    getOptionListValues(db, config.controlTypesList),
-    config.bracketTrackList ? getOptionListValues(db, config.bracketTrackList) : Promise.resolve([]),
-  ]);
+  const [sources, controlTypes, bracketTrackOptions, controlSides, fittings, componentColours, baseStyles] =
+    await Promise.all([
+      getOptionListValues(db, config.sourcesList),
+      getOptionListValues(db, config.controlTypesList),
+      config.bracketTrackList ? getOptionListValues(db, config.bracketTrackList) : Promise.resolve([]),
+      getOptionListValues(db, config.controlSidesList),
+      getOptionListValues(db, "BlindFittings"),
+      getOptionListValues(db, "ComponentColours"),
+      config.baseStylesList ? getOptionListValues(db, config.baseStylesList) : Promise.resolve([]),
+    ]);
 
   return (
     <>
@@ -213,6 +252,10 @@ export default async function EditLineItemPage({
             controlTypes={controlTypes as string[]}
             bracketTrackOptions={config.bracketTrackList ? (bracketTrackOptions as string[]) : undefined}
             bracketTrackLabel={config.slug === "panel" ? "Track / panel config" : "Bracket / track"}
+            controlSides={controlSides as string[]}
+            fittings={fittings as string[]}
+            componentColours={componentColours as string[]}
+            baseStyles={config.baseStylesList ? (baseStyles as string[]) : undefined}
             initial={{
               room,
               fabricSource: str(attrs.fabricSource),
@@ -221,6 +264,13 @@ export default async function EditLineItemPage({
               heightMm: str(attrs.heightMm),
               controlType: str(attrs.controlType),
               bracketTrack: str(attrs.bracketTrack),
+              lhCutOut: str(attrs.lhCutOut),
+              rhCutOut: str(attrs.rhCutOut),
+              controlSide: str(attrs.controlSide),
+              fitting: str(attrs.fitting),
+              componentColour: str(attrs.componentColour),
+              fabricColour: str(attrs.fabricColour),
+              baseStyle: str(attrs.baseStyle),
             }}
           />
         </div>

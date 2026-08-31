@@ -16,13 +16,32 @@ export default async function NewRollerLineItemPage({ params }: { params: Promis
   const [quote] = await db.select().from(schema.quotes).where(eq(schema.quotes.id, quoteId));
   if (!quote) notFound();
 
-  const [sources, brackets, cassettes, channels, links, controlTypes] = await Promise.all([
+  const [
+    sources,
+    brackets,
+    cassettes,
+    channels,
+    links,
+    controlTypes,
+    controlSides,
+    chainLengths,
+    fittings,
+    componentColours,
+    baseStyles,
+    rolls,
+  ] = await Promise.all([
     getOptionListValues(db, "RollerSources"),
     getOptionListValues(db, "RollerBrackets"),
     getOptionListValues(db, "RollerCassettes"),
     getOptionListValues(db, "RollerChannels"),
     getOptionListValues(db, "RollerLinks"),
     getOptionListValues(db, "RollerControlTypes"),
+    getOptionListValues(db, "RollerControlSides"),
+    getOptionListValues(db, "RollerChainLengths"),
+    getOptionListValues(db, "BlindFittings"),
+    getOptionListValues(db, "ComponentColours"),
+    getOptionListValues(db, "RollerBaseStyles"),
+    getOptionListValues(db, "RollerRolls"),
   ]);
 
   return (
@@ -42,6 +61,12 @@ export default async function NewRollerLineItemPage({ params }: { params: Promis
             channels={channels as string[]}
             links={links as string[]}
             controlTypes={controlTypes as string[]}
+            controlSides={controlSides as string[]}
+            chainLengths={chainLengths as string[]}
+            fittings={fittings as string[]}
+            componentColours={componentColours as string[]}
+            baseStyles={baseStyles as string[]}
+            rolls={rolls as string[]}
           />
         </div>
       </div>

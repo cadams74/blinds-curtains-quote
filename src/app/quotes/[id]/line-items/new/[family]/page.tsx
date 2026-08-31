@@ -24,11 +24,16 @@ export default async function NewGenericBlindLineItemPage({
   const [quote] = await db.select().from(schema.quotes).where(eq(schema.quotes.id, quoteId));
   if (!quote) notFound();
 
-  const [sources, controlTypes, bracketTrackOptions] = await Promise.all([
-    getOptionListValues(db, config.sourcesList),
-    getOptionListValues(db, config.controlTypesList),
-    config.bracketTrackList ? getOptionListValues(db, config.bracketTrackList) : Promise.resolve([]),
-  ]);
+  const [sources, controlTypes, bracketTrackOptions, controlSides, fittings, componentColours, baseStyles] =
+    await Promise.all([
+      getOptionListValues(db, config.sourcesList),
+      getOptionListValues(db, config.controlTypesList),
+      config.bracketTrackList ? getOptionListValues(db, config.bracketTrackList) : Promise.resolve([]),
+      getOptionListValues(db, config.controlSidesList),
+      getOptionListValues(db, "BlindFittings"),
+      getOptionListValues(db, "ComponentColours"),
+      config.baseStylesList ? getOptionListValues(db, config.baseStylesList) : Promise.resolve([]),
+    ]);
 
   return (
     <>
@@ -46,6 +51,10 @@ export default async function NewGenericBlindLineItemPage({
             controlTypes={controlTypes as string[]}
             bracketTrackOptions={config.bracketTrackList ? (bracketTrackOptions as string[]) : undefined}
             bracketTrackLabel={config.slug === "panel" ? "Track / panel config" : "Bracket / track"}
+            controlSides={controlSides as string[]}
+            fittings={fittings as string[]}
+            componentColours={componentColours as string[]}
+            baseStyles={config.baseStylesList ? (baseStyles as string[]) : undefined}
           />
         </div>
       </div>

@@ -20,6 +20,15 @@ export interface RollerLineItemInitial {
   cassette: string;
   sideChannels: boolean;
   linkChoice: string;
+  lhCutOut: string;
+  rhCutOut: string;
+  controlSide: string;
+  chainLength: string;
+  fitting: string;
+  componentColour: string;
+  fabricColour: string;
+  baseStyle: string;
+  roll: string;
 }
 
 interface Props {
@@ -30,6 +39,17 @@ interface Props {
   channels: string[];
   links: string[];
   controlTypes: string[];
+  // Non-pricing fields, extracted from the Blind Quote sheet the same way
+  // curtain's Fitting/Ctrl Side were -- none of these feed priceRollerBlind(),
+  // see blindFamilies.ts's comment for the full explanation. Chain Length and
+  // Roll are Roller-only in the source workbook (no other family has a
+  // ChainLengths/Rolls named range); Base Style is shared with Panel.
+  controlSides: string[];
+  chainLengths: string[];
+  fittings: string[];
+  componentColours: string[];
+  baseStyles: string[];
+  rolls: string[];
   // When set, the form edits this existing line item (via
   // updateRollerLineItem) instead of creating a new one -- see
   // /quotes/[id]/line-items/[lineItemId]/edit/page.tsx.
@@ -59,6 +79,12 @@ export function RollerLineItemForm({
   channels,
   links,
   controlTypes,
+  controlSides,
+  chainLengths,
+  fittings,
+  componentColours,
+  baseStyles,
+  rolls,
   lineItemId,
   initial,
 }: Props) {
@@ -74,6 +100,18 @@ export function RollerLineItemForm({
   const [sideChannels, setSideChannels] = useState(initial?.sideChannels ?? false);
   const [linkChoice, setLinkChoice] = useState(initial?.linkChoice ?? "");
   const [room, setRoom] = useState(initial?.room ?? "");
+  // Non-pricing fields -- see Props' comment above. No runPreview() call on
+  // any of these onChange handlers: none of them appear in roller.ts's
+  // pricing engine.
+  const [lhCutOut, setLhCutOut] = useState(initial?.lhCutOut ?? "");
+  const [rhCutOut, setRhCutOut] = useState(initial?.rhCutOut ?? "");
+  const [controlSide, setControlSide] = useState(initial?.controlSide ?? "");
+  const [chainLength, setChainLength] = useState(initial?.chainLength ?? "");
+  const [fitting, setFitting] = useState(initial?.fitting ?? "");
+  const [componentColour, setComponentColour] = useState(initial?.componentColour ?? "");
+  const [fabricColour, setFabricColour] = useState(initial?.fabricColour ?? "");
+  const [baseStyle, setBaseStyle] = useState(initial?.baseStyle ?? "");
+  const [roll, setRoll] = useState(initial?.roll ?? "");
 
   const [preview, setPreview] = useState<RollerBlindResult | null>(null);
   const [previewError, setPreviewError] = useState<string | null>(null);
@@ -269,6 +307,29 @@ export function RollerLineItemForm({
 
       <div className="field-row">
         <div className="field">
+          <label htmlFor="lhCutOut">LH cut out (mm)</label>
+          <input
+            id="lhCutOut"
+            name="lhCutOut"
+            type="number"
+            value={lhCutOut}
+            onChange={(e) => setLhCutOut(e.target.value)}
+          />
+        </div>
+        <div className="field">
+          <label htmlFor="rhCutOut">RH cut out (mm)</label>
+          <input
+            id="rhCutOut"
+            name="rhCutOut"
+            type="number"
+            value={rhCutOut}
+            onChange={(e) => setRhCutOut(e.target.value)}
+          />
+        </div>
+      </div>
+
+      <div className="field-row">
+        <div className="field">
           <label htmlFor="controlType">Control type</label>
           <select
             id="controlType"
@@ -363,6 +424,106 @@ export function RollerLineItemForm({
           />
           Side channels ({channels.join("/")})
         </label>
+      </div>
+
+      <div className="field-row">
+        <div className="field">
+          <label htmlFor="controlSide">Control side</label>
+          <select
+            id="controlSide"
+            name="controlSide"
+            value={controlSide}
+            onChange={(e) => setControlSide(e.target.value)}
+          >
+            <option value="">-- none --</option>
+            {controlSides.map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="field">
+          <label htmlFor="chainLength">Chain length</label>
+          <select
+            id="chainLength"
+            name="chainLength"
+            value={chainLength}
+            onChange={(e) => setChainLength(e.target.value)}
+          >
+            <option value="">-- none --</option>
+            {chainLengths.map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      <div className="field-row">
+        <div className="field">
+          <label htmlFor="fitting">Fitting</label>
+          <select id="fitting" name="fitting" value={fitting} onChange={(e) => setFitting(e.target.value)}>
+            <option value="">-- none --</option>
+            {fittings.map((f) => (
+              <option key={f} value={f}>
+                {f}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="field">
+          <label htmlFor="componentColour">Component colour</label>
+          <select
+            id="componentColour"
+            name="componentColour"
+            value={componentColour}
+            onChange={(e) => setComponentColour(e.target.value)}
+          >
+            <option value="">-- none --</option>
+            {componentColours.map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      <div className="field-row">
+        <div className="field">
+          <label htmlFor="fabricColour">Fabric colour</label>
+          <input
+            id="fabricColour"
+            name="fabricColour"
+            value={fabricColour}
+            onChange={(e) => setFabricColour(e.target.value)}
+          />
+        </div>
+        <div className="field">
+          <label htmlFor="baseStyle">Base style</label>
+          <select id="baseStyle" name="baseStyle" value={baseStyle} onChange={(e) => setBaseStyle(e.target.value)}>
+            <option value="">-- none --</option>
+            {baseStyles.map((b) => (
+              <option key={b} value={b}>
+                {b}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      <div className="field">
+        <label htmlFor="roll">Roll</label>
+        <select id="roll" name="roll" value={roll} onChange={(e) => setRoll(e.target.value)}>
+          <option value="">-- none --</option>
+          {rolls.map((r) => (
+            <option key={r} value={r}>
+              {r}
+            </option>
+          ))}
+        </select>
       </div>
 
       {previewError && <p className="error">{previewError}</p>}

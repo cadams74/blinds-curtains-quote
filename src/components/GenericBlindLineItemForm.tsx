@@ -17,6 +17,13 @@ export interface GenericBlindLineItemInitial {
   heightMm: string;
   controlType: string;
   bracketTrack: string;
+  lhCutOut: string;
+  rhCutOut: string;
+  controlSide: string;
+  fitting: string;
+  componentColour: string;
+  fabricColour: string;
+  baseStyle: string;
 }
 
 interface Props {
@@ -26,6 +33,13 @@ interface Props {
   controlTypes: string[];
   bracketTrackOptions?: string[]; // only Panel has a bracket/track list -- see blindFamilies.ts
   bracketTrackLabel?: string;
+  // Non-pricing fields shared by every blind form -- see blindFamilies.ts's
+  // comment on controlSidesList/baseStylesList for why these don't feed the
+  // price preview the way sources/controlTypes/bracketTrackOptions do.
+  controlSides: string[];
+  fittings: string[];
+  componentColours: string[];
+  baseStyles?: string[]; // only Panel has a base-style list -- see blindFamilies.ts
   // When set, the form edits this existing line item (via
   // updateGenericBlindLineItem) instead of creating a new one -- see
   // /quotes/[id]/line-items/[lineItemId]/edit/page.tsx.
@@ -54,6 +68,10 @@ export function GenericBlindLineItemForm({
   controlTypes,
   bracketTrackOptions,
   bracketTrackLabel = "Bracket / track",
+  controlSides,
+  fittings,
+  componentColours,
+  baseStyles,
   lineItemId,
   initial,
 }: Props) {
@@ -76,6 +94,16 @@ export function GenericBlindLineItemForm({
   );
   const [bracketTrack, setBracketTrack] = useState(initial?.bracketTrack ?? "");
   const [room, setRoom] = useState(initial?.room ?? "");
+  // Non-pricing fields -- see Props' comment above. No runPreview() call on
+  // any of these onChange handlers: unlike fabricSource/controlType/etc.,
+  // none of them appear in genericBlind.ts's pricing engine.
+  const [lhCutOut, setLhCutOut] = useState(initial?.lhCutOut ?? "");
+  const [rhCutOut, setRhCutOut] = useState(initial?.rhCutOut ?? "");
+  const [controlSide, setControlSide] = useState(initial?.controlSide ?? "");
+  const [fitting, setFitting] = useState(initial?.fitting ?? "");
+  const [componentColour, setComponentColour] = useState(initial?.componentColour ?? "");
+  const [fabricColour, setFabricColour] = useState(initial?.fabricColour ?? "");
+  const [baseStyle, setBaseStyle] = useState(initial?.baseStyle ?? "");
 
   const [preview, setPreview] = useState<GenericBlindResult | null>(null);
   const [previewError, setPreviewError] = useState<string | null>(null);
@@ -258,6 +286,29 @@ export function GenericBlindLineItemForm({
 
       <div className="field-row">
         <div className="field">
+          <label htmlFor="lhCutOut">LH cut out (mm)</label>
+          <input
+            id="lhCutOut"
+            name="lhCutOut"
+            type="number"
+            value={lhCutOut}
+            onChange={(e) => setLhCutOut(e.target.value)}
+          />
+        </div>
+        <div className="field">
+          <label htmlFor="rhCutOut">RH cut out (mm)</label>
+          <input
+            id="rhCutOut"
+            name="rhCutOut"
+            type="number"
+            value={rhCutOut}
+            onChange={(e) => setRhCutOut(e.target.value)}
+          />
+        </div>
+      </div>
+
+      <div className="field-row">
+        <div className="field">
           <label htmlFor="controlType">Control type</label>
           {controlTypes.length === 1 ? (
             <>
@@ -305,6 +356,78 @@ export function GenericBlindLineItemForm({
           </div>
         )}
       </div>
+
+      <div className="field-row">
+        <div className="field">
+          <label htmlFor="controlSide">Control side</label>
+          <select
+            id="controlSide"
+            name="controlSide"
+            value={controlSide}
+            onChange={(e) => setControlSide(e.target.value)}
+          >
+            <option value="">-- none --</option>
+            {controlSides.map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="field">
+          <label htmlFor="fitting">Fitting</label>
+          <select id="fitting" name="fitting" value={fitting} onChange={(e) => setFitting(e.target.value)}>
+            <option value="">-- none --</option>
+            {fittings.map((f) => (
+              <option key={f} value={f}>
+                {f}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      <div className="field-row">
+        <div className="field">
+          <label htmlFor="componentColour">Component colour</label>
+          <select
+            id="componentColour"
+            name="componentColour"
+            value={componentColour}
+            onChange={(e) => setComponentColour(e.target.value)}
+          >
+            <option value="">-- none --</option>
+            {componentColours.map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="field">
+          <label htmlFor="fabricColour">Fabric colour</label>
+          <input
+            id="fabricColour"
+            name="fabricColour"
+            value={fabricColour}
+            onChange={(e) => setFabricColour(e.target.value)}
+          />
+        </div>
+      </div>
+
+      {baseStyles && baseStyles.length > 0 && (
+        <div className="field">
+          <label htmlFor="baseStyle">Base style</label>
+          <select id="baseStyle" name="baseStyle" value={baseStyle} onChange={(e) => setBaseStyle(e.target.value)}>
+            <option value="">-- none --</option>
+            {baseStyles.map((b) => (
+              <option key={b} value={b}>
+                {b}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
 
       {previewError && <p className="error">{previewError}</p>}
 

@@ -28,6 +28,16 @@ export interface BlindFamilyUiConfig {
   sourcesList: string;
   controlTypesList: string;
   bracketTrackList?: string;
+  // Non-pricing fields, extracted from the Blind Quote sheet the same way
+  // curtain's Fitting/Ctrl Side were (see CurtainLineItemForm.tsx and
+  // actions.ts) -- present on every row in the source sheet but never fed
+  // into priceGenericBlind()/priceRollerBlind() because they don't appear
+  // in any of the AR:BA pricing-formula columns. controlSidesList is a
+  // per-family named range (e.g. VenetianControlSides); baseStylesList only
+  // exists for Roller and Panel in the source workbook's Blind_Settings --
+  // the other four families have no base-style dropdown at all.
+  controlSidesList: string;
+  baseStylesList?: string;
 }
 
 export const GENERIC_BLIND_FAMILIES: BlindFamilyUiConfig[] = [
@@ -37,6 +47,7 @@ export const GENERIC_BLIND_FAMILIES: BlindFamilyUiConfig[] = [
     pricingFamily: "Venetian",
     sourcesList: "VenetianSources",
     controlTypesList: "VenetianControlTypes",
+    controlSidesList: "VenetianControlSides",
   },
   {
     slug: "roman",
@@ -44,6 +55,7 @@ export const GENERIC_BLIND_FAMILIES: BlindFamilyUiConfig[] = [
     pricingFamily: "Roman",
     sourcesList: "RomanSources",
     controlTypesList: "RomanControlTypes",
+    controlSidesList: "RomanControlSides",
   },
   {
     slug: "panel",
@@ -52,6 +64,8 @@ export const GENERIC_BLIND_FAMILIES: BlindFamilyUiConfig[] = [
     sourcesList: "PanelSources",
     controlTypesList: "PanelControlTypes",
     bracketTrackList: "PanelBrackets",
+    controlSidesList: "PanelControlSides",
+    baseStylesList: "PanelBaseStyles",
   },
   {
     slug: "verishade",
@@ -59,6 +73,7 @@ export const GENERIC_BLIND_FAMILIES: BlindFamilyUiConfig[] = [
     pricingFamily: "Verishade",
     sourcesList: "VerishadeSources",
     controlTypesList: "VerishadeControlTypes",
+    controlSidesList: "VerishadeControlSides",
   },
   {
     slug: "vertical",
@@ -66,6 +81,7 @@ export const GENERIC_BLIND_FAMILIES: BlindFamilyUiConfig[] = [
     pricingFamily: "Vertical",
     sourcesList: "VerticalSources",
     controlTypesList: "VerticalControlTypes",
+    controlSidesList: "VerticalControlSides",
   },
 ];
 
