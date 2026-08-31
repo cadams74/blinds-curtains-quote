@@ -283,6 +283,46 @@ th {
   height: 22px;
 }
 
+/* Curtain Grid / Blind Grid -- a dense, spreadsheet-like review table
+   mirroring the source workbook's own "Curtain Quote"/"Blind Quote" sheets
+   (one row per line item, every column that sheet shows across the top).
+   Deliberately its own compact styling rather than the app's normal
+   `table` rules -- 20+ columns need real estate the standard 14px/10px-8px
+   table can't spare, and a sticky header keeps column labels visible while
+   scrolling a long quote. See curtain-grid/page.tsx and blind-grid/page.tsx. */
+.grid-scroll {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+}
+.grid-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+.grid-table th,
+.grid-table td {
+  text-align: left;
+  padding: 5px 8px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.grid-table th {
+  position: sticky;
+  top: 0;
+  background: var(--bg);
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  border-bottom: 2px solid var(--ink);
+}
+.grid-table tbody tr:hover {
+  background: #f7f8fa;
+}
+
 /* Every page in the app shares this stylesheet, so scope the print rule to
    .no-print rather than assuming only the install sheet ever prints. */
 @media print {
@@ -297,5 +337,18 @@ th {
   }
   .install-card {
     box-shadow: none;
+  }
+  /* Curtain Grid / Blind Grid have far more columns than fit a printed
+     page at screen size -- shrink aggressively and drop the scroll
+     container's own border so browser print scaling has the best chance
+     of fitting the sheet-mirroring table on the page. Still not guaranteed
+     to fit every column at every print size; the on-screen scrollable view
+     is the primary way this page is meant to be used (see page.tsx). */
+  .grid-table {
+    font-size: 8px;
+  }
+  .grid-scroll {
+    overflow-x: visible;
+    border: none;
   }
 }

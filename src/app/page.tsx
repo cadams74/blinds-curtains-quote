@@ -4,6 +4,15 @@ import { desc, eq, sql } from "drizzle-orm";
 import { db } from "@/db/client";
 import * as schema from "@/db/schema";
 import { Topbar } from "@/components/Topbar";
+import { GENERIC_BLIND_FAMILIES } from "@/lib/blindFamilies";
+
+// Every family slug that shares the Blind Quote grid (Roller + the five
+// genericBlind.ts families) -- see blind-grid/page.tsx. Honeycomb excluded,
+// same reason as everywhere else it's excluded: no live quoting route yet.
+const BLIND_FAMILY_SLUGS = ["roller", ...GENERIC_BLIND_FAMILIES.map((f) => f.slug)];
+const BLIND_SLUGS_SQL = sql.raw(
+  `array[${BLIND_FAMILY_SLUGS.map((s) => `'${s}'`).join(",")}]`
+);
 
 export const dynamic = "force-dynamic";
 
@@ -17,11 +26,12 @@ export default async function DashboardPage() {
       createdAt: schema.quotes.createdAt,
       total: sql<string>`coalesce(sum(${schema.quoteLineItems.finalPrice}), 0)`,
       lineCount: sql<number>`count(${schema.quoteLineItems.id})`,
-      // Drives which per-quote install-document buttons show below the row
-      // -- Curtain Install only makes sense for a quote that actually has
-      // curtain line items. Blind Install (and whatever else follows) will
-      // need its own count the same way once that document exists.
+      // Drives which per-quote document/grid buttons show below the row --
+      // each button only makes sense for a quote that actually has line
+      // items of the relevant family. Whatever comes next (Blind Install
+      // etc.) gets its own count the same way.
       curtainCount: sql<number>`count(*) filter (where ${schema.quoteLineItems.familySlug} = 's_wave_sheer')`,
+      blindCount: sql<number>`count(*) filter (where ${schema.quoteLineItems.familySlug} = any(${BLIND_SLUGS_SQL}))`,
     })
     .from(schema.quotes)
     .leftJoin(schema.quoteLineItems, eq(schema.quoteLineItems.quoteId, schema.quotes.id))
@@ -59,13 +69,13 @@ export default async function DashboardPage() {
               <tbody>
                 {quotes.map((q) => {
                   const hasCurtains = Number(q.curtainCount) > 0;
-                  // More install-document buttons (Blind Install etc.) join
-                  // this row the same way -- one more `has...` flag above,
-                  // one more conditional Link below. The row itself is
-                  // skipped entirely when a quote qualifies for none of them
-                  // yet, rather than rendering an empty strip under every
-                  // quote.
-                  const hasInstallDocs = hasCurtains;
+                  const hasBlinds = Number(q.blindCount) > 0;
+                  // More install-document/grid buttons join this row the
+                  // same way -- one more `has...` flag above, one more
+                  // conditional Link below. The row itself is skipped
+                  // entirely when a quote qualifies for none of them,
+                  // rather than rendering an empty strip under every quote.
+                  const hasInstallDocs = hasCurtains || hasBlinds;
                   return (
                     <Fragment key={q.id}>
                       <tr>
@@ -91,6 +101,24 @@ export default async function DashboardPage() {
                                   style={{ fontSize: 13, padding: "4px 10px" }}
                                 >
                                   Curtain Install
+                                </Link>
+                              )}
+                              {hasCurtains && (
+                                <Link
+                                  href={`/quotes/${q.id}/curtain-grid`}
+                                  className="btn secondary"
+                                  style={{ fontSize: 13, padding: "4px 10px" }}
+                                >
+                                  Curtain Grid
+                                </Link>
+                              )}
+                              {hasBlinds && (
+                                <Link
+                                  href={`/quotes/${q.id}/blind-grid`}
+                                  className="btn secondary"
+                                  style={{ fontSize: 13, padding: "4px 10px" }}
+                                >
+                                  Blind Grid
                                 </Link>
                               )}
                             </div>
