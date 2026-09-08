@@ -88,3 +88,12 @@ export const GENERIC_BLIND_FAMILIES: BlindFamilyUiConfig[] = [
 export function getBlindFamilyConfig(slug: string): BlindFamilyUiConfig | undefined {
   return GENERIC_BLIND_FAMILIES.find((f) => f.slug === slug);
 }
+
+// Every family_slug that quotes as a blind -- Roller plus the five
+// genericBlind.ts families above. Honeycomb excluded, same reason as
+// everywhere else it's excluded: no live quoting route yet (see app
+// README). Shared by anything that needs to treat "is this line item a
+// blind" as one check -- blind-grid/page.tsx's line-item query and
+// quoteViews.ts's Blind Grid predicate, rather than each redefining the
+// same list.
+export const ALL_BLIND_FAMILY_SLUGS = ["roller", ...GENERIC_BLIND_FAMILIES.map((f) => f.slug)];

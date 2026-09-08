@@ -5,7 +5,7 @@ import { db } from "@/db/client";
 import * as schema from "@/db/schema";
 import { Topbar } from "@/components/Topbar";
 import { PrintButton } from "@/components/PrintButton";
-import { GENERIC_BLIND_FAMILIES } from "@/lib/blindFamilies";
+import { ALL_BLIND_FAMILY_SLUGS, GENERIC_BLIND_FAMILIES } from "@/lib/blindFamilies";
 
 export const dynamic = "force-dynamic";
 
@@ -25,8 +25,6 @@ export const dynamic = "force-dynamic";
 // not been filled in -- there's no meaningful way to tell them apart from
 // stored attributes alone, and neither case should look like missing data
 // entry.
-const BLIND_FAMILY_SLUGS = ["roller", ...GENERIC_BLIND_FAMILIES.map((f) => f.slug)];
-
 const BLIND_TYPE_LABELS: Record<string, string> = {
   roller: "Roller",
   ...Object.fromEntries(GENERIC_BLIND_FAMILIES.map((f) => [f.slug, f.pricingFamily])),
@@ -73,7 +71,7 @@ export default async function BlindGridPage({ params }: { params: Promise<{ id: 
   const lineItems = await db
     .select()
     .from(schema.quoteLineItems)
-    .where(and(eq(schema.quoteLineItems.quoteId, quoteId), inArray(schema.quoteLineItems.familySlug, BLIND_FAMILY_SLUGS)))
+    .where(and(eq(schema.quoteLineItems.quoteId, quoteId), inArray(schema.quoteLineItems.familySlug, ALL_BLIND_FAMILY_SLUGS)))
     .orderBy(asc(schema.quoteLineItems.lineNumber));
 
   return (

@@ -6,6 +6,7 @@ import * as schema from "@/db/schema";
 import { Topbar } from "@/components/Topbar";
 import { deleteLineItem, duplicateLineItem, setPriceOverride } from "@/lib/actions";
 import { GENERIC_BLIND_FAMILIES } from "@/lib/blindFamilies";
+import { QUOTE_VIEWS } from "@/lib/quoteViews";
 
 export const dynamic = "force-dynamic";
 
@@ -63,6 +64,13 @@ export default async function QuoteDetailPage({ params }: { params: Promise<{ id
 
   const total = lineItems.reduce((sum, li) => sum + Number(li.finalPrice), 0);
 
+  // Which document/grid view buttons (Curtain Install, Curtain Grid, Blind
+  // Grid, and whatever joins them later -- Blind Install etc.) apply to
+  // this quote's actual line items -- see quoteViews.ts. These used to sit
+  // on the dashboard under each quote; Clive asked for them here instead,
+  // at the top of the quote they belong to.
+  const applicableViews = QUOTE_VIEWS.filter((v) => v.appliesTo(lineItems));
+
   return (
     <>
       <Topbar />
@@ -73,6 +81,20 @@ export default async function QuoteDetailPage({ params }: { params: Promise<{ id
               {quote.quoteNumber} <span className="badge">{quote.status}</span>
             </h1>
             <p className="muted">{quote.customerName}</p>
+            {applicableViews.length > 0 && (
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 8 }}>
+                {applicableViews.map((v) => (
+                  <Link
+                    key={v.key}
+                    href={`/quotes/${quoteId}/${v.path}`}
+                    className="btn secondary"
+                    style={{ fontSize: 13, padding: "4px 10px" }}
+                  >
+                    {v.label}
+                  </Link>
+                ))}
+              </div>
+            )}
           </div>
           <div style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
             <a className="btn secondary" href={`/quotes/${quoteId}/pdf`} target="_blank" rel="noreferrer">
