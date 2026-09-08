@@ -571,6 +571,11 @@ export async function addCurtainLineItem(quoteId: number, formData: FormData) {
   // Curtain Install document.
   const fitting = String(formData.get("fitting") ?? "");
   const ctrlSide = String(formData.get("ctrlSide") ?? "");
+  // CM ("Curtain Quote"!AA, Y/D/N) -- see CurtainLineItemForm's Props
+  // comment; not a pricing input, carried through for the Curtain Making
+  // document's "Drop" stat (CurtainInstall shows makeHeightCm unconditionally,
+  // but the source sheet gates it on CM = "D" -- see curtain-making/page.tsx).
+  const cm = String(formData.get("cm") ?? "");
   const room = String(formData.get("room") ?? "").trim() || null;
 
   const curtainData = await loadCurtainDataSource(db);
@@ -597,7 +602,7 @@ export async function addCurtainLineItem(quoteId: number, formData: FormData) {
     lineNumber: (maxLine ?? 0) + 1,
     room,
     familySlug: "s_wave_sheer",
-    attributes: { ...input, fabricSupplier, fabricName, fitting, ctrlSide, enteredBy: user.email },
+    attributes: { ...input, fabricSupplier, fabricName, fitting, ctrlSide, cm, enteredBy: user.email },
     priceBreakdown: result.breakdown,
     calculatedPrice: String(result.breakdown.calculatedPrice),
     finalPrice: String(result.breakdown.calculatedPrice),
@@ -634,6 +639,8 @@ export async function updateCurtainLineItem(quoteId: number, lineItemId: number,
   // Curtain Install document.
   const fitting = String(formData.get("fitting") ?? "");
   const ctrlSide = String(formData.get("ctrlSide") ?? "");
+  // CM ("Curtain Quote"!AA, Y/D/N) -- see addCurtainLineItem's comment above.
+  const cm = String(formData.get("cm") ?? "");
   const room = String(formData.get("room") ?? "").trim() || null;
 
   const curtainData = await loadCurtainDataSource(db);
@@ -653,7 +660,7 @@ export async function updateCurtainLineItem(quoteId: number, lineItemId: number,
   await updateLineItemRow(quoteId, lineItemId, {
     room,
     familySlug: "s_wave_sheer",
-    attributes: { ...input, fabricSupplier, fabricName, fitting, ctrlSide, enteredBy: user.email },
+    attributes: { ...input, fabricSupplier, fabricName, fitting, ctrlSide, cm, enteredBy: user.email },
     priceBreakdown: result.breakdown,
     calculatedPrice: result.breakdown.calculatedPrice,
   });

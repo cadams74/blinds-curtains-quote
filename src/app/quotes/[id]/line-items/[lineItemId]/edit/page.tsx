@@ -181,6 +181,7 @@ export default async function EditLineItemPage({
                 stack: str(attrs.stack),
                 fitting: str(attrs.fitting),
                 ctrlSide: str(attrs.ctrlSide),
+                cm: str(attrs.cm),
                 leftReturnCm: str(attrs.leftReturnCm),
                 rightReturnCm: str(attrs.rightReturnCm),
                 overlapCm: str(attrs.overlapCm),

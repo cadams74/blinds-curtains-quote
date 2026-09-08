@@ -23,6 +23,7 @@ export interface CurtainLineItemInitial {
   stack: string;
   fitting: string;
   ctrlSide: string;
+  cm: string;
   leftReturnCm: string;
   rightReturnCm: string;
   overlapCm: string;
@@ -49,6 +50,12 @@ interface Props {
   // blank for every curtain ever quoted.
   fittings: string[];
   ctrlSides: string[];
+  // CM ("Curtain Quote"!AA3:AA42, source of the Curtain Making sheet's
+  // "Drop" stat) is a hardcoded Y/D/N data-validation list in the source
+  // workbook itself, not a named range -- so, like liningInput's U/L
+  // options below, it's a literal option list here rather than another
+  // fetched prop. Doesn't feed priceCurtain() either (same as
+  // fitting/ctrlSide above), it's purely carried through to attributes.
   suppliers: string[];
   // When set, the form edits this existing line item (via
   // updateCurtainLineItem) instead of creating a new one -- see
@@ -117,6 +124,7 @@ export function CurtainLineItemForm({
   const [stack, setStack] = useState(initial?.stack ?? "");
   const [fitting, setFitting] = useState(initial?.fitting ?? "");
   const [ctrlSide, setCtrlSide] = useState(initial?.ctrlSide ?? "");
+  const [cm, setCm] = useState(initial?.cm ?? "");
   const [fabricSupplier, setFabricSupplier] = useState(initial?.fabricSupplier ?? "");
   const [fabricOptions, setFabricOptions] = useState<{ name: string; pricePerMetre: number | null }[]>([]);
   const [fabricName, setFabricName] = useState(initial?.fabricName ?? "");
@@ -529,25 +537,36 @@ export function CurtainLineItemForm({
         </div>
       </div>
 
-      <div className="field">
-        <label htmlFor="stack">Stack</label>
-        <select
-          id="stack"
-          name="stack"
-          value={stack}
-          onChange={(e) => {
-            setStack(e.target.value);
-            runPreview({ stack: e.target.value });
-          }}
-          required
-        >
-          <option value="">-- select --</option>
-          {stacks.map((s) => (
-            <option key={s} value={s}>
-              {s}
-            </option>
-          ))}
-        </select>
+      <div className="field-row">
+        <div className="field">
+          <label htmlFor="stack">Stack</label>
+          <select
+            id="stack"
+            name="stack"
+            value={stack}
+            onChange={(e) => {
+              setStack(e.target.value);
+              runPreview({ stack: e.target.value });
+            }}
+            required
+          >
+            <option value="">-- select --</option>
+            {stacks.map((s) => (
+              <option key={s} value={s}>
+                {s}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="field">
+          <label htmlFor="cm">CM</label>
+          <select id="cm" name="cm" value={cm} onChange={(e) => setCm(e.target.value)} required>
+            <option value="">-- select --</option>
+            <option value="Y">Y</option>
+            <option value="D">D</option>
+            <option value="N">N</option>
+          </select>
+        </div>
       </div>
 
       <p className="muted" style={{ fontSize: 13, marginBottom: 4 }}>

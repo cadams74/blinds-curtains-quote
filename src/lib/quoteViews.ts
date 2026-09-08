@@ -45,6 +45,12 @@ export const QUOTE_VIEWS: QuoteViewConfig[] = [
     appliesTo: hasBlindLine,
   },
   {
+    key: "curtain-making",
+    label: "Curtain Making",
+    path: "curtain-making",
+    appliesTo: hasCurtainLine,
+  },
+  {
     key: "curtain-grid",
     label: "Curtain Grid",
     path: "curtain-grid",
