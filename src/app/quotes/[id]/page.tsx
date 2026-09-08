@@ -198,20 +198,12 @@ export default async function QuoteDetailPage({ params }: { params: Promise<{ id
                               Duplicate
                             </button>
                           </form>
-                          <details>
-                            <summary
-                              className="btn secondary"
-                              style={{ ...lineItemActionStyle, listStyle: "none" }}
-                            >
-                              Override
-                            </summary>
-                            <PriceOverrideForm
-                              quoteId={quoteId}
-                              lineItemId={li.id}
-                              priceOverride={li.priceOverride}
-                              priceOverrideReason={li.priceOverrideReason}
-                            />
-                          </details>
+                          <PriceOverrideForm
+                            quoteId={quoteId}
+                            lineItemId={li.id}
+                            priceOverride={li.priceOverride}
+                            priceOverrideReason={li.priceOverrideReason}
+                          />
                           <form action={deleteLineItem.bind(null, quoteId, li.id)}>
                             <button className="btn danger" type="submit" style={lineItemActionStyle}>
                               Remove
