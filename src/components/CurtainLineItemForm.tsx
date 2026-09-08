@@ -56,6 +56,10 @@ interface Props {
   // options below, it's a literal option list here rather than another
   // fetched prop. Doesn't feed priceCurtain() either (same as
   // fitting/ctrlSide above), it's purely carried through to attributes.
+  // Shown to the estimator as "Check Measure" (Clive's own term for it --
+  // whether the measurements need to be checked again before the quote is
+  // finalised and the curtain made), last in the field order since it's
+  // the last thing to confirm before submitting.
   suppliers: string[];
   // When set, the form edits this existing line item (via
   // updateCurtainLineItem) instead of creating a new one -- see
@@ -537,36 +541,25 @@ export function CurtainLineItemForm({
         </div>
       </div>
 
-      <div className="field-row">
-        <div className="field">
-          <label htmlFor="stack">Stack</label>
-          <select
-            id="stack"
-            name="stack"
-            value={stack}
-            onChange={(e) => {
-              setStack(e.target.value);
-              runPreview({ stack: e.target.value });
-            }}
-            required
-          >
-            <option value="">-- select --</option>
-            {stacks.map((s) => (
-              <option key={s} value={s}>
-                {s}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="field">
-          <label htmlFor="cm">CM</label>
-          <select id="cm" name="cm" value={cm} onChange={(e) => setCm(e.target.value)} required>
-            <option value="">-- select --</option>
-            <option value="Y">Y</option>
-            <option value="D">D</option>
-            <option value="N">N</option>
-          </select>
-        </div>
+      <div className="field">
+        <label htmlFor="stack">Stack</label>
+        <select
+          id="stack"
+          name="stack"
+          value={stack}
+          onChange={(e) => {
+            setStack(e.target.value);
+            runPreview({ stack: e.target.value });
+          }}
+          required
+        >
+          <option value="">-- select --</option>
+          {stacks.map((s) => (
+            <option key={s} value={s}>
+              {s}
+            </option>
+          ))}
+        </select>
       </div>
 
       <p className="muted" style={{ fontSize: 13, marginBottom: 4 }}>
@@ -616,6 +609,16 @@ export function CurtainLineItemForm({
           }}
           required
         />
+      </div>
+
+      <div className="field">
+        <label htmlFor="cm">Check Measure</label>
+        <select id="cm" name="cm" value={cm} onChange={(e) => setCm(e.target.value)} required>
+          <option value="">-- select --</option>
+          <option value="Y">Y</option>
+          <option value="D">D</option>
+          <option value="N">N</option>
+        </select>
       </div>
 
       {previewError && <p className="error">{previewError}</p>}
