@@ -4,9 +4,10 @@ import { asc, eq } from "drizzle-orm";
 import { db } from "@/db/client";
 import * as schema from "@/db/schema";
 import { Topbar } from "@/components/Topbar";
-import { deleteLineItem, duplicateLineItem, setPriceOverride } from "@/lib/actions";
+import { deleteLineItem, duplicateLineItem } from "@/lib/actions";
 import { GENERIC_BLIND_FAMILIES } from "@/lib/blindFamilies";
 import { QUOTE_VIEWS } from "@/lib/quoteViews";
+import { PriceOverrideForm } from "@/components/PriceOverrideForm";
 
 export const dynamic = "force-dynamic";
 
@@ -204,30 +205,12 @@ export default async function QuoteDetailPage({ params }: { params: Promise<{ id
                             >
                               Override
                             </summary>
-                            <form
-                              action={setPriceOverride.bind(null, quoteId, li.id)}
-                              style={{ marginTop: 8, minWidth: 220, textAlign: "left" }}
-                            >
-                              <div className="field">
-                                <label>Override price ($)</label>
-                                <input
-                                  name="priceOverride"
-                                  type="number"
-                                  step="0.01"
-                                  defaultValue={li.priceOverride ?? ""}
-                                />
-                              </div>
-                              <div className="field">
-                                <label>Reason</label>
-                                <input
-                                  name="priceOverrideReason"
-                                  defaultValue={li.priceOverrideReason ?? ""}
-                                />
-                              </div>
-                              <button className="btn secondary" type="submit" style={{ fontSize: 13 }}>
-                                Save
-                              </button>
-                            </form>
+                            <PriceOverrideForm
+                              quoteId={quoteId}
+                              lineItemId={li.id}
+                              priceOverride={li.priceOverride}
+                              priceOverrideReason={li.priceOverrideReason}
+                            />
                           </details>
                           <form action={deleteLineItem.bind(null, quoteId, li.id)}>
                             <button className="btn danger" type="submit" style={lineItemActionStyle}>
