@@ -76,7 +76,7 @@ export default async function QuoteDetailPage({ params }: { params: Promise<{ id
       <Topbar />
       <div className="page">
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }}>
-          <div>
+          <div style={{ minWidth: 0 }}>
             <h1>
               {quote.quoteNumber} <span className="badge">{quote.status}</span>
             </h1>
@@ -96,12 +96,18 @@ export default async function QuoteDetailPage({ params }: { params: Promise<{ id
               </div>
             )}
           </div>
-          <div style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
-            <a className="btn secondary" href={`/quotes/${quoteId}/pdf`} target="_blank" rel="noreferrer">
+          <div style={{ display: "flex", gap: 8, alignItems: "flex-start", flexShrink: 0 }}>
+            <a
+              className="btn secondary"
+              href={`/quotes/${quoteId}/pdf`}
+              target="_blank"
+              rel="noreferrer"
+              style={{ whiteSpace: "nowrap" }}
+            >
               Download PDF
             </a>
-            <details style={{ position: "relative" }}>
-              <summary className="btn" style={{ cursor: "pointer", listStyle: "none" }}>
+            <details style={{ position: "relative", flexShrink: 0 }}>
+              <summary className="btn" style={{ cursor: "pointer", listStyle: "none", whiteSpace: "nowrap" }}>
                 Add line item
               </summary>
               <div
