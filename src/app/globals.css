@@ -238,7 +238,11 @@ th {
 }
 .install-stats {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  /* auto-fit rather than a fixed column count -- Curtain Install has 7
+     stat tiles, Blind Install has 5, and neither should leave visibly
+     empty trailing columns the way a hardcoded repeat(7, 1fr) would for
+     the shorter one. */
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
   gap: 8px;
   margin-bottom: 16px;
 }

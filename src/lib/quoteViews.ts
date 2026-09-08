@@ -1,6 +1,6 @@
 /**
- * The per-quote document/grid views (Curtain Install, Curtain Grid, Blind
- * Grid, and whatever comes next -- Blind Install etc.) that show as a row
+ * The per-quote document/grid views (Curtain Install, Blind Install,
+ * Curtain Grid, Blind Grid, and whatever comes next) that show as a row
  * of buttons at the top of a quote's own page (quotes/[id]/page.tsx), each
  * one only when the quote actually has line items it applies to.
  *
@@ -37,6 +37,12 @@ export const QUOTE_VIEWS: QuoteViewConfig[] = [
     label: "Curtain Install",
     path: "curtain-install",
     appliesTo: hasCurtainLine,
+  },
+  {
+    key: "blind-install",
+    label: "Blind Install",
+    path: "blind-install",
+    appliesTo: hasBlindLine,
   },
   {
     key: "curtain-grid",

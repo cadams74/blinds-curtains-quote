@@ -97,3 +97,13 @@ export function getBlindFamilyConfig(slug: string): BlindFamilyUiConfig | undefi
 // quoteViews.ts's Blind Grid predicate, rather than each redefining the
 // same list.
 export const ALL_BLIND_FAMILY_SLUGS = ["roller", ...GENERIC_BLIND_FAMILIES.map((f) => f.slug)];
+
+// The source workbook's own "Blind Type" values (Blind_Settings!$A$2:$A$9,
+// the BlindTypes named range) keyed by our URL slug -- matches exactly,
+// since pricingFamily was chosen to match this list in the first place.
+// Shared by blind-grid/page.tsx and blind-install/page.tsx, both of which
+// need to show "Roller"/"Venetian"/etc. rather than the internal slug.
+export const BLIND_TYPE_LABELS: Record<string, string> = {
+  roller: "Roller",
+  ...Object.fromEntries(GENERIC_BLIND_FAMILIES.map((f) => [f.slug, f.pricingFamily])),
+};

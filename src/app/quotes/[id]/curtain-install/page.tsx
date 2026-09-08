@@ -71,6 +71,14 @@ export default async function CurtainInstallPage({ params }: { params: Promise<{
 
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
           <div>
+            {/* eslint-disable-next-line @next/next/no-img-element -- same
+                static /public asset Topbar.tsx uses; a letterhead on a
+                printed page, not an optimizable content image. */}
+            <img
+              src="/logo.png"
+              alt="Unique Curtains + Blinds"
+              style={{ height: 36, display: "block", marginBottom: 12 }}
+            />
             <h1 style={{ marginBottom: 2 }}>Curtain Installation Sheet</h1>
             <p className="muted" style={{ margin: 0 }}>
               {quote.quoteNumber} -- {quote.customerName}

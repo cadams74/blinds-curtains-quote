@@ -5,7 +5,7 @@ import { db } from "@/db/client";
 import * as schema from "@/db/schema";
 import { Topbar } from "@/components/Topbar";
 import { PrintButton } from "@/components/PrintButton";
-import { ALL_BLIND_FAMILY_SLUGS, GENERIC_BLIND_FAMILIES } from "@/lib/blindFamilies";
+import { ALL_BLIND_FAMILY_SLUGS, BLIND_TYPE_LABELS } from "@/lib/blindFamilies";
 
 export const dynamic = "force-dynamic";
 
@@ -25,11 +25,6 @@ export const dynamic = "force-dynamic";
 // not been filled in -- there's no meaningful way to tell them apart from
 // stored attributes alone, and neither case should look like missing data
 // entry.
-const BLIND_TYPE_LABELS: Record<string, string> = {
-  roller: "Roller",
-  ...Object.fromEntries(GENERIC_BLIND_FAMILIES.map((f) => [f.slug, f.pricingFamily])),
-};
-
 interface BlindAttrs {
   fabricSource?: string;
   fabricName?: string;
