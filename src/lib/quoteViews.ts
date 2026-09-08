@@ -31,6 +31,19 @@ const hasCurtainLine = (lineItems: QuoteLineItemFamily[]) =>
 const hasBlindLine = (lineItems: QuoteLineItemFamily[]) =>
   lineItems.some((li) => ALL_BLIND_FAMILY_SLUGS.includes(li.familySlug));
 
+// Roller Order Form aggregates Roller + Panel + Vertical in the source
+// workbook (see blind-roller-order/page.tsx's header comment) -- Verishade
+// has no order form anywhere in the source workbook at all, so it's never
+// included in any of these three predicates.
+const hasRollerOrderLine = (lineItems: QuoteLineItemFamily[]) =>
+  lineItems.some((li) => ["roller", "panel", "vertical"].includes(li.familySlug));
+
+const hasVenetianLine = (lineItems: QuoteLineItemFamily[]) =>
+  lineItems.some((li) => li.familySlug === "venetian");
+
+const hasRomanLine = (lineItems: QuoteLineItemFamily[]) =>
+  lineItems.some((li) => li.familySlug === "roman");
+
 export const QUOTE_VIEWS: QuoteViewConfig[] = [
   {
     key: "curtain-install",
@@ -73,5 +86,23 @@ export const QUOTE_VIEWS: QuoteViewConfig[] = [
     label: "Blind Grid",
     path: "blind-grid",
     appliesTo: hasBlindLine,
+  },
+  {
+    key: "blind-roller-order",
+    label: "Roller Order",
+    path: "blind-roller-order",
+    appliesTo: hasRollerOrderLine,
+  },
+  {
+    key: "blind-venetian-order",
+    label: "Venetian Order",
+    path: "blind-venetian-order",
+    appliesTo: hasVenetianLine,
+  },
+  {
+    key: "blind-roman-order",
+    label: "Roman Order",
+    path: "blind-roman-order",
+    appliesTo: hasRomanLine,
   },
 ];
