@@ -357,30 +357,25 @@ th {
     page: grid-landscape;
   }
   /* Curtain Grid / Blind Grid have far more columns than fit a printed
-     page at screen size -- landscape (above) buys real width back, and the
-     rest is spent making every column actually use the printable width
-     rather than overflowing it: table-layout: fixed divides the full page
-     width evenly across every column instead of sizing each to its
-     content, and allowing text to wrap (rather than the on-screen
-     nowrap) means a long fabric name or colour grows its row taller
-     instead of pushing later columns off the page. Still not a guarantee
-     against a very long line item list running to a second page
-     vertically -- only the column-fitting Clive asked for is what this
-     buys. The on-screen scrollable view remains the primary way this page
-     is meant to be used day to day (see page.tsx).*/
-  .grid-table {
-    width: 100%;
-    table-layout: fixed;
-    font-size: 7px;
-  }
-  .grid-table th,
-  .grid-table td {
-    padding: 2px 3px;
-    white-space: normal;
-    overflow-wrap: anywhere;
-  }
+     page at screen size. An earlier version of this rule forced every
+     column to the same width (table-layout: fixed) to keep them all on
+     the page -- but that padded short columns like "#" out to match
+     "Fabric Name", which read as an unreadable, uneven mess rather than a
+     sheet-like table. Reverted that: columns keep their normal
+     content-sized (auto layout, nowrap) widths here too, exactly as they
+     size on screen. The actual page-fitting now happens in JS
+     (GridPrintFit.tsx, rendered on both grid pages) -- it measures the
+     table's real natural width just before printing and shrinks the
+     whole table proportionally via `zoom`, so relative column widths (and
+     text) stay exactly as designed, just smaller. Landscape (above) is
+     still what buys back the width to make that shrink factor as gentle
+     as possible. Still not a guarantee against a very long line item list
+     running to a second page vertically -- only the column-fitting Clive
+     asked for is what this buys. The on-screen scrollable view remains
+     the primary way this page is meant to be used day to day. */
   .grid-scroll {
     overflow-x: visible;
+    overflow-y: visible;
     border: none;
   }
 }

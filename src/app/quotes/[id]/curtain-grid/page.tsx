@@ -5,6 +5,7 @@ import { db } from "@/db/client";
 import * as schema from "@/db/schema";
 import { Topbar } from "@/components/Topbar";
 import { PrintButton } from "@/components/PrintButton";
+import { GridPrintFit } from "@/components/GridPrintFit";
 
 export const dynamic = "force-dynamic";
 
@@ -62,6 +63,7 @@ export default async function CurtainGridPage({ params }: { params: Promise<{ id
   return (
     <>
       <Topbar />
+      <GridPrintFit />
       <div className="page grid-print-page" style={{ maxWidth: 1400 }}>
         <div className="no-print" style={{ marginBottom: 16 }}>
           <Link href={`/quotes/${quoteId}`}>&larr; Back to {quote.quoteNumber}</Link>
