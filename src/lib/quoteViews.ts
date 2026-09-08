@@ -51,6 +51,12 @@ export const QUOTE_VIEWS: QuoteViewConfig[] = [
     appliesTo: hasCurtainLine,
   },
   {
+    key: "curtain-fabric-order",
+    label: "Fabric Order",
+    path: "curtain-fabric-order",
+    appliesTo: hasCurtainLine,
+  },
+  {
     key: "curtain-grid",
     label: "Curtain Grid",
     path: "curtain-grid",
