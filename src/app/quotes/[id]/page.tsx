@@ -75,7 +75,7 @@ export default async function QuoteDetailPage({ params }: { params: Promise<{ id
     <>
       <Topbar />
       <div className="page">
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }}>
           <div>
             <h1>
               {quote.quoteNumber} <span className="badge">{quote.status}</span>
