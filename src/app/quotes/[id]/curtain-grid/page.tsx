@@ -62,13 +62,21 @@ export default async function CurtainGridPage({ params }: { params: Promise<{ id
   return (
     <>
       <Topbar />
-      <div className="page" style={{ maxWidth: 1400 }}>
+      <div className="page grid-print-page" style={{ maxWidth: 1400 }}>
         <div className="no-print" style={{ marginBottom: 16 }}>
           <Link href={`/quotes/${quoteId}`}>&larr; Back to {quote.quoteNumber}</Link>
         </div>
 
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
           <div>
+            {/* eslint-disable-next-line @next/next/no-img-element -- same
+                static /public asset Topbar.tsx uses; a letterhead on a
+                printed page, not an optimizable content image. */}
+            <img
+              src="/logo.png"
+              alt="Unique Curtains + Blinds"
+              style={{ height: 36, display: "block", marginBottom: 12 }}
+            />
             <h1 style={{ marginBottom: 2 }}>Curtain Quote Grid</h1>
             <p className="muted" style={{ margin: 0 }}>
               {quote.quoteNumber} -- {quote.customerName}

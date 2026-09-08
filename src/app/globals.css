@@ -327,6 +327,17 @@ th {
   background: #f7f8fa;
 }
 
+/* Curtain Grid / Blind Grid print in landscape, via a named CSS page (a
+   Paged Media feature Chrome's print engine honours): any element carrying
+   .grid-print-page is rendered on the wider "grid-landscape" page instead
+   of the default portrait one, without affecting any other printed page
+   (Curtain/Blind Install, the quote PDF) -- they never set this class, so
+   they keep the browser's normal default page size. */
+@page grid-landscape {
+  size: landscape;
+  margin: 10mm;
+}
+
 /* Every page in the app shares this stylesheet, so scope the print rule to
    .no-print rather than assuming only the install sheet ever prints. */
 @media print {
@@ -342,14 +353,31 @@ th {
   .install-card {
     box-shadow: none;
   }
+  .grid-print-page {
+    page: grid-landscape;
+  }
   /* Curtain Grid / Blind Grid have far more columns than fit a printed
-     page at screen size -- shrink aggressively and drop the scroll
-     container's own border so browser print scaling has the best chance
-     of fitting the sheet-mirroring table on the page. Still not guaranteed
-     to fit every column at every print size; the on-screen scrollable view
-     is the primary way this page is meant to be used (see page.tsx). */
+     page at screen size -- landscape (above) buys real width back, and the
+     rest is spent making every column actually use the printable width
+     rather than overflowing it: table-layout: fixed divides the full page
+     width evenly across every column instead of sizing each to its
+     content, and allowing text to wrap (rather than the on-screen
+     nowrap) means a long fabric name or colour grows its row taller
+     instead of pushing later columns off the page. Still not a guarantee
+     against a very long line item list running to a second page
+     vertically -- only the column-fitting Clive asked for is what this
+     buys. The on-screen scrollable view remains the primary way this page
+     is meant to be used day to day (see page.tsx).*/
   .grid-table {
-    font-size: 8px;
+    width: 100%;
+    table-layout: fixed;
+    font-size: 7px;
+  }
+  .grid-table th,
+  .grid-table td {
+    padding: 2px 3px;
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
   .grid-scroll {
     overflow-x: visible;
