@@ -33,12 +33,17 @@ const FAMILY_LABELS: Record<string, string> = {
   vertical: "Vertical Blind",
   s_wave_sheer: "Curtain (S Wave Sheer)",
   misc: "Misc Quote item",
+  curtain_accessory: "Curtain Accessory",
+  blind_accessory: "Blind Accessory",
 };
 
 function describeLineItem(li: QuoteLineItem): string {
   const attrs = li.attributes as Record<string, unknown>;
   if (li.familySlug === "misc") {
     return String(attrs.description ?? "");
+  }
+  if (li.familySlug === "curtain_accessory" || li.familySlug === "blind_accessory") {
+    return String(attrs.name ?? "");
   }
   if (li.familySlug === "s_wave_sheer") {
     const parts = [

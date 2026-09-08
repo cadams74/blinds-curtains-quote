@@ -14,6 +14,8 @@ import { getBlindFamilyConfig } from "./blindFamilies.js";
 import { priceCurtain, type CurtainInput, type CurtainResult } from "../pricing/curtain.js";
 import { priceMisc, type MiscInput, type MiscResult } from "../pricing/misc.js";
 import { computeCurtainFabricSellPrice } from "../pricing/curtainFabricSellPrice.js";
+import { priceAccessory, type AccessoryResult } from "../pricing/accessory.js";
+import { getAccessoryFamilyConfig, getAccessoryCatalog } from "./accessoryFamilies.js";
 
 export async function createQuote(formData: FormData) {
   await requireUser();
@@ -746,6 +748,81 @@ export async function updateMiscLineItem(quoteId: number, lineItemId: number, fo
     room,
     familySlug: "misc",
     attributes: { ...input, enteredBy: user.email },
+    priceBreakdown: result.breakdown,
+    calculatedPrice: result.breakdown.calculatedPrice,
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Curtain Accessory / Blind Accessory -- share accessory.ts's pricing
+// (a plain catalog lookup) and this pair of actions, parameterized by
+// family slug (see accessoryFamilies.ts), the same shape as the generic
+// blind families' addGenericBlindLineItem/updateGenericBlindLineItem above.
+
+export async function getAccessoryOptions(familySlug: string): Promise<{ name: string; price: number }[]> {
+  await requireUser();
+  const config = getAccessoryFamilyConfig(familySlug);
+  if (!config) throw new Error(`Unknown accessory family "${familySlug}".`);
+  return getAccessoryCatalog(db, config);
+}
+
+export async function addAccessoryLineItem(quoteId: number, familySlug: string, formData: FormData) {
+  const user = await requireUser();
+  const config = getAccessoryFamilyConfig(familySlug);
+  if (!config) throw new Error(`Unknown accessory family "${familySlug}".`);
+
+  const name = String(formData.get("name") ?? "").trim();
+  const room = String(formData.get("room") ?? "").trim() || null;
+
+  const catalog = await getAccessoryCatalog(db, config);
+  const result: AccessoryResult = priceAccessory({ name }, catalog);
+  if (!result.ok) {
+    throw new Error(`Pick a ${config.label.toLowerCase()} from the list.`);
+  }
+
+  const [{ value: maxLine }] = await db
+    .select({ value: max(schema.quoteLineItems.lineNumber) })
+    .from(schema.quoteLineItems)
+    .where(eq(schema.quoteLineItems.quoteId, quoteId));
+
+  await db.insert(schema.quoteLineItems).values({
+    quoteId,
+    lineNumber: (maxLine ?? 0) + 1,
+    room,
+    familySlug: config.slug,
+    attributes: { name, enteredBy: user.email },
+    priceBreakdown: result.breakdown,
+    calculatedPrice: String(result.breakdown.calculatedPrice),
+    finalPrice: String(result.breakdown.calculatedPrice),
+  });
+
+  revalidatePath(`/quotes/${quoteId}`);
+  redirect(`/quotes/${quoteId}`);
+}
+
+export async function updateAccessoryLineItem(
+  quoteId: number,
+  lineItemId: number,
+  familySlug: string,
+  formData: FormData
+) {
+  const user = await requireUser();
+  const config = getAccessoryFamilyConfig(familySlug);
+  if (!config) throw new Error(`Unknown accessory family "${familySlug}".`);
+
+  const name = String(formData.get("name") ?? "").trim();
+  const room = String(formData.get("room") ?? "").trim() || null;
+
+  const catalog = await getAccessoryCatalog(db, config);
+  const result: AccessoryResult = priceAccessory({ name }, catalog);
+  if (!result.ok) {
+    throw new Error(`Pick a ${config.label.toLowerCase()} from the list.`);
+  }
+
+  await updateLineItemRow(quoteId, lineItemId, {
+    room,
+    familySlug: config.slug,
+    attributes: { name, enteredBy: user.email },
     priceBreakdown: result.breakdown,
     calculatedPrice: result.breakdown.calculatedPrice,
   });

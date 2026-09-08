@@ -194,17 +194,31 @@ async function main() {
   }
   console.log(`control price rows: ${controlPriceRows}`);
 
-  // ---- blind accessories --------------------------------------------------
-  const accessories = readJson<{ accessories: [string, number][] }>(
+  // ---- blind + curtain accessories -----------------------------------------
+  // Straight out of the source workbook's own "BlindAccessories" and
+  // "Accessories" named ranges -- see schema.ts's comment on
+  // blindAccessories/curtainAccessories and src/pricing/accessory.ts.
+  const blindAccessoryRows = readJson<{ accessories: [string, number][] }>(
     "price_grids/blind_accessories.json"
   );
   if (db) {
     await db
       .insert(schema.blindAccessories)
-      .values(accessories.accessories.map(([name, price]) => ({ name, price: String(price) })))
+      .values(blindAccessoryRows.accessories.map(([name, price]) => ({ name, price: String(price) })))
       .onConflictDoNothing();
   }
-  console.log(`blind accessories: ${accessories.accessories.length}`);
+  console.log(`blind accessories: ${blindAccessoryRows.accessories.length}`);
+
+  const curtainAccessoryRows = readJson<{ accessories: [string, number][] }>(
+    "price_grids/curtain_accessories.json"
+  );
+  if (db) {
+    await db
+      .insert(schema.curtainAccessories)
+      .values(curtainAccessoryRows.accessories.map(([name, price]) => ({ name, price: String(price) })))
+      .onConflictDoNothing();
+  }
+  console.log(`curtain accessories: ${curtainAccessoryRows.accessories.length}`);
 
   // ---- option lists (dropdown values not covered by a dedicated table) ----
   // Everything in blind_settings/curtain_settings EXCEPT the "*FabricPrices"

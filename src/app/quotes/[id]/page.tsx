@@ -20,11 +20,16 @@ const FAMILY_LABELS: Record<string, string> = {
   vertical: "Vertical Blind",
   s_wave_sheer: "Curtain (S Wave Sheer)",
   misc: "Misc Quote item",
+  curtain_accessory: "Curtain Accessory",
+  blind_accessory: "Blind Accessory",
 };
 
 function describeLineItemAttrs(familySlug: string, attrs: Record<string, unknown>): string {
   if (familySlug === "misc") {
     return String(attrs.description ?? "");
+  }
+  if (familySlug === "curtain_accessory" || familySlug === "blind_accessory") {
+    return String(attrs.name ?? "");
   }
   if (familySlug === "s_wave_sheer") {
     const parts = [
@@ -130,7 +135,9 @@ export default async function QuoteDetailPage({ params }: { params: Promise<{ id
                     {f.label}
                   </Link>
                 ))}
+                <Link href={`/quotes/${quoteId}/line-items/new/blind-accessory`}>Blind Accessory</Link>
                 <Link href={`/quotes/${quoteId}/line-items/new/curtain`}>Curtain (S Wave Sheer)</Link>
+                <Link href={`/quotes/${quoteId}/line-items/new/curtain-accessory`}>Curtain Accessory</Link>
                 <Link href={`/quotes/${quoteId}/line-items/new/misc`}>Misc Quote item</Link>
               </div>
             </details>

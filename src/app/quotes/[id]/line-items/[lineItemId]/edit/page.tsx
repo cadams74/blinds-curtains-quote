@@ -7,8 +7,10 @@ import { RollerLineItemForm } from "@/components/RollerLineItemForm";
 import { GenericBlindLineItemForm } from "@/components/GenericBlindLineItemForm";
 import { CurtainLineItemForm } from "@/components/CurtainLineItemForm";
 import { MiscLineItemForm } from "@/components/MiscLineItemForm";
+import { AccessoryLineItemForm } from "@/components/AccessoryLineItemForm";
 import { getOptionListValues } from "@/lib/pricingDataSource";
 import { getBlindFamilyConfig } from "@/lib/blindFamilies";
+import { getAccessoryFamilyConfig, getAccessoryCatalog } from "@/lib/accessoryFamilies";
 import { getCurtainFabricSuppliers } from "@/lib/actions";
 import { getCurtainHookNames } from "@/lib/curtainDataSource";
 
@@ -215,6 +217,32 @@ export default async function EditLineItemPage({
                 price: str(attrs.price),
                 installTimeMinutes: str(attrs.installTimeMinutes),
               }}
+            />
+          </div>
+        </div>
+      </>
+    );
+  }
+
+  if (lineItem.familySlug === "curtain_accessory" || lineItem.familySlug === "blind_accessory") {
+    const accessoryConfig = getAccessoryFamilyConfig(lineItem.familySlug);
+    if (!accessoryConfig) notFound();
+    const catalog = await getAccessoryCatalog(db, accessoryConfig);
+
+    return (
+      <>
+        <Topbar />
+        <div className="page" style={{ maxWidth: 560 }}>
+          <h1>Edit {accessoryConfig.label}</h1>
+          {quoteHeader}
+          <div className="card">
+            <AccessoryLineItemForm
+              quoteId={quoteId}
+              lineItemId={lineItemId}
+              familySlug={accessoryConfig.slug}
+              label={accessoryConfig.label}
+              catalog={catalog}
+              initial={{ room, name: str(attrs.name) }}
             />
           </div>
         </div>

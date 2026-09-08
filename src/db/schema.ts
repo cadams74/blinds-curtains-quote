@@ -85,7 +85,21 @@ export const controlPrices = pgTable("control_prices", {
   lookupIdx: uniqueIndex("control_price_lookup_idx").on(t.familySlug, t.controlType),
 }));
 
+// Name -> $ price, straight out of the source workbook's own "Accessories"
+// (curtain) / "BlindAccessories" (blind) named ranges -- each side's
+// 'Curtain Quote'/'Blind Quote' sheet prices its own Accessory-type rows
+// with a plain VLOOKUP(name, <range>, 2, 0) against exactly this table, no
+// other formula involved (see src/pricing/accessory.ts). blindAccessories
+// was extracted early on but never wired into the app until Accessory
+// became a real line-item type here (see app README) -- curtainAccessories
+// is its curtain-side twin, added at the same time.
 export const blindAccessories = pgTable("blind_accessories", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull().unique(),
+  price: numeric("price", { precision: 10, scale: 2 }).notNull(),
+});
+
+export const curtainAccessories = pgTable("curtain_accessories", {
   id: serial("id").primaryKey(),
   name: text("name").notNull().unique(),
   price: numeric("price", { precision: 10, scale: 2 }).notNull(),
