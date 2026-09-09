@@ -160,7 +160,7 @@ export default async function CurtainGridPage({ params }: { params: Promise<{ id
                         <td>{fmt(attrs.rpwCm)}</td>
                         <td>{fmt(breakdown.trackLengthCm)}</td>
                         <td>{fmt(attrs.heightCm)}</td>
-                        <td>${Number(li.finalPrice).toFixed(2)}</td>
+                        <td>{li.finalPrice === null ? "Needs pricing" : `$${Number(li.finalPrice).toFixed(2)}`}</td>
                       </tr>
                     );
                   })}

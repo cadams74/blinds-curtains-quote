@@ -66,6 +66,10 @@ function describeLineItem(li: QuoteLineItem): string {
 }
 
 function formatLineItemPrice(li: QuoteLineItem): string {
+  // Null only for a duplicate created with a field deselected (see
+  // actions.ts's duplicateLineItemWithOptions) that hasn't been re-saved
+  // via Edit yet -- genuinely not priced, never rendered as "$0.00".
+  if (li.finalPrice === null) return "TBC";
   const overridden = li.priceOverride !== null;
   if (
     li.familySlug === "misc" &&
@@ -78,7 +82,8 @@ function formatLineItemPrice(li: QuoteLineItem): string {
 }
 
 export function QuotePdfDocument({ quote, lineItems }: { quote: Quote; lineItems: QuoteLineItem[] }) {
-  const total = lineItems.reduce((sum, li) => sum + Number(li.finalPrice), 0);
+  const total = lineItems.reduce((sum, li) => sum + (li.finalPrice !== null ? Number(li.finalPrice) : 0), 0);
+  const incompleteCount = lineItems.filter((li) => li.finalPrice === null).length;
 
   return (
     <Document>
@@ -108,8 +113,15 @@ export function QuotePdfDocument({ quote, lineItems }: { quote: Quote; lineItems
           </View>
         ))}
 
+        {incompleteCount > 0 && (
+          <Text style={{ marginTop: 8, color: "#a00" }}>
+            {incompleteCount} item{incompleteCount === 1 ? "" : "s"} not yet priced (TBC) -- total excludes{" "}
+            {incompleteCount === 1 ? "it" : "them"}.
+          </Text>
+        )}
+
         <View style={styles.totalRow}>
-          <Text style={styles.totalLabel}>Total</Text>
+          <Text style={styles.totalLabel}>Total{incompleteCount > 0 ? " (excl. TBC)" : ""}</Text>
           <Text style={styles.totalValue}>${total.toFixed(2)}</Text>
         </View>
 

@@ -4,10 +4,12 @@ import { asc, eq } from "drizzle-orm";
 import { db } from "@/db/client";
 import * as schema from "@/db/schema";
 import { Topbar } from "@/components/Topbar";
-import { deleteLineItem, duplicateLineItem } from "@/lib/actions";
+import { deleteLineItem, moveLineItem } from "@/lib/actions";
 import { GENERIC_BLIND_FAMILIES } from "@/lib/blindFamilies";
 import { QUOTE_VIEWS } from "@/lib/quoteViews";
 import { PriceOverrideForm } from "@/components/PriceOverrideForm";
+import { DuplicateLineItemForm } from "@/components/DuplicateLineItemForm";
+import { getLineItemFields } from "@/lib/lineItemFields";
 
 export const dynamic = "force-dynamic";
 
@@ -25,26 +27,49 @@ const FAMILY_LABELS: Record<string, string> = {
 };
 
 function describeLineItemAttrs(familySlug: string, attrs: Record<string, unknown>): string {
+  let text: string;
   if (familySlug === "misc") {
-    return String(attrs.description ?? "");
-  }
-  if (familySlug === "curtain_accessory" || familySlug === "blind_accessory") {
-    return String(attrs.name ?? "");
-  }
-  if (familySlug === "s_wave_sheer") {
+    text = String(attrs.description ?? "");
+  } else if (familySlug === "curtain_accessory" || familySlug === "blind_accessory") {
+    text = String(attrs.name ?? "");
+  } else if (familySlug === "s_wave_sheer") {
     const parts = [
       attrs.style ? String(attrs.style) : null,
       attrs.heightCm ? `${attrs.heightCm}cm high` : null,
       attrs.fabricName ? String(attrs.fabricName) : null,
     ].filter(Boolean);
-    return parts.join(" -- ");
+    text = parts.join(" -- ");
+  } else {
+    // Roller + the five genericBlind.ts families all share this attribute shape.
+    const parts = [
+      attrs.widthMm && attrs.heightMm ? `${attrs.widthMm}mm x ${attrs.heightMm}mm` : null,
+      attrs.fabricName ? String(attrs.fabricName) : null,
+    ].filter(Boolean);
+    text = parts.join(" -- ");
   }
-  // Roller + the five genericBlind.ts families all share this attribute shape.
-  const parts = [
-    attrs.widthMm && attrs.heightMm ? `${attrs.widthMm}mm x ${attrs.heightMm}mm` : null,
-    attrs.fabricName ? String(attrs.fabricName) : null,
-  ].filter(Boolean);
-  return parts.join(" -- ");
+  // A duplicate created with every descriptive field deselected (see
+  // DuplicateLineItemForm.tsx) has nothing here to show -- flag it rather
+  // than render a confusingly blank Details cell.
+  return text || "-- incomplete --";
+}
+
+/** A line item's price is null only when it was created by duplicating
+ * another with a field deselected and hasn't been re-saved via Edit yet
+ * (see actions.ts's duplicateLineItemWithOptions) -- genuinely not priced,
+ * never rendered as "$0.00" or omitted silently. */
+function formatLineItemPrice(
+  li: { familySlug: string; finalPrice: string | null; priceBreakdown: unknown },
+  overridden: boolean
+): string {
+  if (li.finalPrice === null) return "Needs pricing";
+  if (
+    li.familySlug === "misc" &&
+    !overridden &&
+    (li.priceBreakdown as { priceKind?: string } | null)?.priceKind === "no_charge"
+  ) {
+    return "N/C"; // deliberately not "$0.00" -- see misc.ts
+  }
+  return `$${Number(li.finalPrice).toFixed(2)}`;
 }
 
 // Shared sizing for every per-line-item action control (Edit, Duplicate,
@@ -68,7 +93,8 @@ export default async function QuoteDetailPage({ params }: { params: Promise<{ id
     .where(eq(schema.quoteLineItems.quoteId, quoteId))
     .orderBy(asc(schema.quoteLineItems.lineNumber));
 
-  const total = lineItems.reduce((sum, li) => sum + Number(li.finalPrice), 0);
+  const total = lineItems.reduce((sum, li) => sum + (li.finalPrice !== null ? Number(li.finalPrice) : 0), 0);
+  const incompleteCount = lineItems.filter((li) => li.finalPrice === null).length;
 
   // Which document/grid view buttons (Curtain Install, Curtain Grid, Blind
   // Grid, and whatever joins them later -- Blind Install etc.) apply to
@@ -144,6 +170,13 @@ export default async function QuoteDetailPage({ params }: { params: Promise<{ id
           </div>
         </div>
 
+        {incompleteCount > 0 && (
+          <p className="error" style={{ marginBottom: 12 }}>
+            {incompleteCount} line item{incompleteCount === 1 ? "" : "s"} still need{incompleteCount === 1 ? "s" : ""}{" "}
+            pricing -- open Edit on each to fill in the missing fields. The total below doesn&apos;t include them.
+          </p>
+        )}
+
         <div className="card">
           {lineItems.length === 0 ? (
             <p className="muted">No line items yet.</p>
@@ -160,7 +193,7 @@ export default async function QuoteDetailPage({ params }: { params: Promise<{ id
                 </tr>
               </thead>
               <tbody>
-                {lineItems.map((li) => {
+                {lineItems.map((li, idx) => {
                   const attrs = li.attributes as Record<string, unknown>;
                   const overridden = li.priceOverride !== null;
                   return (
@@ -172,16 +205,12 @@ export default async function QuoteDetailPage({ params }: { params: Promise<{ id
                         {describeLineItemAttrs(li.familySlug, attrs)}
                       </td>
                       <td>
-                        {overridden && (
+                        {overridden && li.calculatedPrice !== null && (
                           <span className="muted" style={{ textDecoration: "line-through", marginRight: 6 }}>
                             ${Number(li.calculatedPrice).toFixed(2)}
                           </span>
                         )}
-                        {li.familySlug === "misc" &&
-                        !overridden &&
-                        (li.priceBreakdown as { priceKind?: string })?.priceKind === "no_charge"
-                          ? "N/C" // deliberately not "$0.00" -- see misc.ts
-                          : `$${Number(li.finalPrice).toFixed(2)}`}
+                        {formatLineItemPrice(li, overridden)}
                       </td>
                       <td style={{ textAlign: "right" }}>
                         <div
@@ -193,6 +222,32 @@ export default async function QuoteDetailPage({ params }: { params: Promise<{ id
                             gap: 8,
                           }}
                         >
+                          <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                            <form action={moveLineItem.bind(null, quoteId, li.id, "up")}>
+                              <button
+                                className="btn secondary"
+                                type="submit"
+                                disabled={idx === 0}
+                                title="Move up"
+                                aria-label="Move up"
+                                style={{ ...lineItemActionStyle, padding: "1px 8px", lineHeight: 1.2 }}
+                              >
+                                &uarr;
+                              </button>
+                            </form>
+                            <form action={moveLineItem.bind(null, quoteId, li.id, "down")}>
+                              <button
+                                className="btn secondary"
+                                type="submit"
+                                disabled={idx === lineItems.length - 1}
+                                title="Move down"
+                                aria-label="Move down"
+                                style={{ ...lineItemActionStyle, padding: "1px 8px", lineHeight: 1.2 }}
+                              >
+                                &darr;
+                              </button>
+                            </form>
+                          </div>
                           <Link
                             href={`/quotes/${quoteId}/line-items/${li.id}/edit`}
                             className="btn secondary"
@@ -200,11 +255,7 @@ export default async function QuoteDetailPage({ params }: { params: Promise<{ id
                           >
                             Edit
                           </Link>
-                          <form action={duplicateLineItem.bind(null, quoteId, li.id)}>
-                            <button className="btn secondary" type="submit" style={lineItemActionStyle}>
-                              Duplicate
-                            </button>
-                          </form>
+                          <DuplicateLineItemForm quoteId={quoteId} lineItemId={li.id} fields={getLineItemFields(li.familySlug)} />
                           <PriceOverrideForm
                             quoteId={quoteId}
                             lineItemId={li.id}
@@ -225,7 +276,7 @@ export default async function QuoteDetailPage({ params }: { params: Promise<{ id
             </table>
           )}
           <div className="total-row">
-            <span>Total</span>
+            <span>Total{incompleteCount > 0 ? " (excl. unpriced)" : ""}</span>
             <span>${total.toFixed(2)}</span>
           </div>
         </div>

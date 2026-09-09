@@ -15,6 +15,13 @@
       "when": 1788879890083,
       "tag": "0001_married_shriek",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1788961077234,
+      "tag": "0002_awesome_lord_hawal",
+      "breakpoints": true
     }
   ]
 }

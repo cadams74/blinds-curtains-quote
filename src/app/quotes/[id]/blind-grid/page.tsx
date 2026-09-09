@@ -173,7 +173,7 @@ export default async function BlindGridPage({ params }: { params: Promise<{ id: 
                         <td className={isRoller ? undefined : "muted"}>
                           {isRoller ? (attrs.sideChannels ? "Yes" : "No") : "--"}
                         </td>
-                        <td>${Number(li.finalPrice).toFixed(2)}</td>
+                        <td>{li.finalPrice === null ? "Needs pricing" : `$${Number(li.finalPrice).toFixed(2)}`}</td>
                       </tr>
                     );
                   })}

@@ -211,12 +211,16 @@ export const quoteLineItems = pgTable("quote_line_items", {
   familySlug: text("family_slug").notNull(),
   // every entered attribute (width/height/fabric/control/etc), shape varies by family
   attributes: jsonb("attributes").notNull(),
-  // full computed price breakdown -- mirrors the workbook's "office use only" columns
+  // full computed price breakdown -- mirrors the workbook's "office use only" columns.
+  // calculatedPrice/finalPrice are nullable: a line item created by duplicating
+  // another with some fields deliberately deselected (see duplicateLineItemWithOptions
+  // in actions.ts) has no valid price until an estimator fills in the missing
+  // fields via Edit -- genuinely blank, not a stale copy or a misleading $0.
   priceBreakdown: jsonb("price_breakdown").notNull(),
-  calculatedPrice: numeric("calculated_price", { precision: 10, scale: 2 }).notNull(),
+  calculatedPrice: numeric("calculated_price", { precision: 10, scale: 2 }),
   priceOverride: numeric("price_override", { precision: 10, scale: 2 }),
   priceOverrideReason: text("price_override_reason"),
-  finalPrice: numeric("final_price", { precision: 10, scale: 2 }).notNull(),
+  finalPrice: numeric("final_price", { precision: 10, scale: 2 }),
 });
 
 // ---------------------------------------------------------------------------

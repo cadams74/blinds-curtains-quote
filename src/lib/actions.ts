@@ -16,6 +16,7 @@ import { priceMisc, type MiscInput, type MiscResult } from "../pricing/misc.js";
 import { computeCurtainFabricSellPrice } from "../pricing/curtainFabricSellPrice.js";
 import { priceAccessory, type AccessoryResult } from "../pricing/accessory.js";
 import { getAccessoryFamilyConfig, getAccessoryCatalog } from "./accessoryFamilies.js";
+import { getLineItemFields } from "./lineItemFields.js";
 
 export async function createQuote(formData: FormData) {
   await requireUser();
@@ -251,18 +252,36 @@ export async function deleteLineItem(quoteId: number, lineItemId: number) {
   revalidatePath(`/quotes/${quoteId}`);
 }
 
-/** Copies an existing line item to a new row at the end of the quote --
- * same room/attributes/price breakdown/override, nothing recomputed. For
- * quoting several near-identical windows (a common real workflow: three
- * roller blinds off the one fabric, just slightly different sizes) this
- * saves re-picking the fabric/source/control from scratch each time --
- * duplicate, then use Edit on the copy to change just what's different.
- * A literal copy, deliberately including any active price override: this
- * is "make another one just like this", not "reprice a similar item" --
- * clearing an override that shouldn't carry over is one click away via the
- * existing Override control on the new row. */
-export async function duplicateLineItem(quoteId: number, lineItemId: number) {
-  await requireUser();
+/** Copies an existing line item to `count` new rows at the end of the
+ * quote, driven by DuplicateLineItemForm.tsx's field checklist and count
+ * input -- the redesigned Duplicate feature (replacing the old one-click
+ * "copy everything" button) built for quoting several near-identical
+ * windows (a common real workflow: three roller blinds off the one fabric,
+ * just slightly different sizes) without re-picking the fabric/source/
+ * control from scratch each time.
+ *
+ * Two distinct modes, chosen per Clive's explicit request:
+ *
+ * - Every field checked (the default): a literal copy, exactly like the
+ *   old duplicateLineItem -- same attributes/priceBreakdown/calculatedPrice/
+ *   priceOverride/finalPrice, nothing recomputed. This is "make another one
+ *   just like this", not "reprice a similar item".
+ *
+ * - Any field unchecked: deselected fields (any field, including
+ *   pricing-relevant ones like Width or Fabric -- Clive was explicit that
+ *   ANY field may be deselected) are left unset on the new row(s) rather
+ *   than copied, and the new row's price is left genuinely blank
+ *   (calculatedPrice/finalPrice both null, priceBreakdown a small
+ *   "incomplete" marker) rather than a stale copied number or a misleading
+ *   $0 -- deliberately NOT re-run through the family's pricing engine with
+ *   partial inputs, since a blank field fed into e.g. width/height would
+ *   either throw or silently price as if it were zero, exactly the kind of
+ *   guess this app's "flag rather than guess" pattern exists to avoid. The
+ *   estimator fills in the missing fields via the normal Edit flow, which
+ *   recomputes the price the same way it always has. See schema.ts's
+ *   comment on why calculatedPrice/finalPrice are nullable. */
+export async function duplicateLineItemWithOptions(quoteId: number, lineItemId: number, formData: FormData) {
+  const user = await requireUser();
 
   const [source] = await db
     .select()
@@ -270,23 +289,100 @@ export async function duplicateLineItem(quoteId: number, lineItemId: number) {
     .where(and(eq(schema.quoteLineItems.id, lineItemId), eq(schema.quoteLineItems.quoteId, quoteId)));
   if (!source) throw new Error("Line item not found.");
 
+  const fields = getLineItemFields(source.familySlug);
+  const selectedKeys = new Set(fields.filter((f) => formData.get(`field_${f.key}`) === "on").map((f) => f.key));
+  const allSelected = fields.every((f) => selectedKeys.has(f.key));
+
+  const countRaw = Number(formData.get("count"));
+  const copies = Number.isFinite(countRaw) ? Math.min(Math.max(Math.round(countRaw), 1), 20) : 1;
+
   const [{ value: maxLine }] = await db
     .select({ value: max(schema.quoteLineItems.lineNumber) })
     .from(schema.quoteLineItems)
     .where(eq(schema.quoteLineItems.quoteId, quoteId));
+  let nextLine = (maxLine ?? 0) + 1;
 
-  await db.insert(schema.quoteLineItems).values({
-    quoteId,
-    lineNumber: (maxLine ?? 0) + 1,
-    room: source.room,
-    familySlug: source.familySlug,
-    attributes: source.attributes,
-    priceBreakdown: source.priceBreakdown,
-    calculatedPrice: source.calculatedPrice,
-    priceOverride: source.priceOverride,
-    priceOverrideReason: source.priceOverrideReason,
-    finalPrice: source.finalPrice,
-  });
+  const sourceAttrs = source.attributes as Record<string, unknown>;
+
+  const rows: (typeof schema.quoteLineItems.$inferInsert)[] = [];
+  for (let i = 0; i < copies; i++) {
+    if (allSelected) {
+      rows.push({
+        quoteId,
+        lineNumber: nextLine++,
+        room: source.room,
+        familySlug: source.familySlug,
+        attributes: { ...sourceAttrs, enteredBy: user.email },
+        priceBreakdown: source.priceBreakdown,
+        calculatedPrice: source.calculatedPrice,
+        priceOverride: source.priceOverride,
+        priceOverrideReason: source.priceOverrideReason,
+        finalPrice: source.finalPrice,
+      });
+    } else {
+      const newAttrs: Record<string, unknown> = { enteredBy: user.email };
+      for (const field of fields) {
+        if (field.key === "room" || !selectedKeys.has(field.key)) continue; // room handled via the room column below; unchecked fields stay unset
+        for (const attrKey of field.attributeKeys) {
+          if (attrKey in sourceAttrs) newAttrs[attrKey] = sourceAttrs[attrKey];
+        }
+      }
+      rows.push({
+        quoteId,
+        lineNumber: nextLine++,
+        room: selectedKeys.has("room") ? source.room : null,
+        familySlug: source.familySlug,
+        attributes: newAttrs,
+        priceBreakdown: { incomplete: true },
+        calculatedPrice: null,
+        priceOverride: null,
+        priceOverrideReason: null,
+        finalPrice: null,
+      });
+    }
+  }
+
+  await db.insert(schema.quoteLineItems).values(rows);
+
+  revalidatePath(`/quotes/${quoteId}`);
+  redirect(`/quotes/${quoteId}`);
+}
+
+/** Swaps lineNumber with the immediate neighbour above/below in the
+ * quote's currently-sorted line-item order -- works regardless of any
+ * gaps in numbering (duplicating, deleting, etc. never renumbers the rest
+ * of the quote, so line numbers are rarely contiguous). Silently does
+ * nothing if already at the top/bottom -- the page itself disables the
+ * button in that case, but a second tab or a stale page could still submit
+ * it, and there's nothing useful to do about that except no-op. */
+export async function moveLineItem(quoteId: number, lineItemId: number, direction: "up" | "down") {
+  await requireUser();
+
+  const items = await db
+    .select({ id: schema.quoteLineItems.id, lineNumber: schema.quoteLineItems.lineNumber })
+    .from(schema.quoteLineItems)
+    .where(eq(schema.quoteLineItems.quoteId, quoteId))
+    .orderBy(asc(schema.quoteLineItems.lineNumber));
+
+  const idx = items.findIndex((li) => li.id === lineItemId);
+  if (idx === -1) throw new Error("Line item not found.");
+
+  const swapIdx = direction === "up" ? idx - 1 : idx + 1;
+  if (swapIdx < 0 || swapIdx >= items.length) {
+    revalidatePath(`/quotes/${quoteId}`);
+    return;
+  }
+
+  const a = items[idx];
+  const b = items[swapIdx];
+
+  // Three-step swap via a scratch value: avoids a transient (lineNumber,
+  // quoteId) collision if a uniqueness constraint is ever added later --
+  // harmless right now since there isn't one, but cheap insurance, and
+  // this action isn't hot-path enough for the extra query to matter.
+  await db.update(schema.quoteLineItems).set({ lineNumber: -1 }).where(eq(schema.quoteLineItems.id, a.id));
+  await db.update(schema.quoteLineItems).set({ lineNumber: a.lineNumber }).where(eq(schema.quoteLineItems.id, b.id));
+  await db.update(schema.quoteLineItems).set({ lineNumber: b.lineNumber }).where(eq(schema.quoteLineItems.id, a.id));
 
   revalidatePath(`/quotes/${quoteId}`);
 }
