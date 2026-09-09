@@ -83,14 +83,27 @@ export function DuplicateLineItemForm({ quoteId, lineItemId, fields }: Props) {
         </div>
         <div style={{ maxHeight: 220, overflowY: "auto", marginBottom: 8 }}>
           {fields.map((f) => (
-            <label key={f.key} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, padding: "2px 0" }}>
+            <label
+              key={f.key}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+                fontSize: 13,
+                fontWeight: 400,
+                color: "inherit",
+                padding: "3px 0",
+                whiteSpace: "nowrap",
+              }}
+            >
               <input
                 type="checkbox"
                 name={`field_${f.key}`}
                 checked={selected[f.key] ?? false}
                 onChange={(e) => setSelected((s) => ({ ...s, [f.key]: e.target.checked }))}
+                style={{ width: "auto", flexShrink: 0, margin: 0 }}
               />
-              {f.label}
+              <span>{f.label}</span>
             </label>
           ))}
         </div>
