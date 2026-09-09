@@ -112,6 +112,22 @@ h1, h2, h3 {
   cursor: not-allowed;
 }
 
+/* Generic disabled-button dimming, for small one-off controls (e.g. the
+   quote page's Move up/down triangles) that don't use the .btn class. */
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Quote page's Move up/down triangles -- sized/positioned via inline style
+   (src/app/quotes/[id]/page.tsx's moveButtonStyle) since that's per-instance
+   (disabled state etc.), but hover feedback needs a real :hover rule. */
+.move-btn:hover:not(:disabled) {
+  background: #eef1fb;
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
 label {
   display: block;
   font-size: 13px;

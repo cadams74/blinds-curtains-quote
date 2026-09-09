@@ -76,8 +76,35 @@ function formatLineItemPrice(
 // Override, Remove) so they read as one uniform row of buttons -- Override
 // used to be a bare "muted" text toggle rather than a button, the one
 // visibly inconsistent one; Remove keeps its "btn danger" red, everything
-// else uses "btn secondary" with this same size.
+// else uses "btn secondary" with this same size. Move up/down deliberately
+// isn't part of this row any more (see moveButtonStyle below) -- with five
+// buttons plus the up/down pair all fighting for space in one cell, Remove
+// was the one that lost and wrapped onto its own line on most quote lines.
+
 const lineItemActionStyle = { fontSize: 13, padding: "4px 10px" } as const;
+
+// Move up/down -- its own dedicated column at the left of the table (next
+// to the line number, per Clive's request), not squeezed in among the
+// other per-line-item action buttons on the right. Solid triangles rather
+// than thin arrow glyphs so they read unambiguously as "move" controls at
+// a small size; the wrapping <div> (see the table body below) centers this
+// pair vertically against the row's full height, whatever that ends up
+// being once the other columns' content sets it.
+const moveButtonStyle = {
+  width: 22,
+  height: 18,
+  padding: 0,
+  fontSize: 9,
+  lineHeight: 1,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  border: "1px solid var(--border)",
+  borderRadius: 4,
+  background: "#fff",
+  color: "var(--muted)",
+  cursor: "pointer",
+} as const;
 
 export default async function QuoteDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -184,6 +211,7 @@ export default async function QuoteDetailPage({ params }: { params: Promise<{ id
             <table>
               <thead>
                 <tr>
+                  <th></th>
                   <th>#</th>
                   <th>Room</th>
                   <th>Product</th>
@@ -198,6 +226,43 @@ export default async function QuoteDetailPage({ params }: { params: Promise<{ id
                   const overridden = li.priceOverride !== null;
                   return (
                     <tr key={li.id}>
+                      <td style={{ padding: 0, width: 1 }}>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            gap: 3,
+                            height: "100%",
+                          }}
+                        >
+                          <form action={moveLineItem.bind(null, quoteId, li.id, "up")}>
+                            <button
+                              type="submit"
+                              className="move-btn"
+                              disabled={idx === 0}
+                              title="Move up"
+                              aria-label="Move up"
+                              style={moveButtonStyle}
+                            >
+                              &#9650;
+                            </button>
+                          </form>
+                          <form action={moveLineItem.bind(null, quoteId, li.id, "down")}>
+                            <button
+                              type="submit"
+                              className="move-btn"
+                              disabled={idx === lineItems.length - 1}
+                              title="Move down"
+                              aria-label="Move down"
+                              style={moveButtonStyle}
+                            >
+                              &#9660;
+                            </button>
+                          </form>
+                        </div>
+                      </td>
                       <td>{li.lineNumber}</td>
                       <td>{li.room ?? <span className="muted">--</span>}</td>
                       <td>{FAMILY_LABELS[li.familySlug] ?? li.familySlug}</td>
@@ -216,38 +281,12 @@ export default async function QuoteDetailPage({ params }: { params: Promise<{ id
                         <div
                           style={{
                             display: "flex",
-                            flexWrap: "wrap",
+                            flexWrap: "nowrap",
                             justifyContent: "flex-end",
                             alignItems: "flex-start",
                             gap: 8,
                           }}
                         >
-                          <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                            <form action={moveLineItem.bind(null, quoteId, li.id, "up")}>
-                              <button
-                                className="btn secondary"
-                                type="submit"
-                                disabled={idx === 0}
-                                title="Move up"
-                                aria-label="Move up"
-                                style={{ ...lineItemActionStyle, padding: "1px 8px", lineHeight: 1.2 }}
-                              >
-                                &uarr;
-                              </button>
-                            </form>
-                            <form action={moveLineItem.bind(null, quoteId, li.id, "down")}>
-                              <button
-                                className="btn secondary"
-                                type="submit"
-                                disabled={idx === lineItems.length - 1}
-                                title="Move down"
-                                aria-label="Move down"
-                                style={{ ...lineItemActionStyle, padding: "1px 8px", lineHeight: 1.2 }}
-                              >
-                                &darr;
-                              </button>
-                            </form>
-                          </div>
                           <Link
                             href={`/quotes/${quoteId}/line-items/${li.id}/edit`}
                             className="btn secondary"
