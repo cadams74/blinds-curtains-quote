@@ -90,7 +90,7 @@ export default async function QuoteDetailPage({ params }: { params: Promise<{ id
                   </Link>
                 ))}
                 <Link href={`/quotes/${quoteId}/line-items/new/blind-accessory`}>Blind Accessory</Link>
-                <Link href={`/quotes/${quoteId}/line-items/new/curtain`}>Curtain (S Wave Sheer)</Link>
+                <Link href={`/quotes/${quoteId}/line-items/new/curtain`}>Curtain</Link>
                 <Link href={`/quotes/${quoteId}/line-items/new/curtain-accessory`}>Curtain Accessory</Link>
                 <Link href={`/quotes/${quoteId}/line-items/new/misc`}>Misc Quote item</Link>
               </div>

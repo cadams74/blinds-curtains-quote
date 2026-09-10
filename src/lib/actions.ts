@@ -6,6 +6,7 @@ import { and, asc, count, eq, inArray, max } from "drizzle-orm";
 import { db } from "../db/client.js";
 import * as schema from "../db/schema.js";
 import { requireUser } from "./session.js";
+import type { ActionState } from "./actionState.js";
 import { loadBlindDataSource, getOptionListValues } from "./pricingDataSource.js";
 import { loadCurtainDataSource } from "./curtainDataSource.js";
 import { priceRollerBlind, type RollerBlindInput, type RollerBlindResult } from "../pricing/roller.js";
@@ -18,11 +19,43 @@ import { priceAccessory, type AccessoryResult } from "../pricing/accessory.js";
 import { getAccessoryFamilyConfig, getAccessoryCatalog } from "./accessoryFamilies.js";
 import { getLineItemFields, type LineItemFieldConfig } from "./lineItemFields.js";
 
-export async function createQuote(formData: FormData) {
+/**
+ * Creates a new quote, either linked to an existing Customers record
+ * (customerId is a real numeric id) or as a one-off with just a typed name
+ * (customerId is "manual" or absent) -- see NewQuoteForm.tsx for the two
+ * form shapes this handles: the plain picker/manual-entry form, and the
+ * "creating a quote for <customer>" confirmation shown when arriving from
+ * a customer's own page via /quotes/new?customerId=.
+ *
+ * useActionState-driven like the rest of this app's forms (see Phase
+ * 13/14/37/38), so a validation error surfaces as a real message via
+ * ActionState instead of Next's generic production-redacted crash screen.
+ */
+export async function createQuote(_prevState: ActionState, formData: FormData): Promise<ActionState> {
   await requireUser();
 
-  const customerName = String(formData.get("customerName") ?? "").trim();
-  if (!customerName) throw new Error("Customer name is required.");
+  const customerIdRaw = String(formData.get("customerId") ?? "").trim();
+
+  let customerId: number | null = null;
+  let customerName: string;
+
+  if (customerIdRaw && customerIdRaw !== "manual") {
+    const parsedId = Number(customerIdRaw);
+    if (!Number.isInteger(parsedId)) {
+      return { error: "Select a valid customer.", successAt: null };
+    }
+    const [customer] = await db.select().from(schema.customers).where(eq(schema.customers.id, parsedId));
+    if (!customer) {
+      return { error: "That customer no longer exists -- refresh and try again.", successAt: null };
+    }
+    customerId = customer.id;
+    customerName = customer.name;
+  } else {
+    customerName = String(formData.get("customerName") ?? "").trim();
+    if (!customerName) {
+      return { error: "Customer name is required.", successAt: null };
+    }
+  }
 
   // Simple sequential quote number -- good enough for a single-office
   // internal tool. Not attempting gap-free/concurrency-safe numbering (two
@@ -35,7 +68,7 @@ export async function createQuote(formData: FormData) {
 
   const [created] = await db
     .insert(schema.quotes)
-    .values({ customerName, quoteNumber })
+    .values({ customerId, customerName, quoteNumber })
     .returning({ id: schema.quotes.id });
 
   redirect(`/quotes/${created.id}`);

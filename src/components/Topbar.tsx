@@ -14,6 +14,8 @@ export async function Topbar() {
       </Link>
       {session?.user && (
         <div className="topbar-user">
+          <Link href="/">Quotes</Link>
+          <Link href="/customers">Customers</Link>
           {session.user.role === "admin" && <Link href="/admin">Admin</Link>}
           <span>
             {session.user.name} <span className="badge">{session.user.role}</span>

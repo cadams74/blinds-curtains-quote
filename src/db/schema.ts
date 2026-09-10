@@ -190,11 +190,42 @@ export const pricingConstantsVersions = pgTable("pricing_constants_versions", {
 });
 
 // ---------------------------------------------------------------------------
+// Customers
+
+export const customers = pgTable("customers", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  address: text("address"),
+  suburb: text("suburb"),
+  state: text("state"),
+  postcode: text("postcode"),
+  mobile: text("mobile"),
+  email: text("email"),
+  alternateEmail: text("alternate_email"),
+  // Free-text notes (special requests, access instructions, anything else
+  // worth keeping against the customer rather than any one quote).
+  notes: text("notes"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+}, (t) => ({
+  nameIdx: index("customers_name_idx").on(t.name),
+}));
+
+// ---------------------------------------------------------------------------
 // Quotes
 
 export const quotes = pgTable("quotes", {
   id: serial("id").primaryKey(),
   quoteNumber: text("quote_number").notNull().unique(),
+  // Nullable: every quote created before Customer Tracking was added has no
+  // linked customer record, only the free-text customerName below -- kept
+  // that way rather than guessing a backfilled match. A quote created for a
+  // one-off/quick customer (typed rather than picked from Customers) is
+  // also legitimately null here. customerName is still stored on the quote
+  // itself (not just derived via a join) so a quote's own record of who it
+  // was for doesn't change retroactively if the customer's name is edited
+  // later -- same reasoning as this app's other "point in time" fields.
+  customerId: integer("customer_id").references(() => customers.id),
   customerName: text("customer_name").notNull(),
   status: text("status").notNull().default("draft"), // draft | issued | accepted | declined
   pricingConstantsVersionId: integer("pricing_constants_version_id")
