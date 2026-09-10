@@ -2,7 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-import { and, asc, count, eq, max } from "drizzle-orm";
+import { and, asc, count, eq, inArray, max } from "drizzle-orm";
 import { db } from "../db/client.js";
 import * as schema from "../db/schema.js";
 import { requireUser } from "./session.js";
@@ -16,7 +16,7 @@ import { priceMisc, type MiscInput, type MiscResult } from "../pricing/misc.js";
 import { computeCurtainFabricSellPrice } from "../pricing/curtainFabricSellPrice.js";
 import { priceAccessory, type AccessoryResult } from "../pricing/accessory.js";
 import { getAccessoryFamilyConfig, getAccessoryCatalog } from "./accessoryFamilies.js";
-import { getLineItemFields } from "./lineItemFields.js";
+import { getLineItemFields, type LineItemFieldConfig } from "./lineItemFields.js";
 
 export async function createQuote(formData: FormData) {
   await requireUser();
@@ -252,6 +252,64 @@ export async function deleteLineItem(quoteId: number, lineItemId: number) {
   revalidatePath(`/quotes/${quoteId}`);
 }
 
+/** Builds the row(s) to insert for duplicating ONE source line item --
+ * shared by both duplicateLineItemWithOptions (one line item) and
+ * duplicateLineItemsWithOptions (a multi-selected batch) below, so their
+ * two-mode logic (literal copy vs field-blanking, see the big comment on
+ * duplicateLineItemWithOptions) can only be implemented once and can't
+ * quietly drift apart between the single and bulk flows. */
+function buildDuplicateRows(
+  source: typeof schema.quoteLineItems.$inferSelect,
+  fields: LineItemFieldConfig[],
+  selectedKeys: Set<string>,
+  allSelected: boolean,
+  copies: number,
+  enteredBy: string | null | undefined,
+  startLineNumber: number
+): (typeof schema.quoteLineItems.$inferInsert)[] {
+  const sourceAttrs = source.attributes as Record<string, unknown>;
+  const rows: (typeof schema.quoteLineItems.$inferInsert)[] = [];
+  let lineNumber = startLineNumber;
+
+  for (let i = 0; i < copies; i++) {
+    if (allSelected) {
+      rows.push({
+        quoteId: source.quoteId,
+        lineNumber: lineNumber++,
+        room: source.room,
+        familySlug: source.familySlug,
+        attributes: { ...sourceAttrs, enteredBy },
+        priceBreakdown: source.priceBreakdown,
+        calculatedPrice: source.calculatedPrice,
+        priceOverride: source.priceOverride,
+        priceOverrideReason: source.priceOverrideReason,
+        finalPrice: source.finalPrice,
+      });
+    } else {
+      const newAttrs: Record<string, unknown> = { enteredBy };
+      for (const field of fields) {
+        if (field.key === "room" || !selectedKeys.has(field.key)) continue; // room handled via the room column below; unchecked fields stay unset
+        for (const attrKey of field.attributeKeys) {
+          if (attrKey in sourceAttrs) newAttrs[attrKey] = sourceAttrs[attrKey];
+        }
+      }
+      rows.push({
+        quoteId: source.quoteId,
+        lineNumber: lineNumber++,
+        room: selectedKeys.has("room") ? source.room : null,
+        familySlug: source.familySlug,
+        attributes: newAttrs,
+        priceBreakdown: { incomplete: true },
+        calculatedPrice: null,
+        priceOverride: null,
+        priceOverrideReason: null,
+        finalPrice: null,
+      });
+    }
+  }
+  return rows;
+}
+
 /** Copies an existing line item to `count` new rows at the end of the
  * quote, driven by DuplicateLineItemForm.tsx's field checklist and count
  * input -- the redesigned Duplicate feature (replacing the old one-click
@@ -300,46 +358,75 @@ export async function duplicateLineItemWithOptions(quoteId: number, lineItemId: 
     .select({ value: max(schema.quoteLineItems.lineNumber) })
     .from(schema.quoteLineItems)
     .where(eq(schema.quoteLineItems.quoteId, quoteId));
+
+  const rows = buildDuplicateRows(source, fields, selectedKeys, allSelected, copies, user.email, (maxLine ?? 0) + 1);
+  await db.insert(schema.quoteLineItems).values(rows);
+
+  revalidatePath(`/quotes/${quoteId}`);
+  redirect(`/quotes/${quoteId}`);
+}
+
+/** Same idea as duplicateLineItemWithOptions above, but for a batch of
+ * several line items selected at once (LineItemsTable.tsx's row
+ * checkboxes + BulkDuplicateLineItemsForm.tsx) -- Clive's follow-up
+ * request once he'd tried the single-item redesign: select several lines
+ * with a checkbox and duplicate them together in one action, rather than
+ * opening Duplicate on each one individually.
+ *
+ * Requires every selected line item to share one family_slug. Clive raised
+ * this himself as a real concern before any code was written ("there may
+ * be issues with needing to ensure they are the same type of entry...
+ * otherwise the specific fields will be different") -- a Curtain and a
+ * Roller Blind don't have the same field set, so there's no single
+ * checklist that could honestly represent "fields to copy" across both.
+ * Rather than showing a confusing union (most boxes meaningless for most
+ * of the selected items) or a thin intersection (Room and little else, in
+ * the common case), this simply requires a same-family selection -- the
+ * client (LineItemsTable.tsx) disables the bulk Duplicate control and
+ * explains why the moment a mixed selection exists, and this action
+ * re-checks the same rule server-side rather than trusting the client.
+ *
+ * Line items are duplicated in the order they were selected
+ * (lineItemIds' own order), `count` copies of EACH selected item -- the
+ * same per-item semantics as the single-item action, just applied to more
+ * than one source row per submit. */
+export async function duplicateLineItemsWithOptions(quoteId: number, lineItemIds: number[], formData: FormData) {
+  const user = await requireUser();
+
+  if (!lineItemIds || lineItemIds.length === 0) throw new Error("No line items selected.");
+
+  const sources = await db
+    .select()
+    .from(schema.quoteLineItems)
+    .where(and(eq(schema.quoteLineItems.quoteId, quoteId), inArray(schema.quoteLineItems.id, lineItemIds)));
+  if (sources.length !== lineItemIds.length) throw new Error("One or more selected line items could not be found.");
+
+  const distinctFamilies = new Set(sources.map((s) => s.familySlug));
+  if (distinctFamilies.size > 1) {
+    throw new Error("Select line items of the same type to duplicate them together -- their fields differ by type.");
+  }
+
+  const fields = getLineItemFields(sources[0].familySlug);
+  const selectedKeys = new Set(fields.filter((f) => formData.get(`field_${f.key}`) === "on").map((f) => f.key));
+  const allSelected = fields.every((f) => selectedKeys.has(f.key));
+
+  const countRaw = Number(formData.get("count"));
+  const copies = Number.isFinite(countRaw) ? Math.min(Math.max(Math.round(countRaw), 1), 20) : 1;
+
+  const [{ value: maxLine }] = await db
+    .select({ value: max(schema.quoteLineItems.lineNumber) })
+    .from(schema.quoteLineItems)
+    .where(eq(schema.quoteLineItems.quoteId, quoteId));
   let nextLine = (maxLine ?? 0) + 1;
 
-  const sourceAttrs = source.attributes as Record<string, unknown>;
-
+  const byId = new Map(sources.map((s) => [s.id, s]));
   const rows: (typeof schema.quoteLineItems.$inferInsert)[] = [];
-  for (let i = 0; i < copies; i++) {
-    if (allSelected) {
-      rows.push({
-        quoteId,
-        lineNumber: nextLine++,
-        room: source.room,
-        familySlug: source.familySlug,
-        attributes: { ...sourceAttrs, enteredBy: user.email },
-        priceBreakdown: source.priceBreakdown,
-        calculatedPrice: source.calculatedPrice,
-        priceOverride: source.priceOverride,
-        priceOverrideReason: source.priceOverrideReason,
-        finalPrice: source.finalPrice,
-      });
-    } else {
-      const newAttrs: Record<string, unknown> = { enteredBy: user.email };
-      for (const field of fields) {
-        if (field.key === "room" || !selectedKeys.has(field.key)) continue; // room handled via the room column below; unchecked fields stay unset
-        for (const attrKey of field.attributeKeys) {
-          if (attrKey in sourceAttrs) newAttrs[attrKey] = sourceAttrs[attrKey];
-        }
-      }
-      rows.push({
-        quoteId,
-        lineNumber: nextLine++,
-        room: selectedKeys.has("room") ? source.room : null,
-        familySlug: source.familySlug,
-        attributes: newAttrs,
-        priceBreakdown: { incomplete: true },
-        calculatedPrice: null,
-        priceOverride: null,
-        priceOverrideReason: null,
-        finalPrice: null,
-      });
-    }
+  for (const id of lineItemIds) {
+    const source = byId.get(id);
+    if (!source) continue; // already verified above every id resolved to a row
+    const built = buildDuplicateRows(source, fields, selectedKeys, allSelected, copies, user.email, nextLine);
+    rows.push(...built);
+    nextLine += built.length;
   }
 
   await db.insert(schema.quoteLineItems).values(rows);
