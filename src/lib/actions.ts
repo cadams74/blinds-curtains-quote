@@ -474,6 +474,66 @@ export async function moveLineItem(quoteId: number, lineItemId: number, directio
   revalidatePath(`/quotes/${quoteId}`);
 }
 
+/** Moves a line item directly to a typed 1-based position, instead of
+ * clicking the up/down arrows repeatedly (Clive's request -- only offered
+ * in the UI when exactly one line item is selected). Only the span of rows
+ * between the item's current position and its target position needs to
+ * change; every row outside that span keeps its lineNumber untouched, and
+ * the span itself keeps the exact same SET of lineNumber values it already
+ * held -- it's the same values, redistributed to reflect the new order. */
+export async function moveLineItemToPosition(quoteId: number, lineItemId: number, formData: FormData) {
+  await requireUser();
+
+  const items = await db
+    .select({ id: schema.quoteLineItems.id, lineNumber: schema.quoteLineItems.lineNumber })
+    .from(schema.quoteLineItems)
+    .where(eq(schema.quoteLineItems.quoteId, quoteId))
+    .orderBy(asc(schema.quoteLineItems.lineNumber));
+
+  const fromIndex = items.findIndex((li) => li.id === lineItemId);
+  if (fromIndex === -1) throw new Error("Line item not found.");
+
+  const raw = formData.get("position");
+  const parsed = Number(raw);
+  if (!Number.isFinite(parsed) || !Number.isInteger(parsed)) {
+    throw new Error("Enter a whole number position.");
+  }
+  const toIndex = Math.min(Math.max(parsed - 1, 0), items.length - 1);
+
+  if (toIndex === fromIndex) {
+    revalidatePath(`/quotes/${quoteId}`);
+    return;
+  }
+
+  const lo = Math.min(fromIndex, toIndex);
+  const hi = Math.max(fromIndex, toIndex);
+  const span = items.slice(lo, hi + 1);
+  const lineNumbers = span.map((li) => li.lineNumber); // already ascending, since `items` is
+
+  // Pull the moved item out of the span's id order and reinsert it at its
+  // new relative position -- everything else in the span just shifts up or
+  // down by one slot, same as dragging a row in a spreadsheet.
+  const ids = span.map((li) => li.id);
+  const [movedId] = ids.splice(fromIndex - lo, 1);
+  ids.splice(toIndex - lo, 0, movedId);
+
+  // Two-phase update via a scratch value, generalizing moveLineItem's
+  // three-step single swap to however many rows the span covers. Each id
+  // is a positive serial primary key, so -id is guaranteed unique across
+  // the span -- no transient (lineNumber, quoteId) collision along the way.
+  for (const id of ids) {
+    await db.update(schema.quoteLineItems).set({ lineNumber: -id }).where(eq(schema.quoteLineItems.id, id));
+  }
+  for (let i = 0; i < ids.length; i++) {
+    await db
+      .update(schema.quoteLineItems)
+      .set({ lineNumber: lineNumbers[i] })
+      .where(eq(schema.quoteLineItems.id, ids[i]));
+  }
+
+  revalidatePath(`/quotes/${quoteId}`);
+}
+
 export async function setPriceOverride(quoteId: number, lineItemId: number, formData: FormData) {
   await requireUser();
   const override = formData.get("priceOverride");

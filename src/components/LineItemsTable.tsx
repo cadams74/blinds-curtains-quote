@@ -5,6 +5,7 @@ import { useState } from "react";
 import { deleteLineItem, moveLineItem } from "@/lib/actions";
 import { getLineItemFields } from "@/lib/lineItemFields";
 import { DuplicateLineItemForm } from "@/components/DuplicateLineItemForm";
+import { MoveToPositionForm } from "@/components/MoveToPositionForm";
 import { PriceOverrideForm } from "@/components/PriceOverrideForm";
 
 // The quote page's line-item table -- a client component (not the quote
@@ -155,23 +156,30 @@ export function LineItemsTable({ quoteId, lineItems }: Props) {
       {selected.size > 0 && (
         <div
           className="card"
-          style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "flex-start", gap: 12 }}
+          style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "flex-start", gap: 16 }}
         >
-          <div>
-            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: mixedFamilies ? 6 : 0 }}>
+          <div style={{ flex: "1 1 auto", minWidth: 0 }}>
+            <div style={{ marginBottom: 8 }}>
               <span style={{ fontSize: 14, fontWeight: 600 }}>
                 {selected.size} line item{selected.size === 1 ? "" : "s"} selected
               </span>
-              <button
-                type="button"
-                className="btn secondary"
-                style={{ fontSize: 12, padding: "2px 8px" }}
-                onClick={() => setSelected(new Set())}
-              >
-                Clear selection
-              </button>
             </div>
-            {mixedFamilies ? (
+            {selected.size === 1 ? (
+              (() => {
+                const only = selectedItems[0];
+                const currentPosition = lineItems.findIndex((li) => li.id === only.id) + 1;
+                return (
+                  <MoveToPositionForm
+                    key={only.id}
+                    quoteId={quoteId}
+                    lineItemId={only.id}
+                    currentPosition={currentPosition}
+                    totalCount={lineItems.length}
+                    onSuccess={() => setSelected(new Set())}
+                  />
+                );
+              })()
+            ) : mixedFamilies ? (
               <p className="error" style={{ margin: 0, fontSize: 13 }}>
                 Select line items of the same type to duplicate them together (currently mixed:{" "}
                 {selectedFamilies.map((f) => FAMILY_LABELS[f] ?? f).join(", ")}) -- their fields differ by type.
@@ -188,6 +196,14 @@ export function LineItemsTable({ quoteId, lineItems }: Props) {
               />
             )}
           </div>
+          <button
+            type="button"
+            className="btn secondary"
+            style={{ fontSize: 12, padding: "2px 8px", flexShrink: 0 }}
+            onClick={() => setSelected(new Set())}
+          >
+            Clear selection
+          </button>
         </div>
       )}
 
